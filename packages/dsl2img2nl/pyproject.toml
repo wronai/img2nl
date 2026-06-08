@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dsl2img2nl"
+version = "0.1.0"
+description = "DSL bus for img2nl control layer"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+dependencies = ["img2nl>=0.1.0", "uri2img2nl>=0.1.0"]
+
+[project.scripts]
+dsl2img2nl = "dsl2img2nl.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
