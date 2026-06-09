@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-06-09
 
 ### Fixed
+- Fix unused-imports issues (ticket-5a03972c)
+- Fix unused-imports issues (ticket-b6a4abf0)
+
+## [0.1.10] - 2026-06-09
+
+### Fixed
 - Fix unused-imports issues (ticket-44310f1e)
 - Fix unused-imports issues (ticket-2104c231)
 - Fix unused-imports issues (ticket-8df9dff2)
@@ -105,6 +111,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - `describe.py` / `llm_gate.py` — use `scene_class`, `special_hits`, `similarity`
 - `README.md` — detection layers, VQL integration, API examples
+
+## [0.1.8] - 2026-06-09
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update project/context.md
+
+### Other
+- Update app.doql.less
+- Update planfile.yaml
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/evolution.toon.yaml
+- Update project/logic.pl
+- Update project/map.toon.yaml
+- Update project/mermaid.export
+- ... and 1 more files
 
 ## [0.1.7] - 2026-06-09
 

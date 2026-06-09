@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('img2nl', '0.1.5', 'python').
+project_metadata('img2nl', '0.1.7', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 73, 'less').
@@ -19,12 +19,13 @@ project_file('packages/uri2img2nl/src/uri2img2nl/query_result.py', 31, 'python')
 project_file('packages/uri2img2nl/src/uri2img2nl/uri.py', 149, 'python').
 project_file('project.sh', 59, 'shell').
 project_file('scripts/build_i18n_catalog.py', 63, 'python').
-project_file('src/img2nl/__init__.py', 38, 'python').
-project_file('src/img2nl/analyze.py', 121, 'python').
-project_file('src/img2nl/api.py', 63, 'python').
-project_file('src/img2nl/capture.py', 92, 'python').
-project_file('src/img2nl/cli.py', 103, 'python').
-project_file('src/img2nl/cli_commands.py', 124, 'python').
+project_file('src/img2nl/__init__.py', 42, 'python').
+project_file('src/img2nl/actions.py', 104, 'python').
+project_file('src/img2nl/analyze.py', 153, 'python').
+project_file('src/img2nl/api.py', 79, 'python').
+project_file('src/img2nl/capture.py', 102, 'python').
+project_file('src/img2nl/cli.py', 113, 'python').
+project_file('src/img2nl/cli_commands.py', 129, 'python').
 project_file('src/img2nl/context.py', 69, 'python').
 project_file('src/img2nl/describe.py', 180, 'python').
 project_file('src/img2nl/features/__init__.py', 32, 'python').
@@ -33,7 +34,7 @@ project_file('src/img2nl/features/barcodes.py', 79, 'python').
 project_file('src/img2nl/features/colors.py', 52, 'python').
 project_file('src/img2nl/features/dynamics.py', 29, 'python').
 project_file('src/img2nl/features/edges.py', 55, 'python').
-project_file('src/img2nl/features/extractors.py', 58, 'python').
+project_file('src/img2nl/features/extractors.py', 99, 'python').
 project_file('src/img2nl/features/fingerprint.py', 31, 'python').
 project_file('src/img2nl/features/identify_matchers.py', 133, 'python').
 project_file('src/img2nl/features/matchers_common.py', 33, 'python').
@@ -55,14 +56,15 @@ project_file('src/img2nl/i18n/locales.py', 60, 'python').
 project_file('src/img2nl/i18n/offline.py', 190, 'python').
 project_file('src/img2nl/i18n/translate.py', 17, 'python').
 project_file('src/img2nl/llm_gate.py', 150, 'python').
-project_file('src/img2nl/plan.py', 112, 'python').
+project_file('src/img2nl/plan.py', 179, 'python').
 project_file('src/img2nl/profiles.py', 99, 'python').
-project_file('src/img2nl/result.py', 43, 'python').
+project_file('src/img2nl/result.py', 45, 'python').
 project_file('src/img2nl/thumbnail.py', 30, 'python').
 project_file('tests/test_analyze.py', 66, 'python').
 project_file('tests/test_detection_layers.py', 88, 'python').
 project_file('tests/test_dsl_screenshot.py', 99, 'python').
 project_file('tests/test_i18n.py', 61, 'python').
+project_file('tests/test_lazy_extractors.py', 175, 'python').
 project_file('tests/test_offline_translate.py', 64, 'python').
 project_file('tests/test_screenshot_pipeline.py', 139, 'python').
 project_file('tests/test_special_layers.py', 154, 'python').
@@ -111,18 +113,23 @@ python_function('packages/uri2img2nl/src/uri2img2nl/uri.py', 'uri_for_capture_an
 python_function('packages/uri2img2nl/src/uri2img2nl/uri.py', 'uri_for_llm_hint', 1, 1, 1).
 python_function('packages/uri2img2nl/src/uri2img2nl/uri.py', '_bool_param', 2, 2, 3).
 python_function('packages/uri2img2nl/src/uri2img2nl/uri.py', 'parse_img2nl_uri', 1, 14, 9).
+python_function('src/img2nl/actions.py', 'build_click_action', 2, 2, 3).
+python_function('src/img2nl/actions.py', 'execute_click_action', 1, 5, 7).
+python_function('src/img2nl/actions.py', 'click_target', 2, 2, 2).
+python_function('src/img2nl/actions.py', 'click_from_result', 2, 4, 2).
 python_function('src/img2nl/analyze.py', '_require_pillow', 0, 2, 0).
 python_function('src/img2nl/analyze.py', '_open_image', 1, 1, 1).
 python_function('src/img2nl/analyze.py', '_assemble_result', 0, 2, 6).
-python_function('src/img2nl/analyze.py', 'analyze_image', 1, 4, 13).
+python_function('src/img2nl/analyze.py', 'analyze_image', 1, 7, 14).
 python_function('src/img2nl/api.py', 'analyze_from_cmd', 1, 1, 2).
 python_function('src/img2nl/api.py', 'targets_from_cmd', 1, 3, 4).
 python_function('src/img2nl/api.py', 'capture_from_cmd', 1, 3, 4).
-python_function('src/img2nl/api.py', 'capture_analyze_from_cmd', 1, 3, 6).
+python_function('src/img2nl/api.py', 'capture_analyze_from_cmd', 1, 6, 7).
+python_function('src/img2nl/api.py', 'click_target_from_cmd', 1, 4, 7).
 python_function('src/img2nl/api.py', 'llm_hint_from_path', 1, 2, 1).
 python_function('src/img2nl/api.py', 'text_from_path', 1, 3, 2).
 python_function('src/img2nl/capture.py', 'capture_screenshot', 1, 11, 7).
-python_function('src/img2nl/capture.py', 'capture_and_analyze', 1, 2, 5).
+python_function('src/img2nl/capture.py', 'capture_and_analyze', 1, 3, 6).
 python_function('src/img2nl/cli.py', '_add_analyze_parser', 1, 1, 3).
 python_function('src/img2nl/cli.py', '_add_capture_parser', 1, 1, 3).
 python_function('src/img2nl/cli.py', '_add_capture_analyze_parser', 1, 1, 3).
@@ -133,7 +140,7 @@ python_function('src/img2nl/cli_commands.py', '_target_list', 1, 4, 2).
 python_function('src/img2nl/cli_commands.py', '_profile_kwargs', 1, 1, 1).
 python_function('src/img2nl/cli_commands.py', 'cmd_analyze', 1, 7, 8).
 python_function('src/img2nl/cli_commands.py', 'cmd_capture', 1, 4, 4).
-python_function('src/img2nl/cli_commands.py', 'cmd_capture_analyze', 1, 6, 8).
+python_function('src/img2nl/cli_commands.py', 'cmd_capture_analyze', 1, 8, 8).
 python_function('src/img2nl/cli_commands.py', 'cmd_translate_install', 1, 8, 5).
 python_function('src/img2nl/context.py', 'default_targets', 1, 1, 2).
 python_function('src/img2nl/context.py', 'infer_source_type', 0, 11, 1).
@@ -152,7 +159,8 @@ python_function('src/img2nl/features/colors.py', 'analyze_colors', 1, 13, 13).
 python_function('src/img2nl/features/dynamics.py', 'analyze_dynamics', 1, 1, 4).
 python_function('src/img2nl/features/edges.py', '_unavailable', 1, 1, 0).
 python_function('src/img2nl/features/edges.py', 'analyze_edges', 1, 6, 16).
-python_function('src/img2nl/features/extractors.py', 'extract_base_features', 1, 2, 10).
+python_function('src/img2nl/features/extractors.py', '_run_layer', 3, 1, 7).
+python_function('src/img2nl/features/extractors.py', 'extract_base_features', 1, 12, 8).
 python_function('src/img2nl/features/extractors.py', 'apply_semantic_layer', 2, 1, 1).
 python_function('src/img2nl/features/fingerprint.py', '_unavailable', 1, 1, 0).
 python_function('src/img2nl/features/fingerprint.py', 'analyze_fingerprint', 1, 2, 6).
@@ -228,7 +236,9 @@ python_function('src/img2nl/plan.py', 'resolve_targets', 0, 6, 3).
 python_function('src/img2nl/plan.py', 'should_run_ui_detect', 0, 3, 0).
 python_function('src/img2nl/plan.py', 'should_run_semantic', 0, 5, 0).
 python_function('src/img2nl/plan.py', 'should_run_identify', 0, 2, 0).
-python_function('src/img2nl/plan.py', 'build_execution_plan', 0, 1, 6).
+python_function('src/img2nl/plan.py', 'resolve_base_layers', 0, 11, 4).
+python_function('src/img2nl/plan.py', 'should_run_special_hits', 0, 4, 1).
+python_function('src/img2nl/plan.py', 'build_execution_plan', 0, 1, 8).
 python_function('src/img2nl/profiles.py', 'list_profiles', 0, 1, 1).
 python_function('src/img2nl/profiles.py', 'get_profile', 1, 2, 6).
 python_function('src/img2nl/profiles.py', 'apply_profile', 1, 5, 2).
@@ -256,6 +266,12 @@ python_function('tests/test_i18n.py', 'test_normalize_locale', 2, 2, 2).
 python_function('tests/test_i18n.py', 'test_all_european_locales_have_full_catalog', 0, 5, 2).
 python_function('tests/test_i18n.py', 'test_translate_not_english_copy', 1, 2, 2).
 python_function('tests/test_i18n.py', 'test_describe_german', 0, 3, 1).
+python_function('tests/test_lazy_extractors.py', 'test_fast_ui_plan_skips_heavy_layers', 0, 3, 2).
+python_function('tests/test_lazy_extractors.py', 'test_document_plan_includes_text_layers', 0, 3, 1).
+python_function('tests/test_lazy_extractors.py', 'test_screenshot_with_text_target_adds_edges', 0, 3, 2).
+python_function('tests/test_lazy_extractors.py', 'test_fast_ui_skips_analyze_edges', 1, 2, 7).
+python_function('tests/test_lazy_extractors.py', 'test_click_target_dry_run', 0, 3, 4).
+python_function('tests/test_lazy_extractors.py', 'test_capture_and_analyze_click_dry_run', 1, 3, 7).
 python_function('tests/test_offline_translate.py', 'test_translate_summary_no_argos_returns_fallback', 0, 4, 2).
 python_function('tests/test_offline_translate.py', 'test_translate_summary_same_lang_noop', 0, 4, 1).
 python_function('tests/test_offline_translate.py', 'test_translate_summary_with_mock_argos', 0, 3, 4).

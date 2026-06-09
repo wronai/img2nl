@@ -1,5 +1,5 @@
 # code2llm call graph | /home/tom/github/wronai/img2nl
-# generated in 0.10s
+# generated in 0.06s
 # nodes: 144 | edges: 159 | modules: 44
 # CC̄=3.8
 
@@ -34,14 +34,14 @@ HUBS[20]:
     CC=6  in:0  out:17  total:17
   src.img2nl.features.targets.build_target_report
     CC=8  in:1  out:16  total:17
-  src.img2nl.profiles.analyze_kwargs_from_cmd
-    CC=10  in:5  out:11  total:16
-  src.img2nl.cli._add_analyze_parser
-    CC=1  in:1  out:15  total:16
-  src.img2nl.cli_commands.cmd_analyze
-    CC=7  in:0  out:16  total:16
   src.img2nl.features.noise.analyze_noise
     CC=6  in:1  out:15  total:16
+  src.img2nl.cli_commands.cmd_analyze
+    CC=7  in:0  out:16  total:16
+  src.img2nl.cli._add_analyze_parser
+    CC=1  in:1  out:15  total:16
+  src.img2nl.profiles.analyze_kwargs_from_cmd
+    CC=10  in:5  out:11  total:16
   src.img2nl.cli._add_capture_analyze_parser
     CC=1  in:1  out:14  total:15
 
@@ -282,7 +282,7 @@ EDGES:
   src.img2nl.describe.describe_image → src.img2nl.i18n.locales.normalize_locale
   src.img2nl.describe.describe_image → src.img2nl.describe._describe_catalog
   src.img2nl.describe.describe_image → src.img2nl.i18n.offline.translate_summary_offline
-  src.img2nl.profiles.get_profile → src.img2nl.profiles.list_profiles
-  src.img2nl.profiles.apply_profile → src.img2nl.profiles.get_profile
-  src.img2nl.profiles.analyze_kwargs_from_cmd → src.img2nl.profiles.get_profile
-  src.img2nl.features.ocr_text.analyze_ocr → src.img2nl.features.ocr_text._preview
+  src.img2nl.cli.build_parser → src.img2nl.cli._add_analyze_parser
+  src.img2nl.cli.build_parser → src.img2nl.cli._add_capture_parser
+  src.img2nl.cli.build_parser → src.img2nl.cli._add_capture_analyze_parser
+  src.img2nl.cli.build_parser → src.img2nl.cli._add_translate_install_parser

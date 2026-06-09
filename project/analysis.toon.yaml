@@ -1,4 +1,4 @@
-# code2llm | 69f 7423L | python:55,yaml:4,toml:4,shell:3,json:2 | 2026-06-09
+# code2llm | 69f 7449L | python:55,yaml:4,toml:4,shell:3,json:2 | 2026-06-09
 # generated in 0.01s
 # CC̅=3.8 | critical:0/177 | dups:0 | cycles:0
 
@@ -49,63 +49,63 @@ PIPELINES[55]:
       PURITY: 100% pure
   [21] Src [uri_for_llm_hint]: uri_for_llm_hint
       PURITY: 100% pure
-  [22] Src [apply_profile]: apply_profile → get_profile → list_profiles
+  [22] Src [main]: main → build_parser → _add_analyze_parser
       PURITY: 100% pure
-  [23] Src [analyze_targets]: analyze_targets → build_execution_plan → infer_source_type
+  [23] Src [analyze_from_cmd]: analyze_from_cmd → analyze_image → _require_pillow
       PURITY: 100% pure
-  [24] Src [resolve_targets]: resolve_targets
+  [24] Src [targets_from_cmd]: targets_from_cmd → analyze_kwargs_from_cmd → get_profile → list_profiles
       PURITY: 100% pure
-  [25] Src [should_run_ui_detect]: should_run_ui_detect
+  [25] Src [capture_from_cmd]: capture_from_cmd → capture_screenshot
       PURITY: 100% pure
-  [26] Src [should_run_semantic]: should_run_semantic
+  [26] Src [capture_analyze_from_cmd]: capture_analyze_from_cmd → analyze_kwargs_from_cmd → get_profile → list_profiles
       PURITY: 100% pure
-  [27] Src [collect_barcodes]: collect_barcodes
+  [27] Src [click_target_from_cmd]: click_target_from_cmd → analyze_kwargs_from_cmd → get_profile → list_profiles
       PURITY: 100% pure
-  [28] Src [collect_ocr]: collect_ocr
+  [28] Src [llm_hint_from_path]: llm_hint_from_path → analyze_image → _require_pillow
       PURITY: 100% pure
-  [29] Src [collect_ui]: collect_ui → match_ui_role
+  [29] Src [text_from_path]: text_from_path → analyze_image → _require_pillow
       PURITY: 100% pure
-  [30] Src [collect_semantic]: collect_semantic
+  [30] Src [apply_profile]: apply_profile → get_profile → list_profiles
       PURITY: 100% pure
-  [31] Src [feature_slice]: feature_slice
+  [31] Src [cmd_analyze]: cmd_analyze → _target_list
       PURITY: 100% pure
-  [32] Src [compare_images_ssim]: compare_images_ssim
+  [32] Src [cmd_capture]: cmd_capture → capture_screenshot
       PURITY: 100% pure
-  [33] Src [match_qrcode]: match_qrcode
+  [33] Src [cmd_capture_analyze]: cmd_capture_analyze → _target_list
       PURITY: 100% pure
-  [34] Src [match_text]: match_text
+  [34] Src [cmd_translate_install]: cmd_translate_install → ensure_language_pair → normalize_locale
       PURITY: 100% pure
-  [35] Src [match_semantic]: match_semantic → _best_semantic_object
+  [35] Src [analyze_targets]: analyze_targets → build_execution_plan → infer_source_type
       PURITY: 100% pure
-  [36] Src [match_ui]: match_ui → match_ui_role
+  [36] Src [resolve_targets]: resolve_targets
       PURITY: 100% pure
-  [37] Src [to_dict]: to_dict
+  [37] Src [should_run_ui_detect]: should_run_ui_detect
       PURITY: 100% pure
-  [38] Src [_try_img2vql]: _try_img2vql
+  [38] Src [should_run_semantic]: should_run_semantic
       PURITY: 100% pure
-  [39] Src [_try_imgl_bridge]: _try_imgl_bridge → _from_imgl_elements
+  [39] Src [collect_barcodes]: collect_barcodes
       PURITY: 100% pure
-  [40] Src [_try_imgl_local]: _try_imgl_local → _from_imgl_elements
+  [40] Src [collect_ocr]: collect_ocr
       PURITY: 100% pure
-  [41] Src [_load_messages]: _load_messages
+  [41] Src [collect_ui]: collect_ui → match_ui_role
       PURITY: 100% pure
-  [42] Src [supported_locales]: supported_locales
+  [42] Src [collect_semantic]: collect_semantic
       PURITY: 100% pure
-  [43] Src [is_european_locale]: is_european_locale → normalize_locale
+  [43] Src [feature_slice]: feature_slice
       PURITY: 100% pure
-  [44] Src [main]: main → build_parser → _add_analyze_parser
+  [44] Src [compare_images_ssim]: compare_images_ssim
       PURITY: 100% pure
-  [45] Src [analyze_from_cmd]: analyze_from_cmd → analyze_image → _require_pillow
+  [45] Src [match_qrcode]: match_qrcode
       PURITY: 100% pure
-  [46] Src [targets_from_cmd]: targets_from_cmd → analyze_kwargs_from_cmd → get_profile → list_profiles
+  [46] Src [match_text]: match_text
       PURITY: 100% pure
-  [47] Src [capture_from_cmd]: capture_from_cmd → capture_screenshot
+  [47] Src [match_semantic]: match_semantic → _best_semantic_object
       PURITY: 100% pure
-  [48] Src [capture_analyze_from_cmd]: capture_analyze_from_cmd → analyze_kwargs_from_cmd → get_profile → list_profiles
+  [48] Src [match_ui]: match_ui → match_ui_role
       PURITY: 100% pure
-  [49] Src [click_target_from_cmd]: click_target_from_cmd → analyze_kwargs_from_cmd → get_profile → list_profiles
+  [49] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [50] Src [llm_hint_from_path]: llm_hint_from_path → analyze_image → _require_pillow
+  [50] Src [_try_img2vql]: _try_img2vql
       PURITY: 100% pure
 
 LAYERS:
@@ -120,18 +120,18 @@ LAYERS:
   │ identify_matchers          132L  0C    5m  CC=10     ←1
   │ cli_commands               128L  0C    6m  CC=8      ←0
   │ cli                        112L  0C    6m  CC=1      ←0
-  │ objects                    103L  0C    2m  CC=14     ←1
   │ actions                    103L  0C    4m  CC=5      ←2
+  │ objects                    103L  0C    2m  CC=14     ←1
   │ targets                    102L  1C    5m  CC=8      ←2
-  │ router                     101L  0C    6m  CC=3      ←1
   │ capture                    101L  0C    2m  CC=11     ←2
+  │ router                     101L  0C    6m  CC=3      ←1
   │ profiles                    98L  0C    4m  CC=10     ←2
   │ extractors                  98L  0C    3m  CC=12     ←1
   │ scene                       97L  0C    6m  CC=11     ←1
   │ semantic                    84L  0C    3m  CC=9      ←1
   │ ui_adapter                  80L  0C    5m  CC=4      ←1
-  │ barcodes                    78L  0C    3m  CC=5      ←1
   │ api                         78L  0C    7m  CC=6      ←0
+  │ barcodes                    78L  0C    3m  CC=5      ←1
   │ ocr_text                    73L  0C    3m  CC=7      ←1
   │ similarity                  73L  0C    3m  CC=5      ←1
   │ context                     68L  0C    2m  CC=11     ←1
@@ -172,7 +172,7 @@ LAYERS:
   │ __init__                     6L  0C    0m  CC=0.0    ←0
   │
   ./                              CC̄=0.0    ←in:0  →out:0
-  │ !! planfile.yaml             1033L  0C    0m  CC=0.0    ←0
+  │ !! planfile.yaml             1059L  0C    0m  CC=0.0    ←0
   │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
   │ prefact.yaml                94L  0C    0m  CC=0.0    ←0
   │ pyproject.toml              85L  0C    0m  CC=0.0    ←0

@@ -22,7 +22,7 @@ Image → natural language summary with heuristics, thumbnails, and LLM transpor
 ## Metadata
 
 - **name**: `img2nl`
-- **version**: `0.1.5`
+- **version**: `0.1.7`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -42,7 +42,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: img2nl;
-  version: 0.1.5;
+  version: 0.1.7;
 }
 
 dependencies {
@@ -152,7 +152,7 @@ ASSERT_EXIT_CODE 0
 ```yaml
 project:
   name: img2nl
-  version: 0.1.5
+  version: 0.1.7
   env: local
 ```
 
@@ -215,13 +215,13 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# img2nl | 66f 4751L | python:62,shell:3,less:1 | 2026-06-09
-# stats: 211 func | 7 cls | 66 mod | CC̄=3.7 | critical:11 | cycles:0
-# alerts[5]: CC parse_img2nl_uri=14; CC _largest_regions=14; CC analyze_colors=13; CC capture_screenshot=11; CC infer_source_type=11
-# hotspots[5]: analyze_edges fan=16; analyze_objects fan=14; analyze_image fan=13; analyze_colors fan=13; analyze_patterns fan=13
+# img2nl | 68f 5217L | python:64,shell:3,less:1 | 2026-06-09
+# stats: 225 func | 7 cls | 68 mod | CC̄=3.8 | critical:13 | cycles:0
+# alerts[5]: CC parse_img2nl_uri=14; CC _largest_regions=14; CC analyze_colors=13; CC extract_base_features=12; CC capture_screenshot=11
+# hotspots[5]: analyze_edges fan=16; analyze_image fan=14; analyze_objects fan=14; analyze_colors fan=13; analyze_patterns fan=13
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[66]:
+M[68]:
   app.doql.less,73
   install-dev.sh,27
   packages/cli2img2nl/src/cli2img2nl/cli.py,33
@@ -239,12 +239,13 @@ M[66]:
   packages/uri2img2nl/src/uri2img2nl/uri.py,149
   project.sh,59
   scripts/build_i18n_catalog.py,63
-  src/img2nl/__init__.py,38
-  src/img2nl/analyze.py,121
-  src/img2nl/api.py,63
-  src/img2nl/capture.py,92
-  src/img2nl/cli.py,103
-  src/img2nl/cli_commands.py,124
+  src/img2nl/__init__.py,42
+  src/img2nl/actions.py,104
+  src/img2nl/analyze.py,153
+  src/img2nl/api.py,79
+  src/img2nl/capture.py,102
+  src/img2nl/cli.py,113
+  src/img2nl/cli_commands.py,129
   src/img2nl/context.py,69
   src/img2nl/describe.py,180
   src/img2nl/features/__init__.py,32
@@ -253,7 +254,7 @@ M[66]:
   src/img2nl/features/colors.py,52
   src/img2nl/features/dynamics.py,29
   src/img2nl/features/edges.py,55
-  src/img2nl/features/extractors.py,58
+  src/img2nl/features/extractors.py,99
   src/img2nl/features/fingerprint.py,31
   src/img2nl/features/identify_matchers.py,133
   src/img2nl/features/matchers_common.py,33
@@ -275,14 +276,15 @@ M[66]:
   src/img2nl/i18n/offline.py,190
   src/img2nl/i18n/translate.py,17
   src/img2nl/llm_gate.py,150
-  src/img2nl/plan.py,112
+  src/img2nl/plan.py,179
   src/img2nl/profiles.py,99
-  src/img2nl/result.py,43
+  src/img2nl/result.py,45
   src/img2nl/thumbnail.py,30
   tests/test_analyze.py,66
   tests/test_detection_layers.py,88
   tests/test_dsl_screenshot.py,99
   tests/test_i18n.py,61
+  tests/test_lazy_extractors.py,175
   tests/test_offline_translate.py,64
   tests/test_screenshot_pipeline.py,139
   tests/test_special_layers.py,154
@@ -359,6 +361,12 @@ D:
     parse_img2nl_uri(uri)
   scripts/build_i18n_catalog.py:
   src/img2nl/__init__.py:
+  src/img2nl/actions.py:
+    e: build_click_action,execute_click_action,click_target,click_from_result
+    build_click_action(target_report;target)
+    execute_click_action(action)
+    click_target(target_report;target)
+    click_from_result(result;target)
   src/img2nl/analyze.py:
     e: _require_pillow,_open_image,_assemble_result,analyze_image
     _require_pillow()
@@ -366,11 +374,12 @@ D:
     _assemble_result()
     analyze_image(image_path)
   src/img2nl/api.py:
-    e: analyze_from_cmd,targets_from_cmd,capture_from_cmd,capture_analyze_from_cmd,llm_hint_from_path,text_from_path
+    e: analyze_from_cmd,targets_from_cmd,capture_from_cmd,capture_analyze_from_cmd,click_target_from_cmd,llm_hint_from_path,text_from_path
     analyze_from_cmd(cmd)
     targets_from_cmd(cmd)
     capture_from_cmd(cmd)
     capture_analyze_from_cmd(cmd)
+    click_target_from_cmd(cmd)
     llm_hint_from_path(path)
     text_from_path(path)
   src/img2nl/capture.py:
@@ -425,7 +434,8 @@ D:
     _unavailable(reason)
     analyze_edges(im)
   src/img2nl/features/extractors.py:
-    e: extract_base_features,apply_semantic_layer
+    e: _run_layer,extract_base_features,apply_semantic_layer
+    _run_layer(name;im;features)
     extract_base_features(im)
     apply_semantic_layer(im;features)
   src/img2nl/features/fingerprint.py:
@@ -542,12 +552,14 @@ D:
     _should_send_to_llm(score;scene;colors;noise)
     llm_transport_hint(features)
   src/img2nl/plan.py:
-    e: resolve_targets,should_run_ui_detect,should_run_semantic,should_run_identify,build_execution_plan,ExecutionPlan
+    e: resolve_targets,should_run_ui_detect,should_run_semantic,should_run_identify,resolve_base_layers,should_run_special_hits,build_execution_plan,ExecutionPlan
     ExecutionPlan:
     resolve_targets()
     should_run_ui_detect()
     should_run_semantic()
     should_run_identify()
+    resolve_base_layers()
+    should_run_special_hits()
     build_execution_plan()
   src/img2nl/profiles.py:
     e: list_profiles,get_profile,apply_profile,analyze_kwargs_from_cmd
@@ -591,6 +603,14 @@ D:
     test_all_european_locales_have_full_catalog()
     test_translate_not_english_copy(lang)
     test_describe_german()
+  tests/test_lazy_extractors.py:
+    e: test_fast_ui_plan_skips_heavy_layers,test_document_plan_includes_text_layers,test_screenshot_with_text_target_adds_edges,test_fast_ui_skips_analyze_edges,test_click_target_dry_run,test_capture_and_analyze_click_dry_run
+    test_fast_ui_plan_skips_heavy_layers()
+    test_document_plan_includes_text_layers()
+    test_screenshot_with_text_target_adds_edges()
+    test_fast_ui_skips_analyze_edges(tmp_path)
+    test_click_target_dry_run()
+    test_capture_and_analyze_click_dry_run(tmp_path)
   tests/test_offline_translate.py:
     e: test_translate_summary_no_argos_returns_fallback,test_translate_summary_same_lang_noop,test_translate_summary_with_mock_argos,test_describe_offline_mode_uses_translate
     test_translate_summary_no_argos_returns_fallback()
@@ -630,7 +650,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('img2nl', '0.1.5', 'python').
+project_metadata('img2nl', '0.1.7', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 73, 'less').
@@ -650,12 +670,13 @@ project_file('packages/uri2img2nl/src/uri2img2nl/query_result.py', 31, 'python')
 project_file('packages/uri2img2nl/src/uri2img2nl/uri.py', 149, 'python').
 project_file('project.sh', 59, 'shell').
 project_file('scripts/build_i18n_catalog.py', 63, 'python').
-project_file('src/img2nl/__init__.py', 38, 'python').
-project_file('src/img2nl/analyze.py', 121, 'python').
-project_file('src/img2nl/api.py', 63, 'python').
-project_file('src/img2nl/capture.py', 92, 'python').
-project_file('src/img2nl/cli.py', 103, 'python').
-project_file('src/img2nl/cli_commands.py', 124, 'python').
+project_file('src/img2nl/__init__.py', 42, 'python').
+project_file('src/img2nl/actions.py', 104, 'python').
+project_file('src/img2nl/analyze.py', 153, 'python').
+project_file('src/img2nl/api.py', 79, 'python').
+project_file('src/img2nl/capture.py', 102, 'python').
+project_file('src/img2nl/cli.py', 113, 'python').
+project_file('src/img2nl/cli_commands.py', 129, 'python').
 project_file('src/img2nl/context.py', 69, 'python').
 project_file('src/img2nl/describe.py', 180, 'python').
 project_file('src/img2nl/features/__init__.py', 32, 'python').
@@ -664,7 +685,7 @@ project_file('src/img2nl/features/barcodes.py', 79, 'python').
 project_file('src/img2nl/features/colors.py', 52, 'python').
 project_file('src/img2nl/features/dynamics.py', 29, 'python').
 project_file('src/img2nl/features/edges.py', 55, 'python').
-project_file('src/img2nl/features/extractors.py', 58, 'python').
+project_file('src/img2nl/features/extractors.py', 99, 'python').
 project_file('src/img2nl/features/fingerprint.py', 31, 'python').
 project_file('src/img2nl/features/identify_matchers.py', 133, 'python').
 project_file('src/img2nl/features/matchers_common.py', 33, 'python').
@@ -686,14 +707,15 @@ project_file('src/img2nl/i18n/locales.py', 60, 'python').
 project_file('src/img2nl/i18n/offline.py', 190, 'python').
 project_file('src/img2nl/i18n/translate.py', 17, 'python').
 project_file('src/img2nl/llm_gate.py', 150, 'python').
-project_file('src/img2nl/plan.py', 112, 'python').
+project_file('src/img2nl/plan.py', 179, 'python').
 project_file('src/img2nl/profiles.py', 99, 'python').
-project_file('src/img2nl/result.py', 43, 'python').
+project_file('src/img2nl/result.py', 45, 'python').
 project_file('src/img2nl/thumbnail.py', 30, 'python').
 project_file('tests/test_analyze.py', 66, 'python').
 project_file('tests/test_detection_layers.py', 88, 'python').
 project_file('tests/test_dsl_screenshot.py', 99, 'python').
 project_file('tests/test_i18n.py', 61, 'python').
+project_file('tests/test_lazy_extractors.py', 175, 'python').
 project_file('tests/test_offline_translate.py', 64, 'python').
 project_file('tests/test_screenshot_pipeline.py', 139, 'python').
 project_file('tests/test_special_layers.py', 154, 'python').
@@ -742,18 +764,23 @@ python_function('packages/uri2img2nl/src/uri2img2nl/uri.py', 'uri_for_capture_an
 python_function('packages/uri2img2nl/src/uri2img2nl/uri.py', 'uri_for_llm_hint', 1, 1, 1).
 python_function('packages/uri2img2nl/src/uri2img2nl/uri.py', '_bool_param', 2, 2, 3).
 python_function('packages/uri2img2nl/src/uri2img2nl/uri.py', 'parse_img2nl_uri', 1, 14, 9).
+python_function('src/img2nl/actions.py', 'build_click_action', 2, 2, 3).
+python_function('src/img2nl/actions.py', 'execute_click_action', 1, 5, 7).
+python_function('src/img2nl/actions.py', 'click_target', 2, 2, 2).
+python_function('src/img2nl/actions.py', 'click_from_result', 2, 4, 2).
 python_function('src/img2nl/analyze.py', '_require_pillow', 0, 2, 0).
 python_function('src/img2nl/analyze.py', '_open_image', 1, 1, 1).
 python_function('src/img2nl/analyze.py', '_assemble_result', 0, 2, 6).
-python_function('src/img2nl/analyze.py', 'analyze_image', 1, 4, 13).
+python_function('src/img2nl/analyze.py', 'analyze_image', 1, 7, 14).
 python_function('src/img2nl/api.py', 'analyze_from_cmd', 1, 1, 2).
 python_function('src/img2nl/api.py', 'targets_from_cmd', 1, 3, 4).
 python_function('src/img2nl/api.py', 'capture_from_cmd', 1, 3, 4).
-python_function('src/img2nl/api.py', 'capture_analyze_from_cmd', 1, 3, 6).
+python_function('src/img2nl/api.py', 'capture_analyze_from_cmd', 1, 6, 7).
+python_function('src/img2nl/api.py', 'click_target_from_cmd', 1, 4, 7).
 python_function('src/img2nl/api.py', 'llm_hint_from_path', 1, 2, 1).
 python_function('src/img2nl/api.py', 'text_from_path', 1, 3, 2).
 python_function('src/img2nl/capture.py', 'capture_screenshot', 1, 11, 7).
-python_function('src/img2nl/capture.py', 'capture_and_analyze', 1, 2, 5).
+python_function('src/img2nl/capture.py', 'capture_and_analyze', 1, 3, 6).
 python_function('src/img2nl/cli.py', '_add_analyze_parser', 1, 1, 3).
 python_function('src/img2nl/cli.py', '_add_capture_parser', 1, 1, 3).
 python_function('src/img2nl/cli.py', '_add_capture_analyze_parser', 1, 1, 3).
@@ -764,7 +791,7 @@ python_function('src/img2nl/cli_commands.py', '_target_list', 1, 4, 2).
 python_function('src/img2nl/cli_commands.py', '_profile_kwargs', 1, 1, 1).
 python_function('src/img2nl/cli_commands.py', 'cmd_analyze', 1, 7, 8).
 python_function('src/img2nl/cli_commands.py', 'cmd_capture', 1, 4, 4).
-python_function('src/img2nl/cli_commands.py', 'cmd_capture_analyze', 1, 6, 8).
+python_function('src/img2nl/cli_commands.py', 'cmd_capture_analyze', 1, 8, 8).
 python_function('src/img2nl/cli_commands.py', 'cmd_translate_install', 1, 8, 5).
 python_function('src/img2nl/context.py', 'default_targets', 1, 1, 2).
 python_function('src/img2nl/context.py', 'infer_source_type', 0, 11, 1).
@@ -783,7 +810,8 @@ python_function('src/img2nl/features/colors.py', 'analyze_colors', 1, 13, 13).
 python_function('src/img2nl/features/dynamics.py', 'analyze_dynamics', 1, 1, 4).
 python_function('src/img2nl/features/edges.py', '_unavailable', 1, 1, 0).
 python_function('src/img2nl/features/edges.py', 'analyze_edges', 1, 6, 16).
-python_function('src/img2nl/features/extractors.py', 'extract_base_features', 1, 2, 10).
+python_function('src/img2nl/features/extractors.py', '_run_layer', 3, 1, 7).
+python_function('src/img2nl/features/extractors.py', 'extract_base_features', 1, 12, 8).
 python_function('src/img2nl/features/extractors.py', 'apply_semantic_layer', 2, 1, 1).
 python_function('src/img2nl/features/fingerprint.py', '_unavailable', 1, 1, 0).
 python_function('src/img2nl/features/fingerprint.py', 'analyze_fingerprint', 1, 2, 6).
@@ -859,7 +887,9 @@ python_function('src/img2nl/plan.py', 'resolve_targets', 0, 6, 3).
 python_function('src/img2nl/plan.py', 'should_run_ui_detect', 0, 3, 0).
 python_function('src/img2nl/plan.py', 'should_run_semantic', 0, 5, 0).
 python_function('src/img2nl/plan.py', 'should_run_identify', 0, 2, 0).
-python_function('src/img2nl/plan.py', 'build_execution_plan', 0, 1, 6).
+python_function('src/img2nl/plan.py', 'resolve_base_layers', 0, 11, 4).
+python_function('src/img2nl/plan.py', 'should_run_special_hits', 0, 4, 1).
+python_function('src/img2nl/plan.py', 'build_execution_plan', 0, 1, 8).
 python_function('src/img2nl/profiles.py', 'list_profiles', 0, 1, 1).
 python_function('src/img2nl/profiles.py', 'get_profile', 1, 2, 6).
 python_function('src/img2nl/profiles.py', 'apply_profile', 1, 5, 2).
@@ -887,6 +917,12 @@ python_function('tests/test_i18n.py', 'test_normalize_locale', 2, 2, 2).
 python_function('tests/test_i18n.py', 'test_all_european_locales_have_full_catalog', 0, 5, 2).
 python_function('tests/test_i18n.py', 'test_translate_not_english_copy', 1, 2, 2).
 python_function('tests/test_i18n.py', 'test_describe_german', 0, 3, 1).
+python_function('tests/test_lazy_extractors.py', 'test_fast_ui_plan_skips_heavy_layers', 0, 3, 2).
+python_function('tests/test_lazy_extractors.py', 'test_document_plan_includes_text_layers', 0, 3, 1).
+python_function('tests/test_lazy_extractors.py', 'test_screenshot_with_text_target_adds_edges', 0, 3, 2).
+python_function('tests/test_lazy_extractors.py', 'test_fast_ui_skips_analyze_edges', 1, 2, 7).
+python_function('tests/test_lazy_extractors.py', 'test_click_target_dry_run', 0, 3, 4).
+python_function('tests/test_lazy_extractors.py', 'test_capture_and_analyze_click_dry_run', 1, 3, 7).
 python_function('tests/test_offline_translate.py', 'test_translate_summary_no_argos_returns_fallback', 0, 4, 2).
 python_function('tests/test_offline_translate.py', 'test_translate_summary_same_lang_noop', 0, 4, 1).
 python_function('tests/test_offline_translate.py', 'test_translate_summary_with_mock_argos', 0, 3, 4).
@@ -970,68 +1006,68 @@ sumd_workflow_step('clean', 1, 'rm -rf .pytest_cache **/__pycache__ dist build *
 
 ## Call Graph
 
-*136 nodes · 145 edges · 43 modules · CC̄=3.7*
+*144 nodes · 159 edges · 44 modules · CC̄=3.8*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
 | `analyze_patterns` *(in src.img2nl.features.patterns)* | 8 | 1 | 31 | **32** |
-| `analyze_objects` *(in src.img2nl.features.objects)* | 11 ⚠ | 1 | 26 | **27** |
+| `analyze_image` *(in src.img2nl.analyze)* | 7 | 7 | 21 | **28** |
+| `analyze_colors` *(in src.img2nl.features.colors)* | 13 ⚠ | 3 | 25 | **28** |
 | `t` *(in src.img2nl.i18n.translate)* | 5 | 19 | 8 | **27** |
-| `analyze_colors` *(in src.img2nl.features.colors)* | 13 ⚠ | 1 | 25 | **26** |
+| `analyze_objects` *(in src.img2nl.features.objects)* | 11 ⚠ | 1 | 26 | **27** |
 | `_describe_catalog` *(in src.img2nl.describe)* | 1 | 3 | 21 | **24** |
-| `analyze_image` *(in src.img2nl.analyze)* | 4 | 6 | 18 | **24** |
 | `analyze_edges` *(in src.img2nl.features.edges)* | 6 | 1 | 21 | **22** |
 | `capture_screenshot` *(in src.img2nl.capture)* | 11 ⚠ | 3 | 18 | **21** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/wronai/img2nl
-# generated in 0.06s
-# nodes: 136 | edges: 145 | modules: 43
-# CC̄=3.7
+# generated in 0.10s
+# nodes: 144 | edges: 159 | modules: 44
+# CC̄=3.8
 
 HUBS[20]:
   src.img2nl.features.patterns.analyze_patterns
     CC=8  in:1  out:31  total:32
-  src.img2nl.features.objects.analyze_objects
-    CC=11  in:1  out:26  total:27
+  src.img2nl.analyze.analyze_image
+    CC=7  in:7  out:21  total:28
+  src.img2nl.features.colors.analyze_colors
+    CC=13  in:3  out:25  total:28
   src.img2nl.i18n.translate.t
     CC=5  in:19  out:8  total:27
-  src.img2nl.features.colors.analyze_colors
-    CC=13  in:1  out:25  total:26
+  src.img2nl.features.objects.analyze_objects
+    CC=11  in:1  out:26  total:27
   src.img2nl.describe._describe_catalog
     CC=1  in:3  out:21  total:24
-  src.img2nl.analyze.analyze_image
-    CC=4  in:6  out:18  total:24
   src.img2nl.features.edges.analyze_edges
     CC=6  in:1  out:21  total:22
   src.img2nl.capture.capture_screenshot
     CC=11  in:3  out:18  total:21
-  packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri
-    CC=14  in:1  out:19  total:20
   src.img2nl.llm_gate.llm_transport_hint
     CC=3  in:1  out:19  total:20
+  packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri
+    CC=14  in:1  out:19  total:20
   src.img2nl.features.semantic.analyze_semantic
     CC=9  in:1  out:17  total:18
-  src.img2nl.features.targets.build_target_report
-    CC=8  in:1  out:16  total:17
+  src.img2nl.cli_commands.cmd_capture_analyze
+    CC=8  in:0  out:18  total:18
+  src.img2nl.api.capture_analyze_from_cmd
+    CC=6  in:0  out:17  total:17
   src.img2nl.features.identify_matchers.collect_ui
     CC=6  in:0  out:17  total:17
+  src.img2nl.features.targets.build_target_report
+    CC=8  in:1  out:16  total:17
+  src.img2nl.profiles.analyze_kwargs_from_cmd
+    CC=10  in:5  out:11  total:16
+  src.img2nl.cli._add_analyze_parser
+    CC=1  in:1  out:15  total:16
   src.img2nl.cli_commands.cmd_analyze
     CC=7  in:0  out:16  total:16
   src.img2nl.features.noise.analyze_noise
     CC=6  in:1  out:15  total:16
-  src.img2nl.cli._add_analyze_parser
-    CC=1  in:1  out:15  total:16
-  packages.dsl2img2nl.src.dsl2img2nl.cli.main
-    CC=8  in:0  out:15  total:15
-  src.img2nl.profiles.analyze_kwargs_from_cmd
-    CC=10  in:4  out:11  total:15
-  src.img2nl.i18n.offline.translate_summary_offline
-    CC=7  in:1  out:14  total:15
-  packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
-    CC=8  in:3  out:11  total:14
+  src.img2nl.cli._add_capture_analyze_parser
+    CC=1  in:1  out:14  total:15
 
 MODULES:
   packages.cli2img2nl.src.cli2img2nl.cli  [1 funcs]
@@ -1081,24 +1117,30 @@ MODULES:
     uri_for_analyze  CC=4  out:1
     uri_for_capture_analyze  CC=1  out:1
     uri_for_targets  CC=1  out:1
+  src.img2nl.actions  [4 funcs]
+    build_click_action  CC=2  out:5
+    click_from_result  CC=4  out:2
+    click_target  CC=2  out:2
+    execute_click_action  CC=5  out:9
   src.img2nl.analyze  [4 funcs]
     _assemble_result  CC=2  out:6
     _open_image  CC=1  out:1
     _require_pillow  CC=2  out:0
-    analyze_image  CC=4  out:18
-  src.img2nl.api  [6 funcs]
+    analyze_image  CC=7  out:21
+  src.img2nl.api  [7 funcs]
     analyze_from_cmd  CC=1  out:2
-    capture_analyze_from_cmd  CC=3  out:11
+    capture_analyze_from_cmd  CC=6  out:17
     capture_from_cmd  CC=3  out:7
+    click_target_from_cmd  CC=4  out:11
     llm_hint_from_path  CC=2  out:1
     targets_from_cmd  CC=3  out:5
     text_from_path  CC=3  out:2
   src.img2nl.capture  [2 funcs]
-    capture_and_analyze  CC=2  out:7
+    capture_and_analyze  CC=3  out:8
     capture_screenshot  CC=11  out:18
   src.img2nl.cli  [6 funcs]
     _add_analyze_parser  CC=1  out:15
-    _add_capture_analyze_parser  CC=1  out:12
+    _add_capture_analyze_parser  CC=1  out:14
     _add_capture_parser  CC=1  out:6
     _add_translate_install_parser  CC=1  out:6
     build_parser  CC=1  out:6
@@ -1108,7 +1150,7 @@ MODULES:
     _target_list  CC=4  out:3
     cmd_analyze  CC=7  out:16
     cmd_capture  CC=4  out:8
-    cmd_capture_analyze  CC=6  out:13
+    cmd_capture_analyze  CC=8  out:18
     cmd_translate_install  CC=8  out:8
   src.img2nl.context  [2 funcs]
     default_targets  CC=1  out:2
@@ -1128,9 +1170,10 @@ MODULES:
     analyze_dynamics  CC=1  out:5
   src.img2nl.features.edges  [1 funcs]
     analyze_edges  CC=6  out:21
-  src.img2nl.features.extractors  [2 funcs]
+  src.img2nl.features.extractors  [3 funcs]
+    _run_layer  CC=1  out:7
     apply_semantic_layer  CC=1  out:1
-    extract_base_features  CC=2  out:11
+    extract_base_features  CC=12  out:10
   src.img2nl.features.fingerprint  [2 funcs]
     _unavailable  CC=1  out:0
     analyze_fingerprint  CC=2  out:8
@@ -1200,11 +1243,13 @@ MODULES:
     t  CC=5  out:8
   src.img2nl.llm_gate  [1 funcs]
     llm_transport_hint  CC=3  out:19
-  src.img2nl.plan  [5 funcs]
-    build_execution_plan  CC=1  out:6
+  src.img2nl.plan  [7 funcs]
+    build_execution_plan  CC=1  out:8
+    resolve_base_layers  CC=11  out:8
     resolve_targets  CC=6  out:4
     should_run_identify  CC=2  out:0
     should_run_semantic  CC=5  out:0
+    should_run_special_hits  CC=4  out:1
     should_run_ui_detect  CC=3  out:0
   src.img2nl.profiles  [4 funcs]
     analyze_kwargs_from_cmd  CC=10  out:11
@@ -1221,6 +1266,13 @@ EDGES:
   packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch → packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line
   packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
   packages.dsl2img2nl.src.dsl2img2nl.cli.main → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze → packages.dsl2img2nl.src.dsl2img2nl.handlers._require_path
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_targets → packages.dsl2img2nl.src.dsl2img2nl.handlers._require_path
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_capture → packages.dsl2img2nl.src.dsl2img2nl.handlers._require_path
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_capture_analyze → packages.dsl2img2nl.src.dsl2img2nl.handlers._require_path
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query → packages.uri2img2nl.src.uri2img2nl.query.query_uri
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query → packages.uri2img2nl.src.uri2img2nl.uri.uri_for_analyze
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint → packages.dsl2img2nl.src.dsl2img2nl.handlers._require_path
   packages.dsl2img2nl.src.dsl2img2nl.grammar._try_kv_token → packages.dsl2img2nl.src.dsl2img2nl.grammar._normalize_token
   packages.dsl2img2nl.src.dsl2img2nl.grammar._try_kv_token → packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_kv
   packages.dsl2img2nl.src.dsl2img2nl.grammar._try_bool_flag → packages.dsl2img2nl.src.dsl2img2nl.grammar._normalize_token
@@ -1230,6 +1282,19 @@ EDGES:
   packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line → packages.dsl2img2nl.src.dsl2img2nl.grammar._finalize_cmd
   packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line → packages.dsl2img2nl.src.dsl2img2nl.grammar._normalize_token
   packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line → packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_token
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_capture_analyze → packages.uri2img2nl.src.uri2img2nl.query_handlers._missing_path
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_capture_analyze → packages.uri2img2nl.src.uri2img2nl.query_handlers.cmd_from_uri
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_capture_analyze → packages.uri2img2nl.src.uri2img2nl.query_handlers._analyze_failure
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_targets → packages.uri2img2nl.src.uri2img2nl.query_handlers._missing_path
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_targets → packages.uri2img2nl.src.uri2img2nl.query_handlers.cmd_from_uri
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_targets → packages.uri2img2nl.src.uri2img2nl.query_handlers._analyze_failure
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_analyze → packages.uri2img2nl.src.uri2img2nl.query_handlers._missing_path
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_analyze → packages.uri2img2nl.src.uri2img2nl.query_handlers.cmd_from_uri
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_analyze → packages.uri2img2nl.src.uri2img2nl.query_handlers._analyze_failure
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_llm_hint → packages.uri2img2nl.src.uri2img2nl.query_handlers._missing_path
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_llm_hint → packages.uri2img2nl.src.uri2img2nl.query_handlers._analyze_failure
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_text → packages.uri2img2nl.src.uri2img2nl.query_handlers._missing_path
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_text → packages.uri2img2nl.src.uri2img2nl.query_handlers._analyze_failure
   packages.uri2img2nl.src.uri2img2nl.cli.main → packages.uri2img2nl.src.uri2img2nl.query.query_uri
   packages.uri2img2nl.src.uri2img2nl.query.query_uri → packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri
   packages.uri2img2nl.src.uri2img2nl.uri.uri_for_analyze → packages.uri2img2nl.src.uri2img2nl.uri._encode_params
@@ -1241,30 +1306,10 @@ EDGES:
   src.img2nl.describe.describe_image → src.img2nl.i18n.locales.normalize_locale
   src.img2nl.describe.describe_image → src.img2nl.describe._describe_catalog
   src.img2nl.describe.describe_image → src.img2nl.i18n.offline.translate_summary_offline
-  src.img2nl.cli.build_parser → src.img2nl.cli._add_analyze_parser
-  src.img2nl.cli.build_parser → src.img2nl.cli._add_capture_parser
-  src.img2nl.cli.build_parser → src.img2nl.cli._add_capture_analyze_parser
-  src.img2nl.cli.build_parser → src.img2nl.cli._add_translate_install_parser
-  src.img2nl.cli.main → src.img2nl.cli.build_parser
-  src.img2nl.analyze._assemble_result → src.img2nl.describe.describe_image
-  src.img2nl.analyze._assemble_result → src.img2nl.llm_gate.llm_transport_hint
-  src.img2nl.analyze._assemble_result → src.img2nl.thumbnail.make_thumbnail
-  src.img2nl.analyze.analyze_image → src.img2nl.analyze._require_pillow
-  src.img2nl.analyze.analyze_image → src.img2nl.analyze._open_image
-  src.img2nl.analyze.analyze_image → src.img2nl.features.extractors.extract_base_features
-  src.img2nl.analyze.analyze_image → src.img2nl.plan.build_execution_plan
-  src.img2nl.analyze.analyze_image → src.img2nl.features.extractors.apply_semantic_layer
-  src.img2nl.analyze.analyze_image → src.img2nl.features.router.execute_target_plan
-  src.img2nl.plan.resolve_targets → src.img2nl.context.default_targets
-  src.img2nl.plan.build_execution_plan → src.img2nl.context.infer_source_type
-  src.img2nl.plan.build_execution_plan → src.img2nl.plan.resolve_targets
-  src.img2nl.plan.build_execution_plan → src.img2nl.plan.should_run_ui_detect
-  src.img2nl.plan.build_execution_plan → src.img2nl.plan.should_run_semantic
-  src.img2nl.plan.build_execution_plan → src.img2nl.plan.should_run_identify
-  src.img2nl.capture.capture_and_analyze → src.img2nl.capture.capture_screenshot
-  src.img2nl.capture.capture_and_analyze → src.img2nl.analyze.analyze_image
   src.img2nl.profiles.get_profile → src.img2nl.profiles.list_profiles
   src.img2nl.profiles.apply_profile → src.img2nl.profiles.get_profile
+  src.img2nl.profiles.analyze_kwargs_from_cmd → src.img2nl.profiles.get_profile
+  src.img2nl.features.ocr_text.analyze_ocr → src.img2nl.features.ocr_text._preview
 ```
 
 ## Test Contracts

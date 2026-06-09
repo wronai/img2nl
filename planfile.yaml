@@ -1031,3 +1031,29 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-5a03972c
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/actions.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/actions.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b6a4abf0
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_lazy_extractors.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_lazy_extractors.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
