@@ -8,6 +8,8 @@ Control-plane adapters (same pattern as `vql/packages/*`):
 | `dsl2img2nl` | `dsl2img2nl` | `ANALYZE`, `QUERY`, `LLM_HINT` |
 | `cli2img2nl` | `cli2img2nl` | Shell wrapper over DSL bus |
 
+Core `img2nl` exposes layered `analyze_image()` — see [../docs/detection-pipeline.md](../docs/detection-pipeline.md).
+
 Install all:
 
 ```bash

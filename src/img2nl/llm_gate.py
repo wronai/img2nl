@@ -13,6 +13,8 @@ def llm_transport_hint(features: dict[str, Any]) -> dict[str, Any]:
     patterns = features.get("patterns", {})
     edges = features.get("edges", {})
     scene = features.get("scene", {})
+    special = features.get("special_hits", {})
+    semantic = features.get("semantic_hits", {})
 
     reasons: list[str] = []
     score = 0.5
@@ -20,6 +22,9 @@ def llm_transport_hint(features: dict[str, Any]) -> dict[str, Any]:
     if scene.get("scene_class") == "empty_dark_screen":
         score -= 0.4
         reasons.append("empty_dark_screen")
+    if scene.get("scene_class") == "unchanged_screen":
+        score -= 0.25
+        reasons.append("unchanged_screen")
 
     if colors.get("is_monochrome") or colors.get("is_mostly_dark"):
         score -= 0.35
@@ -57,9 +62,21 @@ def llm_transport_hint(features: dict[str, Any]) -> dict[str, Any]:
     if edges.get("available") and edges.get("entropy", 0) > 5.0:
         score += 0.05
         reasons.append("high_entropy")
+    if special.get("has_text"):
+        score -= 0.1
+        reasons.append("ocr_text_available")
+    if special.get("has_qr"):
+        score -= 0.05
+        reasons.append("barcode_decoded")
+    if semantic.get("labels"):
+        score -= 0.05
+        reasons.append("semantic_labels_available")
 
     score = max(0.0, min(1.0, score))
-    send = score >= 0.45 and scene.get("scene_class") != "empty_dark_screen" and not (
+    send = score >= 0.45 and scene.get("scene_class") not in {
+        "empty_dark_screen",
+        "unchanged_screen",
+    } and not (
         colors.get("is_monochrome") and colors.get("is_mostly_dark") and noise.get("is_flat")
     )
 

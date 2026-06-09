@@ -6,6 +6,17 @@ from typing import Any
 
 
 def classify_scene(features: dict[str, Any]) -> dict[str, Any]:
+    similarity = features.get("similarity", {})
+    if similarity.get("match"):
+        return {
+            "scene_class": "unchanged_screen",
+            "labels": ["fingerprint_match"],
+        }
+
+    special = features.get("special_hits", {})
+    if special.get("has_qr"):
+        return {"scene_class": "barcode_present", "labels": ["qr_or_barcode"]}
+
     colors = features.get("colors", {})
     noise = features.get("noise", {})
     objects = features.get("objects", {})

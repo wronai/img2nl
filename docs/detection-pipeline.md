@@ -39,26 +39,31 @@ Extra: `pip install img2nl[similarity]`
 
 Fingerprint trzymaj w `.vql.json` / wyniku `analyze_image()` → query bez ponownej analizy.
 
-## Warstwa 3 — moduły specjalistyczne (planowane)
+## Warstwa 3 — moduły specjalistyczne
 
-Odpalane warunkowo:
+Odpalane warunkowo (`features.special_hits`):
 
-| Moduł | Paczka | Trigger |
-|-------|--------|---------|
-| QR/barcode | `pyzbar` | wysoki kontrast + prostokątne regiony |
-| OCR | `rapidocr-onnxruntime` lub `easyocr` | `text_likelihood` |
-| Twarze | `mediapipe` / OpenCV Haar | regiony skóropodobne |
+| Moduł | Plik | Paczka | Trigger |
+|-------|------|--------|---------|
+| QR/barcode | `barcodes.py` | `pyzbar` | nie `empty_dark_screen`; wysoki kontrast lub duże regiony |
+| OCR | `ocr_text.py` | `rapidocr-onnxruntime` | `text_likelihood` lub scena UI z tekstem |
 
 Extra: `pip install img2nl[scan]` / `[ocr]`.
 
-## Warstwa 4 — semantyka (planowane, premium)
+## Warstwa 4 — semantyka (opcjonalna)
 
-| Paczka | Kiedy |
-|--------|-------|
-| `ultralytics` | nazwy obiektów (person, laptop) gdy `llm_gate.send_to_llm` |
-| CLIP (transformers) | zero-shot tagi |
+| Moduł | Plik | Paczka | Trigger |
+|-------|------|--------|---------|
+| YOLO | `semantic.py` | `ultralytics` | tylko `analyze_image(..., enable_detect=True)` |
 
 Extra: `pip install img2nl[detect]`.
+
+## Podobieństwo ekranów (`similarity.py`)
+
+- `fingerprint_hamming(a, b)` — odległość pHash
+- `compare_fingerprints(current, reference)` — match gdy distance ≤ 5
+- `compare_images_ssim(im_a, im_b)` — drugi etap (scikit-image)
+- `analyze_image(..., reference_fingerprint=prev_fp)` → `features.similarity` + scena `unchanged_screen`
 
 ## Klasy sceny (`scene.py`)
 
@@ -99,8 +104,23 @@ Reguły bez ML — pole `features.scene.scene_class`:
     "scene_class": "empty_dark_screen",
     "labels": ["monochrome_or_dark", "flat_blank_like"]
   },
-  "special_hits": {},
-  "semantic_hits": {}
+  "special_hits": {
+    "barcodes": {"available": true, "has_codes": false, "count": 0},
+    "ocr": {"available": true, "skipped": true, "has_text": false},
+    "has_qr": false,
+    "has_text": false
+  },
+  "semantic_hits": {
+    "available": true,
+    "skipped": true,
+    "labels": [],
+    "object_count": 0
+  },
+  "similarity": {
+    "available": true,
+    "match": false,
+    "phash_distance": 12
+  }
 }
 ```
 
@@ -110,28 +130,57 @@ Reguły bez ML — pole `features.scene.scene_class`:
 pip install -e ".[analyze]"                    # Pillow + NumPy (core)
 pip install -e ".[analyze,opencv]"            # + edges
 pip install -e ".[analyze,similarity]"        # + fingerprint
-pip install -e ".[full]"                      # analyze + opencv + similarity (+ scan gdy dodane)
+pip install -e ".[full]"                      # analyze + opencv + similarity + scan
+pip install -e ".[ocr]"                       # + OCR warunkowy
+pip install -e ".[detect]"                    # + YOLO (enable_detect=True)
 ```
 
-## Integracja VQL / img2vql
+## API
 
-```mermaid
-flowchart TD
-    A[img2nl analyze] --> B{monochrome + dark + flat?}
-    B -->|tak| C[empty_dark_screen, skip LLM]
-    B -->|nie| D[edges + fingerprint]
-    D --> E{hash match?}
-    E -->|tak| F[unchanged_screen]
-    E -->|nie| G{text_likelihood?}
-    G -->|tak| H[OCR optional]
-    G -->|nie| I{send_to_llm?}
-    I -->|tak| J[YOLO optional]
-    H --> K[vql.json]
-    J --> K
-    I -->|nie| K
+```python
+from img2nl import analyze_image
+
+prev = analyze_image("screen.png")
+cur = analyze_image(
+    "screen2.png",
+    reference_fingerprint=prev.features["fingerprint"],
+    enable_detect=False,  # True → YOLO (ciężkie)
+)
 ```
 
-Przykład: ekran `#000000`, `object_count: 144` z siatki VQL → gałąź **C**, bez OCR/YOLO.
+### VQL cache (img2vql)
+
+Program `.vql.json` przechowuje w `metadata`:
+- `fingerprint`, `special_hits`, `scene_class`, `llm_hint`, `img2nl_text`
+
+`analyze_screenshot(..., skip_if_unchanged=True)` — gdy fingerprint match, pomija rebuild siatki i tylko odświeża metadata.
+
+```bash
+uri2vql analyze-window --image capture.png --out app.vql.json
+uri2vql query "vql://window/compare?file=app.vql.json&image=capture.png"
+uri2vql query "vql://window/refresh?file=app.vql.json&image=capture.png"
+uri2vql query "vql://window/diagnose?file=app.vql.json&image=capture.png&save=1"
+uri2vql query "vql://window/summary?file=app.vql.json"
+```
+
+CLI:
+
+```bash
+img2vql diagnose capture.png --vql-program app.vql.json --save
+uri2vql refresh-window --vql-program app.vql.json --image capture.png
+uri2vql compare-window --vql-program app.vql.json --image capture.png
+uri2vql diagnose-window --image capture.png --vql-program app.vql.json --save
+uri2vql resolve "odśwież metadata vql" --file app.vql.json --image capture.png
+```
+
+Demo: `oqlos/vql/examples/img2nl-vql-flow.sh capture.png app.vql.json`
+
+## Powiązane projekty
+
+| Repo | Pakiet | Rola |
+|------|--------|------|
+| `oqlos/vql` | `img2vql` | diagnose + metadata → `.vql.json` |
+| `oqlos/vql` | `uri2vql` | `window/compare`, `window/refresh`, CLI |
 
 ## Kolejność implementacji
 
@@ -139,11 +188,17 @@ Przykład: ekran `#000000`, `object_count: 144` z siatki VQL → gałąź **C**,
 2. [x] `edges.py`, `fingerprint.py`, `scene.py`
 3. [x] `analyze_image()` — lazy optional modules
 4. [x] `describe.py`, `llm_gate.py` — scene_class
-5. [ ] `pyzbar` / OCR (warstwa 3)
-6. [ ] `ultralytics` (warstwa 4)
-7. [ ] SSIM + nearest screen w VQL cache
+5. [x] `pyzbar` / OCR (warstwa 3)
+6. [x] `ultralytics` (warstwa 4, opt-in `enable_detect`)
+7. [x] SSIM + `reference_fingerprint` w analyze
+8. [x] integracja fingerprint cache w `img2vql`
+9. [x] `window/refresh`, diagnose `--save`, NLP2URI, demo script
 
-## CLI
+## Backlog
+
+Zobacz [TODO.md](../TODO.md) — m.in. `rest2vql`, auto-OCR w VQL, testy CI dla YOLO/OCR.
+
+## CLI (core)
 
 ```bash
 img2nl analyze photo.png --json

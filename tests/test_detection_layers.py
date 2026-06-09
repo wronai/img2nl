@@ -54,6 +54,8 @@ def test_optional_modules_graceful_without_extras(tmp_path: Path) -> None:
     assert "edges" in r.features
     assert "fingerprint" in r.features
     assert "scene" in r.features
+    assert "special_hits" in r.features
+    assert "semantic_hits" in r.features
     # Without opencv/imagehash installed, modules report unavailable.
     if not r.features["edges"].get("available"):
         assert "reason" in r.features["edges"]
