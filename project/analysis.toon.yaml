@@ -1,0 +1,107 @@
+# code2llm | 49f 4200L | python:38,toml:4,shell:3,json:2,yaml:1 | 2026-06-09
+# generated in 0.03s
+# CC̅=5.3 | critical:3/63 | dups:0 | cycles:0
+
+HEALTH[3]:
+  🟡 CC    classify_scene CC=18 (limit:15)
+  🟡 CC    _describe_catalog CC=17 (limit:15)
+  🟡 CC    llm_transport_hint CC=27 (limit:15)
+
+REFACTOR[1]:
+  1. split 3 high-CC methods  (CC>15)
+
+PIPELINES[11]:
+  [1] Src [main]: main → dispatch → split_command
+      PURITY: 100% pure
+  [2] Src [execute_dsl_line]: execute_dsl_line → dispatch → split_command
+      PURITY: 100% pure
+  [3] Src [main]: main → analyze_image → classify_scene
+      PURITY: 100% pure
+  [4] Src [compare_images_ssim]: compare_images_ssim
+      PURITY: 100% pure
+  [5] Src [_load_messages]: _load_messages
+      PURITY: 100% pure
+  [6] Src [supported_locales]: supported_locales
+      PURITY: 100% pure
+  [7] Src [is_european_locale]: is_european_locale → normalize_locale
+      PURITY: 100% pure
+  [8] Src [main]: main → query_uri → parse_img2nl_uri
+      PURITY: 100% pure
+  [9] Src [main]: main → dispatch → split_command
+      PURITY: 100% pure
+  [10] Src [is_img2nl_uri]: is_img2nl_uri
+      PURITY: 100% pure
+  [11] Src [uri_for_llm_hint]: uri_for_llm_hint
+      PURITY: 100% pure
+
+LAYERS:
+  src/                            CC̄=5.7    ←in:0  →out:0
+  │ !! messages.json             1122L  0C    0m  CC=0.0    ←0
+  │ offline                    189L  1C    8m  CC=11     ←2
+  │ !! describe                   132L  0C    2m  CC=17     ←1
+  │ objects                    103L  0C    2m  CC=14     ←1
+  │ analyze                     95L  0C    1m  CC=6      ←3
+  │ !! llm_gate                    88L  0C    1m  CC=27     ←1
+  │ cli                         85L  0C    1m  CC=14     ←0
+  │ semantic                    84L  0C    3m  CC=9      ←1
+  │ barcodes                    78L  0C    3m  CC=5      ←1
+  │ ocr_text                    73L  0C    3m  CC=7      ←1
+  │ similarity                  73L  0C    3m  CC=5      ←1
+  │ !! scene                       65L  0C    1m  CC=18     ←1
+  │ locales                     59L  0C    3m  CC=8      ←4
+  │ edges                       54L  0C    2m  CC=6      ←1
+  │ patterns                    53L  0C    1m  CC=8      ←1
+  │ colors                      51L  0C    2m  CC=13     ←1
+  │ result                      34L  1C    1m  CC=1      ←0
+  │ __init__                    31L  0C    0m  CC=0.0    ←0
+  │ fingerprint                 30L  0C    2m  CC=2      ←1
+  │ noise                       29L  0C    1m  CC=6      ←1
+  │ thumbnail                   29L  0C    1m  CC=4      ←1
+  │ dynamics                    28L  0C    1m  CC=1      ←1
+  │ __init__                    26L  0C    0m  CC=0.0    ←0
+  │ __init__                    25L  0C    0m  CC=0.0    ←0
+  │ special_hits                19L  0C    1m  CC=1      ←1
+  │ translate                   16L  0C    1m  CC=5      ←1
+  │ catalog                     16L  0C    1m  CC=2      ←0
+  │
+  packages/                       CC̄=4.4    ←in:0  →out:0
+  │ query                      106L  1C    2m  CC=9      ←2
+  │ handlers                    77L  0C    4m  CC=6      ←1
+  │ uri                         46L  1C    4m  CC=5      ←2
+  │ grammar                     45L  0C    2m  CC=14     ←1
+  │ cli                         33L  0C    1m  CC=8      ←0
+  │ cli                         32L  0C    1m  CC=6      ←0
+  │ bus                         29L  0C    2m  CC=8      ←2
+  │ cli                         28L  0C    1m  CC=4      ←0
+  │ result                      26L  1C    1m  CC=1      ←0
+  │ pyproject.toml              18L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              18L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              18L  0C    0m  CC=0.0    ←0
+  │ __init__                     6L  0C    0m  CC=0.0    ←0
+  │ __init__                     6L  0C    0m  CC=0.0    ←0
+  │
+  ./                              CC̄=0.0    ←in:0  →out:0
+  │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              82L  0C    0m  CC=0.0    ←0
+  │ project.sh                  59L  0C    0m  CC=0.0    ←0
+  │ Makefile                    21L  0C    0m  CC=0.0    ←0
+  │ install-dev.sh              11L  0C    0m  CC=0.0    ←0
+  │ tree.sh                      1L  0C    0m  CC=0.0    ←0
+  │
+  scripts/                        CC̄=0.0    ←in:0  →out:0
+  │ messages.extra.json        277L  0C    0m  CC=0.0    ←0
+  │ build_i18n_catalog          62L  0C    0m  CC=0.0    ←0
+  │
+
+COUPLING:
+                       packages.dsl2img2nl  packages.uri2img2nl           src.img2nl  packages.cli2img2nl
+  packages.dsl2img2nl                   ──                    2                    2                   ←1
+  packages.uri2img2nl                   ←2                   ──                    3                     
+           src.img2nl                   ←2                   ←3                   ──                       hub
+  packages.cli2img2nl                    1                                                             ──
+  CYCLES: none
+  HUB: src.img2nl/ (fan-in=5)
+
+EXTERNAL:
+  validation: run `vallm batch .` → validation.toon
+  duplication: run `redup scan .` → duplication.toon

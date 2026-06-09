@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<!-- generated in 0.00s -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>code2llm Analysis Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #334155;
+            --border: #475569;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --success: #22c55e;
+            --warning: #eab308;
+            --error: #ef4444;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #f8fafc;
+                --surface: #ffffff;
+                --surface-hover: #f1f5f9;
+                --border: #e2e8f0;
+                --text: #1e293b;
+                --text-muted: #64748b;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .search {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .search input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            color: var(--text);
+            font-size: 0.875rem;
+            outline: none;
+        }
+
+        .search input:focus {
+            border-color: var(--accent);
+        }
+
+        .search input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .file-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        .file-group {
+            margin-bottom: 1rem;
+        }
+
+        .file-group-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            padding: 0.5rem 0.75rem;
+            font-weight: 600;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.625rem 0.75rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            margin-bottom: 0.125rem;
+        }
+
+        .file-item:hover {
+            background: var(--surface-hover);
+        }
+
+        .file-item.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .file-item.active .file-meta {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .file-icon {
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .file-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-size {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        /* Content */
+        .content {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .content-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+        }
+
+        .content-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .content-title h2 {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .content-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.5rem 1rem;
+            background: var(--surface-hover);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--border);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .content-body {
+            flex: 1;
+            overflow: auto;
+            padding: 1.5rem;
+        }
+
+        /* Welcome */
+        .welcome {
+            max-width: 800px;
+        }
+
+        .welcome h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .welcome p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Content Display */
+        pre {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        code {
+            font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+        }
+
+        .markdown-content {
+            line-height: 1.7;
+        }
+
+        .markdown-content h1,
+        .markdown-content h2,
+        .markdown-content h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .markdown-content h1 {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .markdown-content p {
+            margin-bottom: 1rem;
+        }
+
+        .markdown-content code {
+            background: var(--surface);
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-size: 0.875em;
+        }
+
+        .markdown-content pre code {
+            background: transparent;
+            padding: 0;
+        }
+
+        .markdown-content ul,
+        .markdown-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .markdown-content li {
+            margin-bottom: 0.25rem;
+        }
+
+        .markdown-content blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
+            margin-left: 0;
+            color: var(--text-muted);
+        }
+
+        .markdown-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .markdown-content th,
+        .markdown-content td {
+            border: 1px solid var(--border);
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        .markdown-content th {
+            background: var(--surface);
+        }
+
+        .markdown-content img {
+            max-width: 100%;
+            border-radius: 0.5rem;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        /* Mermaid */
+        .mermaid-content {
+            background: var(--surface);
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+
+        .mermaid-content pre {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Image Preview */
+        .image-preview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            background: var(--surface);
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .sidebar.open {
+                display: flex;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 100;
+            }
+
+            .file-size {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="header">
+                <h1>🔍 code2llm</h1>
+                <p>Analysis Results Browser</p>
+            </div>
+            <div class="search">
+                <input type="text" id="search" placeholder="Search files..." oninput="filterFiles(this.value)">
+            </div>
+            <div class="file-list" id="fileList">
+                <!-- Files will be rendered here -->
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="content-header">
+                <div class="content-title">
+                    <span id="contentIcon">📁</span>
+                    <h2 id="contentTitle">Welcome</h2>
+                </div>
+                <div class="content-actions" id="contentActions">
+                    <!-- Actions will be rendered here -->
+                </div>
+            </div>
+            <div class="content-body" id="contentBody">
+                <div class="welcome">
+                    <h2>Analysis Results</h2>
+                    <p>Select a file from the sidebar to view its contents. This interface works on GitHub Pages without any server required.</p>  # noqa: E501
+                    <div class="stats-grid" id="statsGrid">
+                        <!-- Stats will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Initialize mermaid
+        mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+
+        const files = [{"name": "calls.png", "rel_path": "calls.png", "path": "calls.png", "size": "274.3KB", "icon": "🖼️", "type": "image", "type_name": "Image", "content": "[Binary file]", "is_subdir": false}, {"name": "compact_flow.png", "rel_path": "compact_flow.png", "path": "compact_flow.png", "size": "19.4KB", "icon": "🖼️", "type": "image", "type_name": "Image", "content": "[Binary file]", "is_subdir": false}, {"name": "flow.png", "rel_path": "flow.png", "path": "flow.png", "size": "19.6KB", "icon": "🖼️", "type": "image", "type_name": "Image", "content": "[Binary file]", "is_subdir": false}, {"name": "README.md", "rel_path": "README.md", "path": "README.md", "size": "9.4KB", "icon": "📝", "type": "markdown", "type_name": "Markdown", "content": "# code2llm - Generated Analysis Files\n<!-- generated in 0.01s -->\n\nThis directory contains the complete analysis of your project generated by `code2llm`. Each file serves a specific purpose for understanding, refactoring, and documenting your codebase.  # noqa: E501\n\n## 📁 Generated Files Overview\n\nWhen you run `code2llm ./ -f all`, the following files are created:\n\n### 🎯 Core Analysis Files\n\n| File | Format | Purpose | Key Insights |\n|------|--------|---------|--------------|\n| `evolution.toon.yaml` | **YAML** | **📋 Refactoring queue** - Prioritized improvements | 0 refactoring actions needed |\n| `map.toon.yaml` | **YAML** | **🗺️ Structural map + project header** - Modules, imports, exports, signatures, stats, alerts, hotspots, trend | Project architecture overview |\n\n### 🤖 LLM-Ready Documentation\n\n| File | Format | Purpose | Use Case |\n|------|--------|---------|----------|\n| `prompt.txt` | **Text** | **📝 Ready-to-send prompt** - Lists all files with instructions | Attach to LLM conversation as context guide |\n| `context.md` | **Markdown** | **📖 LLM narrative** - Architecture summary | Paste into ChatGPT/Claude for code analysis |\n\n### 📊 Visualizations\n\n| File | Format | Purpose | Description |\n|------|--------|---------|-------------|\n| `flow.mmd` | **Mermaid** | **🔄 Control flow diagram** | Function call paths with complexity styling |\n| `calls.mmd` | **Mermaid** | **📞 Call graph** | Function dependencies (edges only) |\n| `compact_flow.mmd` | **Mermaid** | **📦 Module overview** | Aggregated module-level view |\n\n## 🚀 Quick Start Commands\n\n### Basic Analysis\n```bash\n# Quick health check (TOON format only)\ncode2llm ./ -f toon\n\n# Generate all formats (what created these files)\ncode2llm ./ -f all\n\n# LLM-ready context only\ncode2llm ./ -f context\n```\n\n### Performance Options\n```bash\n# Fast analysis for large projects\ncode2llm ./ -f toon --strategy quick\n\n# Memory-limited analysis\ncode2llm ./ -f all --max-memory 500\n\n# Skip PNG generation (faster)\ncode2llm ./ -f all --no-png\n```\n\n### Refactoring Focus\n```bash\n# Get refactoring recommendations\ncode2llm ./ -f evolution\n\n# Focus on specific code smells\ncode2llm ./ -f toon --refactor --smell god_function\n\n# Data flow analysis\ncode2llm ./ -f flow --data-flow\n```\n\n## 📖 Understanding Each File\n\n### `analysis.toon` - Health Diagnostics\n**Purpose**: Quick overview of code health issues\n**Key sections**:\n- **HEALTH**: Critical issues (🔴) and warnings (🟡)\n- **REFACTOR**: Prioritized refactoring actions\n- **COUPLING**: Module dependencies and potential cycles\n- **LAYERS**: Package complexity metrics\n- **FUNCTIONS**: High-complexity functions (CC ≥ 10)\n- **CLASSES**: Complex classes needing attention\n\n**Example usage**:\n```bash\n# View health issues\ncat analysis.toon | head -30\n\n# Check refactoring priorities\ngrep \"REFACTOR\" analysis.toon\n```\n\n### `evolution.toon.yaml` - Refactoring Queue\n**Purpose**: Step-by-step refactoring plan\n**Key sections**:\n- **NEXT**: Immediate actions to take\n- **RISKS**: Potential breaking changes\n- **METRICS-TARGET**: Success criteria\n\n**Example usage**:\n```bash\n# Get refactoring plan\ncat evolution.toon.yaml\n\n# Track progress\ngrep \"NEXT\" evolution.toon.yaml\n```\n\n### `flow.toon` - Legacy Data Flow Analysis\n**Purpose**: Understand data movement through the system (legacy / explicit opt-in)\n**Key sections**:\n- **PIPELINES**: Data processing chains\n- **CONTRACTS**: Function input/output contracts\n- **SIDE_EFFECTS**: Functions with external impacts\n\n**Example usage**:\n```bash\n# Find data pipelines\ngrep \"PIPELINES\" flow.toon\n\n# Identify side effects\ngrep \"SIDE_EFFECTS\" flow.toon\n```\n\n### `map.toon.yaml` - Structural Map + Project Header\n**Purpose**: High-level architecture overview plus compact project header\n**Key sections**:\n- **MODULES**: All modules with basic stats\n- **IMPORTS**: Dependency relationships\n- **EXPORTS**: Public API surface and signatures\n- **HEADER**: Stats, alerts, hotspots, evolution trend\n\n**Example usage**:\n```bash\n# See project structure\ncat map.toon.yaml | head -50\n\n# Find public APIs\ngrep \"SIGNATURES\" map.toon.yaml\n```\n\n### `project.toon.yaml` - Compact Analysis View\n**Purpose**: Compact module view generated from project.yaml data\n**Status**: Legacy view generated on demand from unified project.yaml\n\n**Example usage**:\n```bash\n# View compact project structure\ncat project.toon.yaml | head -30\n\n# Find largest files\ngrep -E \"^  .*[0-9]{3,}$\" project.toon.yaml | sort -t',' -k2 -n -r | head -10\n```\n\n### `prompt.txt` - Ready-to-Send LLM Prompt\n**Purpose**: Pre-formatted prompt listing all generated files for LLM conversation\n**Generation**: Written when `code2llm` runs with a source path and requests `-f all` (including `--no-chunk`) or `code2logic`  # noqa: E501\n**Contents**:\n- **Files section**: Lists all existing generated files with descriptions, including `project.toon.yaml` when generated by `-f all`  # noqa: E501\n- **Source files section**: Highlights important source files such as `cli_exports/orchestrator.py`\n- **Missing section**: Shows which files weren't generated (if any)\n- **Task section**: Refactoring brief with concrete execution instructions, not just analysis\n- **Priority Order section**: State-dependent refactoring priorities, starting with blockers and then architecture cleanup  # noqa: E501\n- **Requirements section**: Guidelines for suggested changes\n\n**Example usage**:\n```bash\n# View the prompt\ncat prompt.txt\n\n# Copy to clipboard and paste into ChatGPT/Claude\ncat prompt.txt | pbcopy  # macOS\ncat prompt.txt | xclip -sel clip  # Linux\n```\n\n### `context.md` - LLM Narrative\n**Purpose**: Ready-to-paste context for AI assistants\n**Key sections**:\n- **Overview**: Project statistics\n- **Architecture**: Module breakdown\n- **Entry Points**: Public interfaces\n- **Patterns**: Design patterns detected\n\n**Example usage**:\n```bash\n# Copy to clipboard for LLM\ncat context.md | pbcopy  # macOS\ncat context.md | xclip -sel clip  # Linux\n\n# Use with Claude/ChatGPT for code analysis\n```\n\n### Visualization Files (`*.mmd`, `*.png`)\n**Purpose**: Visual understanding of code structure\n**Files**:\n- `flow.mmd` - Detailed control flow with complexity colors\n- `calls.mmd` - Simple call graph\n- `compact_flow.mmd` - High-level module view\n- `*.png` - Pre-rendered images\n\n**Example usage**:\n```bash\n# View diagrams\nopen flow.png  # macOS\nxdg-open flow.png  # Linux\n\n# Edit in Mermaid Live Editor\n# Copy content of .mmd files to https://mermaid.live\n```\n\n## 🔍 Common Analysis Patterns\n\n### 1. Code Health Assessment\n```bash\n# Quick health check\ncode2llm ./ -f toon\ncat analysis.toon | grep -E \"(HEALTH|REFACTOR)\"\n```\n\n### 2. Refactoring Planning\n```bash\n# Get refactoring queue\ncode2llm ./ -f evolution\ncat evolution.toon.yaml\n\n# Focus on specific issues\ncode2llm ./ -f toon --refactor --smell god_function\n```\n\n### 3. LLM Assistance\n```bash\n# Generate context for AI\ncode2llm ./ -f context\ncat context.md\n\n# Use with Claude: \"Based on this context, help me refactor the god modules\"\n```\n\n### 4. Team Documentation\n```bash\n# Generate all docs for team\ncode2llm ./ -f all -o ./docs/\n\n# Create visual diagrams\nopen docs/flow.png\n```\n\n## 📊 Interpreting Metrics\n\n### Complexity Metrics (CC)\n- **🔴 Critical (≥5.0)**: Immediate refactoring needed\n- **🟠 High (3.0-4.9)**: Consider refactoring\n- **🟡 Medium (1.5-2.9)**: Monitor complexity\n- **🟢 Low (0.1-1.4)**: Acceptable\n- **⚪ Basic (0.0)**: Simple functions\n\n### Module Health\n- **GOD Module**: Too large (>500 lines, >20 methods)\n- **HUB**: High fan-out (calls many modules)\n- **FAN-IN**: High incoming dependencies\n- **CYCLES**: Circular dependencies\n\n### Data Flow Indicators\n- **PIPELINE**: Sequential data processing\n- **CONTRACT**: Clear input/output specification\n- **SIDE_EFFECT**: External state modification\n\n## 🛠️ Integration Examples\n\n### CI/CD Pipeline\n```bash\n#!/bin/bash\n# Analyze code quality in CI\ncode2llm ./ -f toon -o ./analysis\nif grep -q \"🔴 GOD\" ./analysis/analysis.toon; then\n    echo \"❌ God modules detected\"\n    exit 1\nfi\n```\n\n### Pre-commit Hook\n```bash\n#!/bin/sh\n# .git/hooks/pre-commit\ncode2llm ./ -f toon -o ./temp_analysis\nif grep -q \"🔴\" ./temp_analysis/analysis.toon; then\n    echo \"⚠️  Critical issues found. Review before committing.\"\nfi\nrm -rf ./temp_analysis\n```\n\n### Documentation Generation\n```bash\n# Generate docs for README\ncode2llm ./ -f context -o ./docs/\necho \"## Architecture\" >> README.md\ncat docs/context.md >> README.md\n```\n\n## 📚 Next Steps\n\n1. **Review `analysis.toon`** - Identify critical issues\n2. **Check `evolution.toon.yaml`** - Plan refactoring priorities\n3. **Use `context.md`** - Get LLM assistance for complex changes\n4. **Reference visualizations** - Understand system architecture\n5. **Track progress** - Re-run analysis after changes\n\n## 🔧 Advanced Usage\n\n### Custom Analysis\n```bash\n# Deep analysis with all insights\ncode2llm ./ -m hybrid -f all --max-depth 15 -v\n\n# Performance-optimized\ncode2llm ./ -m static -f toon --strategy quick\n\n# Refactoring-focused\ncode2llm ./ -f toon,evolution --refactor\n```\n\n### Output Customization\n```bash\n# Separate output directories\ncode2llm ./ -f all -o ./analysis-$(date +%Y%m%d)\n\n# Split YAML into multiple files\ncode2llm ./ -f yaml --split-output\n\n# Separate orphaned functions\ncode2llm ./ -f yaml --separate-orphans\n```\n\n---\n\n**Generated by**: `code2llm ./ -f all --readme`  \n**Analysis Date**: 2026-06-09  \n**Total Functions**: 63  \n**Total Classes**: 5  \n**Modules**: 49  \n\nFor more information about code2llm, visit: https://github.com/tom-sapletta/code2llm\n", "is_subdir": false}, {"name": "context.md", "rel_path": "context.md", "path": "context.md", "size": "9.3KB", "icon": "📝", "type": "markdown", "type_name": "Markdown", "content": "# System Architecture Analysis\n<!-- generated in 0.00s -->\n\n## Overview\n\n- **Project**: /home/tom/github/wronai/img2nl\n- **Primary Language**: python\n- **Languages**: python: 38, toml: 4, shell: 3, json: 2, yaml: 1\n- **Analysis Mode**: static\n- **Total Functions**: 63\n- **Total Classes**: 5\n- **Modules**: 49\n- **Entry Points**: 15\n\n## Architecture by Module\n\n### src.img2nl.i18n.offline\n- **Functions**: 8\n- **Classes**: 1\n- **File**: `offline.py`\n\n### packages.dsl2img2nl.src.dsl2img2nl.handlers\n- **Functions**: 4\n- **File**: `handlers.py`\n\n### packages.uri2img2nl.src.uri2img2nl.uri\n- **Functions**: 4\n- **Classes**: 1\n- **File**: `uri.py`\n\n### src.img2nl.features.ocr_text\n- **Functions**: 3\n- **File**: `ocr_text.py`\n\n### src.img2nl.features.semantic\n- **Functions**: 3\n- **File**: `semantic.py`\n\n### src.img2nl.features.similarity\n- **Functions**: 3\n- **File**: `similarity.py`\n\n### src.img2nl.features.barcodes\n- **Functions**: 3\n- **File**: `barcodes.py`\n\n### src.img2nl.i18n.locales\n- **Functions**: 3\n- **File**: `locales.py`\n\n### packages.dsl2img2nl.src.dsl2img2nl.bus\n- **Functions**: 2\n- **File**: `bus.py`\n\n### src.img2nl.features.edges\n- **Functions**: 2\n- **File**: `edges.py`\n\n### src.img2nl.features.colors\n- **Functions**: 2\n- **File**: `colors.py`\n\n### src.img2nl.features.fingerprint\n- **Functions**: 2\n- **File**: `fingerprint.py`\n\n### src.img2nl.features.objects\n- **Functions**: 2\n- **File**: `objects.py`\n\n### packages.dsl2img2nl.src.dsl2img2nl.grammar\n- **Functions**: 2\n- **File**: `grammar.py`\n\n### src.img2nl.describe\n- **Functions**: 2\n- **File**: `describe.py`\n\n### packages.uri2img2nl.src.uri2img2nl.query\n- **Functions**: 2\n- **Classes**: 1\n- **File**: `query.py`\n\n### packages.dsl2img2nl.src.dsl2img2nl.cli\n- **Functions**: 1\n- **File**: `cli.py`\n\n### src.img2nl.features.dynamics\n- **Functions**: 1\n- **File**: `dynamics.py`\n\n### src.img2nl.cli\n- **Functions**: 1\n- **File**: `cli.py`\n\n### src.img2nl.features.scene\n- **Functions**: 1\n- **File**: `scene.py`\n\n## Key Entry Points\n\nMain execution flows into the system:\n\n### src.img2nl.cli.main\n- **Calls**: argparse.ArgumentParser, parser.add_subparsers, sub.add_parser, a.add_argument, a.add_argument, a.add_argument, a.add_argument, a.add_argument\n\n### packages.dsl2img2nl.src.dsl2img2nl.cli.main\n- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch, None.strip, None.strip\n\n### src.img2nl.features.similarity.compare_images_ssim\n- **Calls**: _gray, _gray, min, min, float, np.array, min, ssim\n\n### packages.cli2img2nl.src.cli2img2nl.cli.main\n- **Calls**: argparse.ArgumentParser, parser.add_subparsers, sub.add_parser, e.add_argument, e.add_argument, parser.parse_args, packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch, print\n\n### packages.uri2img2nl.src.uri2img2nl.cli.main\n- **Calls**: argparse.ArgumentParser, parser.add_subparsers, sub.add_parser, q.add_argument, parser.parse_args, packages.uri2img2nl.src.uri2img2nl.query.query_uri, print, json.dumps\n\n### src.img2nl.i18n.catalog._load_messages\n- **Calls**: json.loads, _CATALOG_PATH.read_text, data.items\n\n### packages.uri2img2nl.src.uri2img2nl.uri.is_img2nl_uri\n- **Calls**: None.scheme.lower, urlparse\n\n### packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line\n- **Calls**: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch\n\n### src.img2nl.i18n.locales.supported_locales\n- **Calls**: sorted\n\n### src.img2nl.i18n.locales.is_european_locale\n- **Calls**: src.img2nl.i18n.locales.normalize_locale\n\n### packages.uri2img2nl.src.uri2img2nl.uri.uri_for_llm_hint\n- **Calls**: urlencode\n\n### src.img2nl.result.Img2NlResult.to_dict\n\n### src.img2nl.i18n.offline.TranslateResult.to_dict\n\n### packages.dsl2img2nl.src.dsl2img2nl.result.DslResult.to_dict\n\n### packages.uri2img2nl.src.uri2img2nl.query.QueryResult.to_dict\n\n## Process Flows\n\nKey execution flows identified:\n\n### Flow 1: main\n```\nmain [src.img2nl.cli]\n```\n\n### Flow 2: compare_images_ssim\n```\ncompare_images_ssim [src.img2nl.features.similarity]\n```\n\n### Flow 3: _load_messages\n```\n_load_messages [src.img2nl.i18n.catalog]\n```\n\n### Flow 4: is_img2nl_uri\n```\nis_img2nl_uri [packages.uri2img2nl.src.uri2img2nl.uri]\n```\n\n### Flow 5: execute_dsl_line\n```\nexecute_dsl_line [packages.dsl2img2nl.src.dsl2img2nl.bus]\n  └─> dispatch\n      └─ →> split_command\n      └─ →> handle_from_tokens\n          └─> handle_analyze\n```\n\n### Flow 6: supported_locales\n```\nsupported_locales [src.img2nl.i18n.locales]\n```\n\n### Flow 7: is_european_locale\n```\nis_european_locale [src.img2nl.i18n.locales]\n  └─> normalize_locale\n```\n\n### Flow 8: uri_for_llm_hint\n```\nuri_for_llm_hint [packages.uri2img2nl.src.uri2img2nl.uri]\n```\n\n### Flow 9: to_dict\n```\nto_dict [src.img2nl.result.Img2NlResult]\n```\n\n## Key Classes\n\n### src.img2nl.result.Img2NlResult\n- **Methods**: 1\n- **Key Methods**: src.img2nl.result.Img2NlResult.to_dict\n\n### src.img2nl.i18n.offline.TranslateResult\n- **Methods**: 1\n- **Key Methods**: src.img2nl.i18n.offline.TranslateResult.to_dict\n\n### packages.uri2img2nl.src.uri2img2nl.uri.Img2NlUri\n- **Methods**: 1\n- **Key Methods**: packages.uri2img2nl.src.uri2img2nl.uri.Img2NlUri.target\n\n### packages.dsl2img2nl.src.dsl2img2nl.result.DslResult\n- **Methods**: 1\n- **Key Methods**: packages.dsl2img2nl.src.dsl2img2nl.result.DslResult.to_dict\n\n### packages.uri2img2nl.src.uri2img2nl.query.QueryResult\n- **Methods**: 1\n- **Key Methods**: packages.uri2img2nl.src.uri2img2nl.query.QueryResult.to_dict\n\n## Data Transformation Functions\n\nKey functions that process and transform data:\n\n### packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line\n- **Output to**: packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command, None.upper, len, tok.upper, tok.startswith\n\n### packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri\n- **Output to**: urlparse, parse_qs, Img2NlUri, ValueError, None.strip\n\n## Public API Surface\n\nFunctions exposed as public API (no underscore prefix):\n\n- `src.img2nl.llm_gate.llm_transport_hint` - 54 calls\n- `src.img2nl.cli.main` - 32 calls\n- `src.img2nl.features.patterns.analyze_patterns` - 31 calls\n- `src.img2nl.analyze.analyze_image` - 29 calls\n- `src.img2nl.features.scene.classify_scene` - 28 calls\n- `src.img2nl.features.objects.analyze_objects` - 26 calls\n- `src.img2nl.features.colors.analyze_colors` - 25 calls\n- `src.img2nl.features.edges.analyze_edges` - 21 calls\n- `src.img2nl.features.semantic.analyze_semantic` - 17 calls\n- `packages.uri2img2nl.src.uri2img2nl.query.query_uri` - 17 calls\n- `packages.dsl2img2nl.src.dsl2img2nl.cli.main` - 15 calls\n- `src.img2nl.features.noise.analyze_noise` - 15 calls\n- `src.img2nl.i18n.offline.translate_summary_offline` - 14 calls\n- `src.img2nl.features.ocr_text.analyze_ocr` - 12 calls\n- `src.img2nl.features.similarity.compare_images_ssim` - 12 calls\n- `src.img2nl.i18n.offline.ensure_language_pair` - 12 calls\n- `src.img2nl.thumbnail.make_thumbnail` - 12 calls\n- `packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch` - 11 calls\n- `packages.cli2img2nl.src.cli2img2nl.cli.main` - 11 calls\n- `packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line` - 10 calls\n- `src.img2nl.features.barcodes.analyze_barcodes` - 9 calls\n- `packages.uri2img2nl.src.uri2img2nl.cli.main` - 9 calls\n- `packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query` - 8 calls\n- `packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens` - 8 calls\n- `src.img2nl.features.fingerprint.analyze_fingerprint` - 8 calls\n- `src.img2nl.i18n.translate.t` - 8 calls\n- `packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze` - 7 calls\n- `packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri` - 7 calls\n- `packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint` - 6 calls\n- `src.img2nl.features.similarity.compare_fingerprints` - 6 calls\n- `src.img2nl.features.dynamics.analyze_dynamics` - 5 calls\n- `src.img2nl.describe.describe_image` - 5 calls\n- `src.img2nl.features.special_hits.analyze_special_hits` - 4 calls\n- `src.img2nl.i18n.locales.normalize_locale` - 4 calls\n- `src.img2nl.i18n.offline.list_installed_pairs` - 4 calls\n- `src.img2nl.i18n.offline.list_available_pairs` - 4 calls\n- `src.img2nl.features.similarity.fingerprint_hamming` - 2 calls\n- `packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command` - 2 calls\n- `packages.uri2img2nl.src.uri2img2nl.uri.is_img2nl_uri` - 2 calls\n- `packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line` - 1 calls\n\n## System Interactions\n\nHow components interact:\n\n```mermaid\ngraph TD\n    main --> ArgumentParser\n    main --> add_subparsers\n    main --> add_parser\n    main --> add_argument\n    main --> parse_args\n    compare_images_ssim --> _gray\n    compare_images_ssim --> min\n    compare_images_ssim --> float\n    _load_messages --> loads\n    _load_messages --> read_text\n    _load_messages --> items\n    is_img2nl_uri --> lower\n    is_img2nl_uri --> urlparse\n    execute_dsl_line --> dispatch\n    supported_locales --> sorted\n    is_european_locale --> normalize_locale\n    uri_for_llm_hint --> urlencode\n```\n\n## Reverse Engineering Guidelines\n\n1. **Entry Points**: Start analysis from the entry points listed above\n2. **Core Logic**: Focus on classes with many methods\n3. **Data Flow**: Follow data transformation functions\n4. **Process Flows**: Use the flow diagrams for execution paths\n5. **API Surface**: Public API functions reveal the interface\n\n## Context for LLM\n\nMaintain the identified architectural patterns and public API surface when suggesting changes.", "is_subdir": false}, {"name": "calls.mmd", "rel_path": "calls.mmd", "path": "calls.mmd", "size": "8.4KB", "icon": "📈", "type": "mermaid", "type_name": "Mermaid", "content": "flowchart LR\n%% generated in 0.01s\n    subgraph packages__cli2img2nl\n        packages__cli2img2nl__src__cli2img2nl__cli__main[&quot;main&quot;]\n    end\n    subgraph packages__dsl2img2nl\n        packages__dsl2img2nl__src__dsl2img2nl__cli__main[&quot;main&quot;]\n        packages__dsl2img2nl__src__dsl2img2nl__grammar__parse_line[&quot;parse_line&quot;]\n        packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch[&quot;dispatch&quot;]\n        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_analyze[&quot;handle_analyze&quot;]\n        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens[&quot;handle_from_tokens&quot;]\n        packages__dsl2img2nl__src__dsl2img2nl__bus__execute_dsl_line[&quot;execute_dsl_line&quot;]\n        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_llm_hint[&quot;handle_llm_hint&quot;]\n        packages__dsl2img2nl__src__dsl2img2nl__grammar__split_command[&quot;split_command&quot;]\n        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query[&quot;handle_query&quot;]\n    end\n    subgraph packages__uri2img2nl\n        packages__uri2img2nl__src__uri2img2nl__uri__uri_for_analyze[&quot;uri_for_analyze&quot;]\n        packages__uri2img2nl__src__uri2img2nl__uri__parse_img2nl_uri[&quot;parse_img2nl_uri&quot;]\n        packages__uri2img2nl__src__uri2img2nl__query__query_uri[&quot;query_uri&quot;]\n        packages__uri2img2nl__src__uri2img2nl__cli__main[&quot;main&quot;]\n    end\n    subgraph src__img2nl\n        src__img2nl__features__fingerprint__analyze_fingerprint[&quot;analyze_fingerprint&quot;]\n        src__img2nl__features__barcodes__analyze_barcodes[&quot;analyze_barcodes&quot;]\n        src__img2nl__features__semantic___get_model[&quot;_get_model&quot;]\n        src__img2nl__features__barcodes___suppress_zbar_stderr[&quot;_suppress_zbar_stderr&quot;]\n        src__img2nl__features__special_hits__analyze_special_hits[&quot;analyze_special_hits&quot;]\n        src__img2nl__features__semantic__analyze_semantic[&quot;analyze_semantic&quot;]\n        src__img2nl__i18n__translate__t[&quot;t&quot;]\n        src__img2nl__features__ocr_text___should_ocr[&quot;_should_ocr&quot;]\n        src__img2nl__features__similarity__fingerprint_hamming[&quot;fingerprint_hamming&quot;]\n        src__img2nl__features__fingerprint___unavailable[&quot;_unavailable&quot;]\n        src__img2nl__i18n__offline__translate_summary_offline[&quot;translate_summary_offline&quot;]\n        src__img2nl__i18n__offline__ensure_language_pair[&quot;ensure_language_pair&quot;]\n        src__img2nl__features__ocr_text__analyze_ocr[&quot;analyze_ocr&quot;]\n        src__img2nl__features__similarity__compare_fingerprints[&quot;compare_fingerprints&quot;]\n        src__img2nl__describe__describe_image[&quot;describe_image&quot;]\n        src__img2nl__llm_gate__llm_transport_hint[&quot;llm_transport_hint&quot;]\n        src__img2nl__i18n__offline__list_available_pairs[&quot;list_available_pairs&quot;]\n        src__img2nl__i18n__locales__is_european_locale[&quot;is_european_locale&quot;]\n        src__img2nl__features__barcodes___should_scan[&quot;_should_scan&quot;]\n        src__img2nl__i18n__offline__argostranslate_available[&quot;argostranslate_available&quot;]\n        src__img2nl__features__scene__classify_scene[&quot;classify_scene&quot;]\n        src__img2nl__describe___describe_catalog[&quot;_describe_catalog&quot;]\n        src__img2nl__i18n__offline___update_index[&quot;_update_index&quot;]\n        src__img2nl__features__ocr_text___preview[&quot;_preview&quot;]\n        src__img2nl__i18n__locales__normalize_locale[&quot;normalize_locale&quot;]\n        src__img2nl__i18n__offline___require_argos[&quot;_require_argos&quot;]\n        src__img2nl__analyze__analyze_image[&quot;analyze_image&quot;]\n        src__img2nl__i18n__offline__list_installed_pairs[&quot;list_installed_pairs&quot;]\n        src__img2nl__features__semantic___should_detect[&quot;_should_detect&quot;]\n    end\n    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_analyze --&gt; src__img2nl__analyze__analyze_image\n    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query --&gt; packages__uri2img2nl__src__uri2img2nl__query__query_uri\n    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query --&gt; packages__uri2img2nl__src__uri2img2nl__uri__uri_for_analyze\n    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_llm_hint --&gt; src__img2nl__analyze__analyze_image\n    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens --&gt; packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_analyze\n    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens --&gt; packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query\n    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens --&gt; packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_llm_hint\n    packages__dsl2img2nl__src__dsl2img2nl__cli__main --&gt; packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch\n    packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch --&gt; packages__dsl2img2nl__src__dsl2img2nl__grammar__split_command\n    packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch --&gt; packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens\n    packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch --&gt; packages__dsl2img2nl__src__dsl2img2nl__grammar__parse_line\n    packages__dsl2img2nl__src__dsl2img2nl__bus__execute_dsl_line --&gt; packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch\n    src__img2nl__features__ocr_text__analyze_ocr --&gt; src__img2nl__features__ocr_text___preview\n    src__img2nl__features__ocr_text__analyze_ocr --&gt; src__img2nl__features__ocr_text___should_ocr\n    src__img2nl__features__semantic__analyze_semantic --&gt; src__img2nl__features__semantic___get_model\n    src__img2nl__features__semantic__analyze_semantic --&gt; src__img2nl__features__semantic___should_detect\n    src__img2nl__features__fingerprint__analyze_fingerprint --&gt; src__img2nl__features__fingerprint___unavailable\n    src__img2nl__features__similarity__compare_fingerprints --&gt; src__img2nl__features__similarity__fingerprint_hamming\n    src__img2nl__features__special_hits__analyze_special_hits --&gt; src__img2nl__features__barcodes__analyze_barcodes\n    src__img2nl__features__special_hits__analyze_special_hits --&gt; src__img2nl__features__ocr_text__analyze_ocr\n    src__img2nl__i18n__translate__t --&gt; src__img2nl__i18n__locales__normalize_locale\n    src__img2nl__features__barcodes__analyze_barcodes --&gt; src__img2nl__features__barcodes___suppress_zbar_stderr\n    src__img2nl__features__barcodes__analyze_barcodes --&gt; src__img2nl__features__barcodes___should_scan\n    src__img2nl__i18n__locales__is_european_locale --&gt; src__img2nl__i18n__locales__normalize_locale\n    src__img2nl__analyze__analyze_image --&gt; src__img2nl__features__scene__classify_scene\n    src__img2nl__analyze__analyze_image --&gt; src__img2nl__features__special_hits__analyze_special_hits\n    src__img2nl__analyze__analyze_image --&gt; src__img2nl__i18n__locales__normalize_locale\n    src__img2nl__analyze__analyze_image --&gt; src__img2nl__describe__describe_image\n    src__img2nl__analyze__analyze_image --&gt; src__img2nl__llm_gate__llm_transport_hint\n    packages__uri2img2nl__src__uri2img2nl__cli__main --&gt; packages__uri2img2nl__src__uri2img2nl__query__query_uri\n    src__img2nl__i18n__offline__list_installed_pairs --&gt; src__img2nl__i18n__offline___require_argos\n    src__img2nl__i18n__offline__list_installed_pairs --&gt; src__img2nl__i18n__offline__argostranslate_available\n    src__img2nl__i18n__offline__list_available_pairs --&gt; src__img2nl__i18n__offline___require_argos\n    src__img2nl__i18n__offline__list_available_pairs --&gt; src__img2nl__i18n__offline___update_index\n    src__img2nl__i18n__offline__ensure_language_pair --&gt; src__img2nl__i18n__locales__normalize_locale\n    src__img2nl__i18n__offline__ensure_language_pair --&gt; src__img2nl__i18n__offline___require_argos\n    src__img2nl__i18n__offline__ensure_language_pair --&gt; src__img2nl__i18n__offline___update_index\n    src__img2nl__i18n__offline__translate_summary_offline --&gt; src__img2nl__i18n__locales__normalize_locale\n    src__img2nl__i18n__offline__translate_summary_offline --&gt; src__img2nl__i18n__offline___require_argos\n    src__img2nl__i18n__offline__translate_summary_offline --&gt; src__img2nl__i18n__offline__argostranslate_available\n    packages__dsl2img2nl__src__dsl2img2nl__grammar__parse_line --&gt; packages__dsl2img2nl__src__dsl2img2nl__grammar__split_command\n    packages__cli2img2nl__src__cli2img2nl__cli__main --&gt; packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch\n    src__img2nl__describe__describe_image --&gt; src__img2nl__i18n__locales__normalize_locale\n    src__img2nl__describe__describe_image --&gt; src__img2nl__describe___describe_catalog\n    src__img2nl__describe__describe_image --&gt; src__img2nl__i18n__offline__translate_summary_offline\n    packages__uri2img2nl__src__uri2img2nl__query__query_uri --&gt; packages__uri2img2nl__src__uri2img2nl__uri__parse_img2nl_uri\n    packages__uri2img2nl__src__uri2img2nl__query__query_uri --&gt; src__img2nl__analyze__analyze_image\n", "is_subdir": false}, {"name": "compact_flow.mmd", "rel_path": "compact_flow.mmd", "path": "compact_flow.mmd", "size": "453B", "icon": "📈", "type": "mermaid", "type_name": "Mermaid", "content": "flowchart TD\n%% generated in 0.01s\n    packages__cli2img2nl[&quot;packages.cli2img2nl&lt;br/&gt;1 funcs&quot;]\n    packages__dsl2img2nl[&quot;packages.dsl2img2nl&lt;br/&gt;10 funcs&quot;]\n    packages__uri2img2nl[&quot;packages.uri2img2nl&lt;br/&gt;7 funcs&quot;]\n    src__img2nl[&quot;src.img2nl&lt;br/&gt;45 funcs&quot;]\n    packages__uri2img2nl --&gt;|3| src__img2nl\n    packages__dsl2img2nl --&gt;|2| src__img2nl\n    packages__dsl2img2nl --&gt;|2| packages__uri2img2nl\n    packages__cli2img2nl --&gt;|1| packages__dsl2img2nl\n", "is_subdir": false}, {"name": "flow.mmd", "rel_path": "flow.mmd", "path": "flow.mmd", "size": "1.8KB", "icon": "📈", "type": "mermaid", "type_name": "Mermaid", "content": "flowchart TD\n%% generated in 0.01s\n\n    %% Entry points (blue)\n    classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff\n\n    subgraph CLI\n        packages__cli2img2nl__src__cli2img2nl__cli__main[&quot;main&quot;]\n    end\n\n    subgraph Core\n        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query[&quot;handle_query&quot;]\n        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens[&quot;handle_from_tokens&quot;]\n        packages__dsl2img2nl__src__dsl2img2nl__cli__main[&quot;main&quot;]\n        packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch(&quot;dispatch CC=8&quot;)\n        packages__dsl2img2nl__src__dsl2img2nl__bus__execute_dsl_line[&quot;execute_dsl_line&quot;]\n        src__img2nl__cli__main[&quot;main&quot;]\n        src__img2nl__features__scene__classify_scene{{classify_scene CC=18}}\n        src__img2nl__result__Img2NlResult__to_dict[&quot;to_dict&quot;]\n        src__img2nl__features__similarity__compare_images_ssim[&quot;compare_images_ssim&quot;]\n        src__img2nl__i18n__translate__t[&quot;t&quot;]\n        src__img2nl__i18n__catalog___load_messages[&quot;_load_messages&quot;]\n        src__img2nl__i18n__locales__normalize_locale(&quot;normalize_locale CC=8&quot;)\n        src__img2nl__i18n__locales__supported_locales[&quot;supported_locales&quot;]\n        src__img2nl__i18n__locales__is_european_locale[&quot;is_european_locale&quot;]\n        src__img2nl__analyze__analyze_image[&quot;analyze_image&quot;]\n        ...[&quot;+10 more&quot;]\n    end\n\n    class packages__dsl2img2nl__src__dsl2img2nl__cli__main,packages__dsl2img2nl__src__dsl2img2nl__bus__execute_dsl_line,src__img2nl__cli__main,src__img2nl__result__Img2NlResult__to_dict,src__img2nl__features__similarity__compare_images_ssim,src__img2nl__i18n__catalog___load_messages,src__img2nl__i18n__locales__supported_locales,src__img2nl__i18n__locales__is_european_locale,packages__uri2img2nl__src__uri2img2nl__cli__main,src__img2nl__i18n__offline__TranslateResult__to_dict entry\n", "is_subdir": false}, {"name": "prompt.txt", "rel_path": "prompt.txt", "path": "prompt.txt", "size": "2.9KB", "icon": "📄", "type": "text", "type_name": "Text", "content": "You are an AI assistant helping me understand and improve a codebase.\n# generated in 0.00s\nUse the attached/generated files as the authoritative context.\nYour goal is to refactor the project based on these files, not just summarize it.\n\nwe are in project path: img2nl\n\nFiles for analysis:\n\nNote: project/validation.toon.yaml and project/duplication.toon.yaml are generated by external tools (vallm and redup)\n- analysis.toon.yaml  (Health diagnostics - complexity metrics, god modules, coupling issues, refactoring priorities) [5KB]\n- map.toon.yaml  (Structural map - files, sizes, imports, exports, signatures, project header) [6KB]\n- evolution.toon.yaml  (Refactoring queue - ranked actions by impact/effort, risks, metrics targets, history) [2KB]\n- project.toon.yaml  (Compact project overview - generated from project.yaml data) [2KB]\n- context.md  (LLM narrative - architecture summary and project context) [9KB]\n\nMissing files (not generated in this run):\n- README.md\n\nTask:\n- Treat this prompt as a refactoring brief: identify the highest-priority changes and prepare concrete edits.\n- Use the file set to decide whether the first pass should focus on correctness, duplication, complexity reduction, or architecture cleanup.\n- If you can safely implement the refactor, do it; otherwise give an exact file-by-file change plan and test plan.\n- Use analysis.toon.yaml to locate high-CC functions and god modules that should be split first.\n- Keep module boundaries intact and update imports/exports according to map.toon.yaml.\n- Use evolution.toon.yaml as the execution backlog and work from the top-ranked items.\n- Keep project.toon.yaml aligned with the refactored architecture.\n\nPriority Order:\nP1 — Split or simplify the highest-CC / god modules identified in analysis.toon.yaml.\nP1 — Preserve module boundaries and update imports/exports according to map.toon.yaml.\nP2 — Keep the compact project overview in project.toon.yaml aligned with the refactor.\nP2 — Execute the highest-impact items from evolution.toon.yaml in order of benefit/risk.\n\nFocus Areas for Analysis:\n1. **Code Health Analysis** - Review complexity metrics, god modules, coupling issues from analysis.toon.yaml\n2. **Structural Map** - Use map.toon.yaml to inspect imports, exports, signatures, and the project header\n3. **Refactoring Priorities** - Examine ranked refactoring actions and risk assessment from evolution.toon.yaml\n4. **Project Overview** - Review the compact project overview from project.toon.yaml\n\nAnalysis Strategy:\n- Start with analysis.toon.yaml for health metrics, then map.toon.yaml for structure and signatures\n- Review evolution.toon.yaml for action priorities and next steps\n- Compare the compact project overview in project.toon.yaml with the main analysis files\n\nConstraints:\n- Prefer minimal, incremental changes.\n- Maintain full backward compatibility.\n- Base recommendations on concrete metrics from the provided files.\n- If uncertain, ask clarifying questions.\n", "is_subdir": false}, {"name": "mermaid.export", "rel_path": "mermaid.export", "path": "mermaid.export", "size": "11.2KB", "icon": "📄", "type": "unknown", "type_name": "EXPORT", "content": "[Binary file]", "is_subdir": false}, {"name": "analysis.toon.yaml", "rel_path": "analysis.toon.yaml", "path": "analysis.toon.yaml", "size": "5.3KB", "icon": "⚙️", "type": "yaml", "type_name": "YAML", "content": "# code2llm | 49f 4200L | python:38,toml:4,shell:3,json:2,yaml:1 | 2026-06-09\n# generated in 0.03s\n# CC̅=5.3 | critical:3/63 | dups:0 | cycles:0\n\nHEALTH[3]:\n  🟡 CC    classify_scene CC=18 (limit:15)\n  🟡 CC    _describe_catalog CC=17 (limit:15)\n  🟡 CC    llm_transport_hint CC=27 (limit:15)\n\nREFACTOR[1]:\n  1. split 3 high-CC methods  (CC&gt;15)\n\nPIPELINES[11]:\n  [1] Src [main]: main → dispatch → split_command\n      PURITY: 100% pure\n  [2] Src [execute_dsl_line]: execute_dsl_line → dispatch → split_command\n      PURITY: 100% pure\n  [3] Src [main]: main → analyze_image → classify_scene\n      PURITY: 100% pure\n  [4] Src [compare_images_ssim]: compare_images_ssim\n      PURITY: 100% pure\n  [5] Src [_load_messages]: _load_messages\n      PURITY: 100% pure\n  [6] Src [supported_locales]: supported_locales\n      PURITY: 100% pure\n  [7] Src [is_european_locale]: is_european_locale → normalize_locale\n      PURITY: 100% pure\n  [8] Src [main]: main → query_uri → parse_img2nl_uri\n      PURITY: 100% pure\n  [9] Src [main]: main → dispatch → split_command\n      PURITY: 100% pure\n  [10] Src [is_img2nl_uri]: is_img2nl_uri\n      PURITY: 100% pure\n  [11] Src [uri_for_llm_hint]: uri_for_llm_hint\n      PURITY: 100% pure\n\nLAYERS:\n  src/                            CC̄=5.7    ←in:0  →out:0\n  │ !! messages.json             1122L  0C    0m  CC=0.0    ←0\n  │ offline                    189L  1C    8m  CC=11     ←2\n  │ !! describe                   132L  0C    2m  CC=17     ←1\n  │ objects                    103L  0C    2m  CC=14     ←1\n  │ analyze                     95L  0C    1m  CC=6      ←3\n  │ !! llm_gate                    88L  0C    1m  CC=27     ←1\n  │ cli                         85L  0C    1m  CC=14     ←0\n  │ semantic                    84L  0C    3m  CC=9      ←1\n  │ barcodes                    78L  0C    3m  CC=5      ←1\n  │ ocr_text                    73L  0C    3m  CC=7      ←1\n  │ similarity                  73L  0C    3m  CC=5      ←1\n  │ !! scene                       65L  0C    1m  CC=18     ←1\n  │ locales                     59L  0C    3m  CC=8      ←4\n  │ edges                       54L  0C    2m  CC=6      ←1\n  │ patterns                    53L  0C    1m  CC=8      ←1\n  │ colors                      51L  0C    2m  CC=13     ←1\n  │ result                      34L  1C    1m  CC=1      ←0\n  │ __init__                    31L  0C    0m  CC=0.0    ←0\n  │ fingerprint                 30L  0C    2m  CC=2      ←1\n  │ noise                       29L  0C    1m  CC=6      ←1\n  │ thumbnail                   29L  0C    1m  CC=4      ←1\n  │ dynamics                    28L  0C    1m  CC=1      ←1\n  │ __init__                    26L  0C    0m  CC=0.0    ←0\n  │ __init__                    25L  0C    0m  CC=0.0    ←0\n  │ special_hits                19L  0C    1m  CC=1      ←1\n  │ translate                   16L  0C    1m  CC=5      ←1\n  │ catalog                     16L  0C    1m  CC=2      ←0\n  │\n  packages/                       CC̄=4.4    ←in:0  →out:0\n  │ query                      106L  1C    2m  CC=9      ←2\n  │ handlers                    77L  0C    4m  CC=6      ←1\n  │ uri                         46L  1C    4m  CC=5      ←2\n  │ grammar                     45L  0C    2m  CC=14     ←1\n  │ cli                         33L  0C    1m  CC=8      ←0\n  │ cli                         32L  0C    1m  CC=6      ←0\n  │ bus                         29L  0C    2m  CC=8      ←2\n  │ cli                         28L  0C    1m  CC=4      ←0\n  │ result                      26L  1C    1m  CC=1      ←0\n  │ pyproject.toml              18L  0C    0m  CC=0.0    ←0\n  │ pyproject.toml              18L  0C    0m  CC=0.0    ←0\n  │ pyproject.toml              18L  0C    0m  CC=0.0    ←0\n  │ __init__                     6L  0C    0m  CC=0.0    ←0\n  │ __init__                     6L  0C    0m  CC=0.0    ←0\n  │\n  ./                              CC̄=0.0    ←in:0  →out:0\n  │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0\n  │ pyproject.toml              82L  0C    0m  CC=0.0    ←0\n  │ project.sh                  59L  0C    0m  CC=0.0    ←0\n  │ Makefile                    21L  0C    0m  CC=0.0    ←0\n  │ install-dev.sh              11L  0C    0m  CC=0.0    ←0\n  │ tree.sh                      1L  0C    0m  CC=0.0    ←0\n  │\n  scripts/                        CC̄=0.0    ←in:0  →out:0\n  │ messages.extra.json        277L  0C    0m  CC=0.0    ←0\n  │ build_i18n_catalog          62L  0C    0m  CC=0.0    ←0\n  │\n\nCOUPLING:\n                       packages.dsl2img2nl  packages.uri2img2nl           src.img2nl  packages.cli2img2nl\n  packages.dsl2img2nl                   ──                    2                    2                   ←1\n  packages.uri2img2nl                   ←2                   ──                    3                     \n           src.img2nl                   ←2                   ←3                   ──                       hub\n  packages.cli2img2nl                    1                                                             ──\n  CYCLES: none\n  HUB: src.img2nl/ (fan-in=5)\n\nEXTERNAL:\n  validation: run `vallm batch .` → validation.toon\n  duplication: run `redup scan .` → duplication.toon\n", "is_subdir": false}, {"name": "calls.toon.yaml", "rel_path": "calls.toon.yaml", "path": "calls.toon.yaml", "size": "8.5KB", "icon": "⚙️", "type": "yaml", "type_name": "YAML", "content": "# code2llm call graph | /home/tom/github/wronai/img2nl\n# generated in 0.07s\n# nodes: 43 | edges: 47 | modules: 21\n# CC̄=5.3\n\nHUBS[20]:\n  src.img2nl.describe._describe_catalog\n    CC=17  in:3  out:72  total:75\n  src.img2nl.llm_gate.llm_transport_hint\n    CC=27  in:1  out:54  total:55\n  src.img2nl.analyze.analyze_image\n    CC=6  in:6  out:29  total:35\n  src.img2nl.features.scene.classify_scene\n    CC=18  in:2  out:28  total:30\n  src.img2nl.i18n.translate.t\n    CC=5  in:19  out:8  total:27\n  packages.uri2img2nl.src.uri2img2nl.query.query_uri\n    CC=9  in:2  out:17  total:19\n  src.img2nl.features.semantic.analyze_semantic\n    CC=9  in:1  out:17  total:18\n  packages.dsl2img2nl.src.dsl2img2nl.cli.main\n    CC=8  in:0  out:15  total:15\n  src.img2nl.i18n.offline.translate_summary_offline\n    CC=7  in:1  out:14  total:15\n  packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch\n    CC=8  in:3  out:11  total:14\n  src.img2nl.i18n.offline.ensure_language_pair\n    CC=11  in:2  out:12  total:14\n  src.img2nl.features.ocr_text.analyze_ocr\n    CC=7  in:1  out:12  total:13\n  src.img2nl.i18n.locales.normalize_locale\n    CC=8  in:8  out:4  total:12\n  packages.cli2img2nl.src.cli2img2nl.cli.main\n    CC=6  in:0  out:11  total:11\n  packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line\n    CC=14  in:1  out:10  total:11\n  src.img2nl.features.barcodes.analyze_barcodes\n    CC=5  in:1  out:9  total:10\n  src.img2nl.features.fingerprint.analyze_fingerprint\n    CC=2  in:1  out:8  total:9\n  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens\n    CC=4  in:1  out:8  total:9\n  packages.uri2img2nl.src.uri2img2nl.cli.main\n    CC=4  in:0  out:9  total:9\n  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query\n    CC=6  in:1  out:8  total:9\n\nMODULES:\n  packages.cli2img2nl.src.cli2img2nl.cli  [1 funcs]\n    main  CC=6  out:11\n  packages.dsl2img2nl.src.dsl2img2nl.bus  [2 funcs]\n    dispatch  CC=8  out:11\n    execute_dsl_line  CC=1  out:1\n  packages.dsl2img2nl.src.dsl2img2nl.cli  [1 funcs]\n    main  CC=8  out:15\n  packages.dsl2img2nl.src.dsl2img2nl.grammar  [2 funcs]\n    parse_line  CC=14  out:10\n    split_command  CC=1  out:2\n  packages.dsl2img2nl.src.dsl2img2nl.handlers  [4 funcs]\n    handle_analyze  CC=4  out:7\n    handle_from_tokens  CC=4  out:8\n    handle_llm_hint  CC=4  out:6\n    handle_query  CC=6  out:8\n  packages.uri2img2nl.src.uri2img2nl.cli  [1 funcs]\n    main  CC=4  out:9\n  packages.uri2img2nl.src.uri2img2nl.query  [1 funcs]\n    query_uri  CC=9  out:17\n  packages.uri2img2nl.src.uri2img2nl.uri  [2 funcs]\n    parse_img2nl_uri  CC=5  out:7\n    uri_for_analyze  CC=2  out:1\n  src.img2nl.analyze  [1 funcs]\n    analyze_image  CC=6  out:29\n  src.img2nl.describe  [2 funcs]\n    _describe_catalog  CC=17  out:72\n    describe_image  CC=8  out:5\n  src.img2nl.features.barcodes  [3 funcs]\n    _should_scan  CC=3  out:7\n    _suppress_zbar_stderr  CC=1  out:7\n    analyze_barcodes  CC=5  out:9\n  src.img2nl.features.fingerprint  [2 funcs]\n    _unavailable  CC=1  out:0\n    analyze_fingerprint  CC=2  out:8\n  src.img2nl.features.ocr_text  [3 funcs]\n    _preview  CC=2  out:3\n    _should_ocr  CC=3  out:5\n    analyze_ocr  CC=7  out:12\n  src.img2nl.features.scene  [1 funcs]\n    classify_scene  CC=18  out:28\n  src.img2nl.features.semantic  [3 funcs]\n    _get_model  CC=2  out:1\n    _should_detect  CC=2  out:2\n    analyze_semantic  CC=9  out:17\n  src.img2nl.features.similarity  [2 funcs]\n    compare_fingerprints  CC=4  out:6\n    fingerprint_hamming  CC=5  out:2\n  src.img2nl.features.special_hits  [1 funcs]\n    analyze_special_hits  CC=1  out:4\n  src.img2nl.i18n.locales  [2 funcs]\n    is_european_locale  CC=1  out:1\n    normalize_locale  CC=8  out:4\n  src.img2nl.i18n.offline  [7 funcs]\n    _require_argos  CC=2  out:1\n    _update_index  CC=2  out:1\n    argostranslate_available  CC=2  out:0\n    ensure_language_pair  CC=11  out:12\n    list_available_pairs  CC=5  out:4\n    list_installed_pairs  CC=3  out:4\n    translate_summary_offline  CC=7  out:14\n  src.img2nl.i18n.translate  [1 funcs]\n    t  CC=5  out:8\n  src.img2nl.llm_gate  [1 funcs]\n    llm_transport_hint  CC=27  out:54\n\nEDGES:\n  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze → src.img2nl.analyze.analyze_image\n  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query → packages.uri2img2nl.src.uri2img2nl.query.query_uri\n  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query → packages.uri2img2nl.src.uri2img2nl.uri.uri_for_analyze\n  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint → src.img2nl.analyze.analyze_image\n  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens → packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze\n  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens → packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query\n  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens → packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint\n  packages.dsl2img2nl.src.dsl2img2nl.cli.main → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch\n  packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch → packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command\n  packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch → packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens\n  packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch → packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line\n  packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch\n  src.img2nl.features.ocr_text.analyze_ocr → src.img2nl.features.ocr_text._preview\n  src.img2nl.features.ocr_text.analyze_ocr → src.img2nl.features.ocr_text._should_ocr\n  src.img2nl.features.semantic.analyze_semantic → src.img2nl.features.semantic._get_model\n  src.img2nl.features.semantic.analyze_semantic → src.img2nl.features.semantic._should_detect\n  src.img2nl.features.fingerprint.analyze_fingerprint → src.img2nl.features.fingerprint._unavailable\n  src.img2nl.features.similarity.compare_fingerprints → src.img2nl.features.similarity.fingerprint_hamming\n  src.img2nl.features.special_hits.analyze_special_hits → src.img2nl.features.barcodes.analyze_barcodes\n  src.img2nl.features.special_hits.analyze_special_hits → src.img2nl.features.ocr_text.analyze_ocr\n  src.img2nl.i18n.translate.t → src.img2nl.i18n.locales.normalize_locale\n  src.img2nl.features.barcodes.analyze_barcodes → src.img2nl.features.barcodes._suppress_zbar_stderr\n  src.img2nl.features.barcodes.analyze_barcodes → src.img2nl.features.barcodes._should_scan\n  src.img2nl.i18n.locales.is_european_locale → src.img2nl.i18n.locales.normalize_locale\n  src.img2nl.analyze.analyze_image → src.img2nl.features.scene.classify_scene\n  src.img2nl.analyze.analyze_image → src.img2nl.features.special_hits.analyze_special_hits\n  src.img2nl.analyze.analyze_image → src.img2nl.i18n.locales.normalize_locale\n  src.img2nl.analyze.analyze_image → src.img2nl.describe.describe_image\n  src.img2nl.analyze.analyze_image → src.img2nl.llm_gate.llm_transport_hint\n  packages.uri2img2nl.src.uri2img2nl.cli.main → packages.uri2img2nl.src.uri2img2nl.query.query_uri\n  src.img2nl.i18n.offline.list_installed_pairs → src.img2nl.i18n.offline._require_argos\n  src.img2nl.i18n.offline.list_installed_pairs → src.img2nl.i18n.offline.argostranslate_available\n  src.img2nl.i18n.offline.list_available_pairs → src.img2nl.i18n.offline._require_argos\n  src.img2nl.i18n.offline.list_available_pairs → src.img2nl.i18n.offline._update_index\n  src.img2nl.i18n.offline.ensure_language_pair → src.img2nl.i18n.locales.normalize_locale\n  src.img2nl.i18n.offline.ensure_language_pair → src.img2nl.i18n.offline._require_argos\n  src.img2nl.i18n.offline.ensure_language_pair → src.img2nl.i18n.offline._update_index\n  src.img2nl.i18n.offline.translate_summary_offline → src.img2nl.i18n.locales.normalize_locale\n  src.img2nl.i18n.offline.translate_summary_offline → src.img2nl.i18n.offline._require_argos\n  src.img2nl.i18n.offline.translate_summary_offline → src.img2nl.i18n.offline.argostranslate_available\n  packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line → packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command\n  packages.cli2img2nl.src.cli2img2nl.cli.main → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch\n  src.img2nl.describe.describe_image → src.img2nl.i18n.locales.normalize_locale\n  src.img2nl.describe.describe_image → src.img2nl.describe._describe_catalog\n  src.img2nl.describe.describe_image → src.img2nl.i18n.offline.translate_summary_offline\n  packages.uri2img2nl.src.uri2img2nl.query.query_uri → packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri\n  packages.uri2img2nl.src.uri2img2nl.query.query_uri → src.img2nl.analyze.analyze_image\n", "is_subdir": false}, {"name": "calls.yaml", "rel_path": "calls.yaml", "path": "calls.yaml", "size": "18.0KB", "icon": "⚙️", "type": "yaml", "type_name": "YAML", "content": "project: /home/tom/github/wronai/img2nl\ngenerated_from: code2llm call graph analysis\nstats:\n  total_nodes: 43\n  total_edges: 47\n  modules_count: 21\nnodes:\n  packages.dsl2img2nl.src.dsl2img2nl.cli.main:\n    name: main\n    module: packages.dsl2img2nl.src.dsl2img2nl.cli\n    line: 12\n    cyclomatic_complexity: 8\n    calls_out: 15\n    calls_in: 0\n  src.img2nl.features.fingerprint.analyze_fingerprint:\n    name: analyze_fingerprint\n    module: src.img2nl.features.fingerprint\n    line: 18\n    cyclomatic_complexity: 2\n    calls_out: 8\n    calls_in: 1\n  src.img2nl.features.barcodes.analyze_barcodes:\n    name: analyze_barcodes\n    module: src.img2nl.features.barcodes\n    line: 35\n    cyclomatic_complexity: 5\n    calls_out: 9\n    calls_in: 1\n  src.img2nl.features.semantic._get_model:\n    name: _get_model\n    module: src.img2nl.features.semantic\n    line: 17\n    cyclomatic_complexity: 2\n    calls_out: 1\n    calls_in: 1\n  src.img2nl.features.barcodes._suppress_zbar_stderr:\n    name: _suppress_zbar_stderr\n    module: src.img2nl.features.barcodes\n    line: 12\n    cyclomatic_complexity: 1\n    calls_out: 7\n    calls_in: 1\n  packages.cli2img2nl.src.cli2img2nl.cli.main:\n    name: main\n    module: packages.cli2img2nl.src.cli2img2nl.cli\n    line: 12\n    cyclomatic_complexity: 6\n    calls_out: 11\n    calls_in: 0\n  packages.uri2img2nl.src.uri2img2nl.uri.uri_for_analyze:\n    name: uri_for_analyze\n    module: packages.uri2img2nl.src.uri2img2nl.uri\n    line: 27\n    cyclomatic_complexity: 2\n    calls_out: 1\n    calls_in: 1\n  packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line:\n    name: parse_line\n    module: packages.dsl2img2nl.src.dsl2img2nl.grammar\n    line: 14\n    cyclomatic_complexity: 14\n    calls_out: 10\n    calls_in: 1\n  src.img2nl.features.special_hits.analyze_special_hits:\n    name: analyze_special_hits\n    module: src.img2nl.features.special_hits\n    line: 11\n    cyclomatic_complexity: 1\n    calls_out: 4\n    calls_in: 1\n  src.img2nl.features.semantic.analyze_semantic:\n    name: analyze_semantic\n    module: src.img2nl.features.semantic\n    line: 26\n    cyclomatic_complexity: 9\n    calls_out: 17\n    calls_in: 1\n  packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch:\n    name: dispatch\n    module: packages.dsl2img2nl.src.dsl2img2nl.bus\n    line: 12\n    cyclomatic_complexity: 8\n    calls_out: 11\n    calls_in: 3\n  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze:\n    name: handle_analyze\n    module: packages.dsl2img2nl.src.dsl2img2nl.handlers\n    line: 11\n    cyclomatic_complexity: 4\n    calls_out: 7\n    calls_in: 1\n  packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri:\n    name: parse_img2nl_uri\n    module: packages.uri2img2nl.src.uri2img2nl.uri\n    line: 38\n    cyclomatic_complexity: 5\n    calls_out: 7\n    calls_in: 1\n  src.img2nl.i18n.translate.t:\n    name: t\n    module: src.img2nl.i18n.translate\n    line: 9\n    cyclomatic_complexity: 5\n    calls_out: 8\n    calls_in: 19\n  packages.uri2img2nl.src.uri2img2nl.query.query_uri:\n    name: query_uri\n    module: packages.uri2img2nl.src.uri2img2nl.query\n    line: 36\n    cyclomatic_complexity: 9\n    calls_out: 17\n    calls_in: 2\n  src.img2nl.features.ocr_text._should_ocr:\n    name: _should_ocr\n    module: src.img2nl.features.ocr_text\n    line: 8\n    cyclomatic_complexity: 3\n    calls_out: 5\n    calls_in: 1\n  src.img2nl.features.similarity.fingerprint_hamming:\n    name: fingerprint_hamming\n    module: src.img2nl.features.similarity\n    line: 8\n    cyclomatic_complexity: 5\n    calls_out: 2\n    calls_in: 1\n  src.img2nl.features.fingerprint._unavailable:\n    name: _unavailable\n    module: src.img2nl.features.fingerprint\n    line: 8\n    cyclomatic_complexity: 1\n    calls_out: 0\n    calls_in: 1\n  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens:\n    name: handle_from_tokens\n    module: packages.dsl2img2nl.src.dsl2img2nl.handlers\n    line: 69\n    cyclomatic_complexity: 4\n    calls_out: 8\n    calls_in: 1\n  src.img2nl.i18n.offline.translate_summary_offline:\n    name: translate_summary_offline\n    module: src.img2nl.i18n.offline\n    line: 133\n    cyclomatic_complexity: 7\n    calls_out: 14\n    calls_in: 1\n  src.img2nl.i18n.offline.ensure_language_pair:\n    name: ensure_language_pair\n    module: src.img2nl.i18n.offline\n    line: 95\n    cyclomatic_complexity: 11\n    calls_out: 12\n    calls_in: 2\n  src.img2nl.features.ocr_text.analyze_ocr:\n    name: analyze_ocr\n    module: src.img2nl.features.ocr_text\n    line: 25\n    cyclomatic_complexity: 7\n    calls_out: 12\n    calls_in: 1\n  packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line:\n    name: execute_dsl_line\n    module: packages.dsl2img2nl.src.dsl2img2nl.bus\n    line: 28\n    cyclomatic_complexity: 1\n    calls_out: 1\n    calls_in: 0\n  src.img2nl.features.similarity.compare_fingerprints:\n    name: compare_fingerprints\n    module: src.img2nl.features.similarity\n    line: 21\n    cyclomatic_complexity: 4\n    calls_out: 6\n    calls_in: 1\n  src.img2nl.describe.describe_image:\n    name: describe_image\n    module: src.img2nl.describe\n    line: 99\n    cyclomatic_complexity: 8\n    calls_out: 5\n    calls_in: 1\n  src.img2nl.llm_gate.llm_transport_hint:\n    name: llm_transport_hint\n    module: src.img2nl.llm_gate\n    line: 8\n    cyclomatic_complexity: 27\n    calls_out: 54\n    calls_in: 1\n  src.img2nl.i18n.offline.list_available_pairs:\n    name: list_available_pairs\n    module: src.img2nl.i18n.offline\n    line: 79\n    cyclomatic_complexity: 5\n    calls_out: 4\n    calls_in: 1\n  src.img2nl.i18n.locales.is_european_locale:\n    name: is_european_locale\n    module: src.img2nl.i18n.locales\n    line: 58\n    cyclomatic_complexity: 1\n    calls_out: 1\n    calls_in: 0\n  src.img2nl.features.barcodes._should_scan:\n    name: _should_scan\n    module: src.img2nl.features.barcodes\n    line: 26\n    cyclomatic_complexity: 3\n    calls_out: 7\n    calls_in: 1\n  src.img2nl.i18n.offline.argostranslate_available:\n    name: argostranslate_available\n    module: src.img2nl.i18n.offline\n    line: 40\n    cyclomatic_complexity: 2\n    calls_out: 0\n    calls_in: 3\n  src.img2nl.features.scene.classify_scene:\n    name: classify_scene\n    module: src.img2nl.features.scene\n    line: 8\n    cyclomatic_complexity: 18\n    calls_out: 28\n    calls_in: 2\n  src.img2nl.describe._describe_catalog:\n    name: _describe_catalog\n    module: src.img2nl.describe\n    line: 12\n    cyclomatic_complexity: 17\n    calls_out: 72\n    calls_in: 3\n  src.img2nl.i18n.offline._update_index:\n    name: _update_index\n    module: src.img2nl.i18n.offline\n    line: 63\n    cyclomatic_complexity: 2\n    calls_out: 1\n    calls_in: 2\n  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint:\n    name: handle_llm_hint\n    module: packages.dsl2img2nl.src.dsl2img2nl.handlers\n    line: 50\n    cyclomatic_complexity: 4\n    calls_out: 6\n    calls_in: 1\n  packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command:\n    name: split_command\n    module: packages.dsl2img2nl.src.dsl2img2nl.grammar\n    line: 10\n    cyclomatic_complexity: 1\n    calls_out: 2\n    calls_in: 3\n  src.img2nl.features.ocr_text._preview:\n    name: _preview\n    module: src.img2nl.features.ocr_text\n    line: 18\n    cyclomatic_complexity: 2\n    calls_out: 3\n    calls_in: 1\n  packages.uri2img2nl.src.uri2img2nl.cli.main:\n    name: main\n    module: packages.uri2img2nl.src.uri2img2nl.cli\n    line: 12\n    cyclomatic_complexity: 4\n    calls_out: 9\n    calls_in: 0\n  src.img2nl.i18n.locales.normalize_locale:\n    name: normalize_locale\n    module: src.img2nl.i18n.locales\n    line: 37\n    cyclomatic_complexity: 8\n    calls_out: 4\n    calls_in: 8\n  src.img2nl.i18n.offline._require_argos:\n    name: _require_argos\n    module: src.img2nl.i18n.offline\n    line: 50\n    cyclomatic_complexity: 2\n    calls_out: 1\n    calls_in: 4\n  src.img2nl.analyze.analyze_image:\n    name: analyze_image\n    module: src.img2nl.analyze\n    line: 27\n    cyclomatic_complexity: 6\n    calls_out: 29\n    calls_in: 6\n  src.img2nl.i18n.offline.list_installed_pairs:\n    name: list_installed_pairs\n    module: src.img2nl.i18n.offline\n    line: 71\n    cyclomatic_complexity: 3\n    calls_out: 4\n    calls_in: 1\n  src.img2nl.features.semantic._should_detect:\n    name: _should_detect\n    module: src.img2nl.features.semantic\n    line: 10\n    cyclomatic_complexity: 2\n    calls_out: 2\n    calls_in: 1\n  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query:\n    name: handle_query\n    module: packages.dsl2img2nl.src.dsl2img2nl.handlers\n    line: 29\n    cyclomatic_complexity: 6\n    calls_out: 8\n    calls_in: 1\nedges:\n- caller: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze\n  callee: src.img2nl.analyze.analyze_image\n  call_type: resolved\n- caller: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query\n  callee: packages.uri2img2nl.src.uri2img2nl.query.query_uri\n  call_type: resolved\n- caller: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query\n  callee: packages.uri2img2nl.src.uri2img2nl.uri.uri_for_analyze\n  call_type: resolved\n- caller: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint\n  callee: src.img2nl.analyze.analyze_image\n  call_type: resolved\n- caller: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens\n  callee: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze\n  call_type: resolved\n- caller: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens\n  callee: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query\n  call_type: resolved\n- caller: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens\n  callee: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint\n  call_type: resolved\n- caller: packages.dsl2img2nl.src.dsl2img2nl.cli.main\n  callee: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch\n  call_type: resolved\n- caller: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch\n  callee: packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command\n  call_type: resolved\n- caller: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch\n  callee: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens\n  call_type: resolved\n- caller: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch\n  callee: packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line\n  call_type: resolved\n- caller: packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line\n  callee: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch\n  call_type: resolved\n- caller: src.img2nl.features.ocr_text.analyze_ocr\n  callee: src.img2nl.features.ocr_text._preview\n  call_type: resolved\n- caller: src.img2nl.features.ocr_text.analyze_ocr\n  callee: src.img2nl.features.ocr_text._should_ocr\n  call_type: resolved\n- caller: src.img2nl.features.semantic.analyze_semantic\n  callee: src.img2nl.features.semantic._get_model\n  call_type: resolved\n- caller: src.img2nl.features.semantic.analyze_semantic\n  callee: src.img2nl.features.semantic._should_detect\n  call_type: resolved\n- caller: src.img2nl.features.fingerprint.analyze_fingerprint\n  callee: src.img2nl.features.fingerprint._unavailable\n  call_type: resolved\n- caller: src.img2nl.features.similarity.compare_fingerprints\n  callee: src.img2nl.features.similarity.fingerprint_hamming\n  call_type: resolved\n- caller: src.img2nl.features.special_hits.analyze_special_hits\n  callee: src.img2nl.features.barcodes.analyze_barcodes\n  call_type: resolved\n- caller: src.img2nl.features.special_hits.analyze_special_hits\n  callee: src.img2nl.features.ocr_text.analyze_ocr\n  call_type: resolved\n- caller: src.img2nl.i18n.translate.t\n  callee: src.img2nl.i18n.locales.normalize_locale\n  call_type: resolved\n- caller: src.img2nl.features.barcodes.analyze_barcodes\n  callee: src.img2nl.features.barcodes._suppress_zbar_stderr\n  call_type: resolved\n- caller: src.img2nl.features.barcodes.analyze_barcodes\n  callee: src.img2nl.features.barcodes._should_scan\n  call_type: resolved\n- caller: src.img2nl.i18n.locales.is_european_locale\n  callee: src.img2nl.i18n.locales.normalize_locale\n  call_type: resolved\n- caller: src.img2nl.analyze.analyze_image\n  callee: src.img2nl.features.scene.classify_scene\n  call_type: resolved\n- caller: src.img2nl.analyze.analyze_image\n  callee: src.img2nl.features.special_hits.analyze_special_hits\n  call_type: resolved\n- caller: src.img2nl.analyze.analyze_image\n  callee: src.img2nl.i18n.locales.normalize_locale\n  call_type: resolved\n- caller: src.img2nl.analyze.analyze_image\n  callee: src.img2nl.describe.describe_image\n  call_type: resolved\n- caller: src.img2nl.analyze.analyze_image\n  callee: src.img2nl.llm_gate.llm_transport_hint\n  call_type: resolved\n- caller: packages.uri2img2nl.src.uri2img2nl.cli.main\n  callee: packages.uri2img2nl.src.uri2img2nl.query.query_uri\n  call_type: resolved\n- caller: src.img2nl.i18n.offline.list_installed_pairs\n  callee: src.img2nl.i18n.offline._require_argos\n  call_type: resolved\n- caller: src.img2nl.i18n.offline.list_installed_pairs\n  callee: src.img2nl.i18n.offline.argostranslate_available\n  call_type: resolved\n- caller: src.img2nl.i18n.offline.list_available_pairs\n  callee: src.img2nl.i18n.offline._require_argos\n  call_type: resolved\n- caller: src.img2nl.i18n.offline.list_available_pairs\n  callee: src.img2nl.i18n.offline._update_index\n  call_type: resolved\n- caller: src.img2nl.i18n.offline.ensure_language_pair\n  callee: src.img2nl.i18n.locales.normalize_locale\n  call_type: resolved\n- caller: src.img2nl.i18n.offline.ensure_language_pair\n  callee: src.img2nl.i18n.offline._require_argos\n  call_type: resolved\n- caller: src.img2nl.i18n.offline.ensure_language_pair\n  callee: src.img2nl.i18n.offline._update_index\n  call_type: resolved\n- caller: src.img2nl.i18n.offline.translate_summary_offline\n  callee: src.img2nl.i18n.locales.normalize_locale\n  call_type: resolved\n- caller: src.img2nl.i18n.offline.translate_summary_offline\n  callee: src.img2nl.i18n.offline._require_argos\n  call_type: resolved\n- caller: src.img2nl.i18n.offline.translate_summary_offline\n  callee: src.img2nl.i18n.offline.argostranslate_available\n  call_type: resolved\n- caller: packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line\n  callee: packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command\n  call_type: resolved\n- caller: packages.cli2img2nl.src.cli2img2nl.cli.main\n  callee: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch\n  call_type: resolved\n- caller: src.img2nl.describe.describe_image\n  callee: src.img2nl.i18n.locales.normalize_locale\n  call_type: resolved\n- caller: src.img2nl.describe.describe_image\n  callee: src.img2nl.describe._describe_catalog\n  call_type: resolved\n- caller: src.img2nl.describe.describe_image\n  callee: src.img2nl.i18n.offline.translate_summary_offline\n  call_type: resolved\n- caller: packages.uri2img2nl.src.uri2img2nl.query.query_uri\n  callee: packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri\n  call_type: resolved\n- caller: packages.uri2img2nl.src.uri2img2nl.query.query_uri\n  callee: src.img2nl.analyze.analyze_image\n  call_type: resolved\nmodules:\n  packages.cli2img2nl.src.cli2img2nl.cli:\n  - packages.cli2img2nl.src.cli2img2nl.cli.main\n  packages.dsl2img2nl.src.dsl2img2nl.bus:\n  - packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch\n  - packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line\n  packages.dsl2img2nl.src.dsl2img2nl.cli:\n  - packages.dsl2img2nl.src.dsl2img2nl.cli.main\n  packages.dsl2img2nl.src.dsl2img2nl.grammar:\n  - packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line\n  - packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command\n  packages.dsl2img2nl.src.dsl2img2nl.handlers:\n  - packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze\n  - packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens\n  - packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint\n  - packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query\n  packages.uri2img2nl.src.uri2img2nl.cli:\n  - packages.uri2img2nl.src.uri2img2nl.cli.main\n  packages.uri2img2nl.src.uri2img2nl.query:\n  - packages.uri2img2nl.src.uri2img2nl.query.query_uri\n  packages.uri2img2nl.src.uri2img2nl.uri:\n  - packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri\n  - packages.uri2img2nl.src.uri2img2nl.uri.uri_for_analyze\n  src.img2nl.analyze:\n  - src.img2nl.analyze.analyze_image\n  src.img2nl.describe:\n  - src.img2nl.describe._describe_catalog\n  - src.img2nl.describe.describe_image\n  src.img2nl.features.barcodes:\n  - src.img2nl.features.barcodes._should_scan\n  - src.img2nl.features.barcodes._suppress_zbar_stderr\n  - src.img2nl.features.barcodes.analyze_barcodes\n  src.img2nl.features.fingerprint:\n  - src.img2nl.features.fingerprint._unavailable\n  - src.img2nl.features.fingerprint.analyze_fingerprint\n  src.img2nl.features.ocr_text:\n  - src.img2nl.features.ocr_text._preview\n  - src.img2nl.features.ocr_text._should_ocr\n  - src.img2nl.features.ocr_text.analyze_ocr\n  src.img2nl.features.scene:\n  - src.img2nl.features.scene.classify_scene\n  src.img2nl.features.semantic:\n  - src.img2nl.features.semantic._get_model\n  - src.img2nl.features.semantic._should_detect\n  - src.img2nl.features.semantic.analyze_semantic\n  src.img2nl.features.similarity:\n  - src.img2nl.features.similarity.compare_fingerprints\n  - src.img2nl.features.similarity.fingerprint_hamming\n  src.img2nl.features.special_hits:\n  - src.img2nl.features.special_hits.analyze_special_hits\n  src.img2nl.i18n.locales:\n  - src.img2nl.i18n.locales.is_european_locale\n  - src.img2nl.i18n.locales.normalize_locale\n  src.img2nl.i18n.offline:\n  - src.img2nl.i18n.offline._require_argos\n  - src.img2nl.i18n.offline._update_index\n  - src.img2nl.i18n.offline.argostranslate_available\n  - src.img2nl.i18n.offline.ensure_language_pair\n  - src.img2nl.i18n.offline.list_available_pairs\n  - src.img2nl.i18n.offline.list_installed_pairs\n  - src.img2nl.i18n.offline.translate_summary_offline\n  src.img2nl.i18n.translate:\n  - src.img2nl.i18n.translate.t\n  src.img2nl.llm_gate:\n  - src.img2nl.llm_gate.llm_transport_hint\nentry_points:\n- packages.cli2img2nl.src.cli2img2nl.cli.main\n- packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line\n- packages.dsl2img2nl.src.dsl2img2nl.cli.main\n- packages.dsl2img2nl.src.dsl2img2nl.result.DslResult.to_dict\n- packages.uri2img2nl.src.uri2img2nl.cli.main\n- packages.uri2img2nl.src.uri2img2nl.query.QueryResult.to_dict\n- packages.uri2img2nl.src.uri2img2nl.uri.is_img2nl_uri\n- packages.uri2img2nl.src.uri2img2nl.uri.uri_for_llm_hint\n- src.img2nl.cli.main\n- src.img2nl.features.similarity.compare_images_ssim\n- src.img2nl.i18n.catalog._load_messages\n- src.img2nl.i18n.locales.is_european_locale\n- src.img2nl.i18n.locales.supported_locales\n- src.img2nl.i18n.offline.TranslateResult.to_dict\n- src.img2nl.result.Img2NlResult.to_dict\n", "is_subdir": false}, {"name": "evolution.toon.yaml", "rel_path": "evolution.toon.yaml", "path": "evolution.toon.yaml", "size": "2.1KB", "icon": "⚙️", "type": "yaml", "type_name": "YAML", "content": "# code2llm/evolution | 63 func | 32f | 2026-06-09\n# generated in 0.01s\n\nNEXT[5] (ranked by impact):\n  [1] !! SPLIT-FUNC      llm_transport_hint  CC=27  fan=14\n      WHY: CC=27 exceeds 15\n      EFFORT: ~1h  IMPACT: 378\n\n  [2] !  SPLIT-FUNC      _describe_catalog  CC=17  fan=16\n      WHY: CC=17 exceeds 15\n      EFFORT: ~1h  IMPACT: 272\n\n  [3] !  SPLIT-FUNC      classify_scene  CC=18  fan=10\n      WHY: CC=18 exceeds 15\n      EFFORT: ~1h  IMPACT: 180\n\n  [4] !! SPLIT           src/img2nl/i18n/messages.json\n      WHY: 1122L, 0 classes, max CC=0\n      EFFORT: ~4h  IMPACT: 0\n\n  [5] !! SPLIT           goal.yaml\n      WHY: 512L, 0 classes, max CC=0\n      EFFORT: ~4h  IMPACT: 0\n\n\nRISKS[2]:\n  ⚠ Splitting src/img2nl/i18n/messages.json may break 0 import paths\n  ⚠ Splitting goal.yaml may break 0 import paths\n\nMETRICS-TARGET:\n  CC̄:          5.3 → ≤3.7\n  max-CC:      27 → ≤13\n  god-modules: 2 → 0\n  high-CC(≥15): 3 → ≤1\n  hub-types:   0 → ≤0\n\nPATTERNS (language parser shared logic):\n  _extract_declarations() in base.py — unified extraction for:\n    - TypeScript: interfaces, types, classes, functions, arrow funcs\n    - PHP: namespaces, traits, classes, functions, includes\n    - Ruby: modules, classes, methods, requires\n    - C++: classes, structs, functions, #includes\n    - C#: classes, interfaces, methods, usings\n    - Java: classes, interfaces, methods, imports\n    - Go: packages, functions, structs\n    - Rust: modules, functions, traits, use statements\n\n  Shared regex patterns per language:\n    - import: language-specific import/require/using patterns\n    - class: class/struct/trait declarations with inheritance\n    - function: function/method signatures with visibility\n    - brace_tracking: for C-family languages ({ })\n    - end_keyword_tracking: for Ruby (module/class/def...end)\n\n  Benefits:\n    - Consistent extraction logic across all languages\n    - Reduced code duplication (~70% reduction in parser LOC)\n    - Easier maintenance: fix once, apply everywhere\n    - Standardized FunctionInfo/ClassInfo models\n\nHISTORY:\n  (first run — no previous data)\n", "is_subdir": false}, {"name": "map.toon.yaml", "rel_path": "map.toon.yaml", "path": "map.toon.yaml", "size": "6.6KB", "icon": "⚙️", "type": "yaml", "type_name": "YAML", "content": "# img2nl | 49f 4200L | toml:4,shell:3,yaml:1,python:38,json:2 | 2026-06-09\n# generated in 0.02s\n# stats: 63 func | 0 cls | 49 mod | CC̄=5.3 | critical:3 | cycles:0\n# alerts[5]: CC llm_transport_hint=27; fan-out analyze_image=21; CC classify_scene=18; CC _describe_catalog=17; fan-out analyze_edges=17\n# hotspots[5]: analyze_image fan=21; analyze_edges fan=17; _describe_catalog fan=16; main fan=15; analyze_semantic fan=15\n# evolution: baseline\n# Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods\nM[49]:\n  Makefile,21\n  goal.yaml,512\n  install-dev.sh,11\n  packages/cli2img2nl/pyproject.toml,18\n  packages/cli2img2nl/src/cli2img2nl/cli.py,32\n  packages/dsl2img2nl/pyproject.toml,18\n  packages/dsl2img2nl/src/dsl2img2nl/__init__.py,6\n  packages/dsl2img2nl/src/dsl2img2nl/bus.py,29\n  packages/dsl2img2nl/src/dsl2img2nl/cli.py,33\n  packages/dsl2img2nl/src/dsl2img2nl/grammar.py,45\n  packages/dsl2img2nl/src/dsl2img2nl/handlers.py,77\n  packages/dsl2img2nl/src/dsl2img2nl/result.py,26\n  packages/uri2img2nl/pyproject.toml,18\n  packages/uri2img2nl/src/uri2img2nl/__init__.py,6\n  packages/uri2img2nl/src/uri2img2nl/cli.py,28\n  packages/uri2img2nl/src/uri2img2nl/query.py,106\n  packages/uri2img2nl/src/uri2img2nl/uri.py,46\n  project.sh,59\n  pyproject.toml,82\n  scripts/build_i18n_catalog.py,62\n  scripts/messages.extra.json,277\n  src/img2nl/__init__.py,25\n  src/img2nl/analyze.py,95\n  src/img2nl/cli.py,85\n  src/img2nl/describe.py,132\n  src/img2nl/features/__init__.py,31\n  src/img2nl/features/barcodes.py,78\n  src/img2nl/features/colors.py,51\n  src/img2nl/features/dynamics.py,28\n  src/img2nl/features/edges.py,54\n  src/img2nl/features/fingerprint.py,30\n  src/img2nl/features/noise.py,29\n  src/img2nl/features/objects.py,103\n  src/img2nl/features/ocr_text.py,73\n  src/img2nl/features/patterns.py,53\n  src/img2nl/features/scene.py,65\n  src/img2nl/features/semantic.py,84\n  src/img2nl/features/similarity.py,73\n  src/img2nl/features/special_hits.py,19\n  src/img2nl/i18n/__init__.py,26\n  src/img2nl/i18n/catalog.py,16\n  src/img2nl/i18n/locales.py,59\n  src/img2nl/i18n/messages.json,1122\n  src/img2nl/i18n/offline.py,189\n  src/img2nl/i18n/translate.py,16\n  src/img2nl/llm_gate.py,88\n  src/img2nl/result.py,34\n  src/img2nl/thumbnail.py,29\n  tree.sh,1\nD:\n  src/img2nl/llm_gate.py:\n    e: llm_transport_hint\n    llm_transport_hint(features)\n  src/img2nl/features/scene.py:\n    e: classify_scene\n    classify_scene(features)\n  src/img2nl/describe.py:\n    e: _describe_catalog,describe_image\n    _describe_catalog(features;lang)\n    describe_image(features)\n  src/img2nl/cli.py:\n    e: main\n    main(argv)\n  src/img2nl/features/objects.py:\n    e: _largest_regions,analyze_objects\n    _largest_regions(mask)\n    analyze_objects(im)\n  packages/dsl2img2nl/src/dsl2img2nl/grammar.py:\n    e: split_command,parse_line\n    split_command(line)\n    parse_line(line)\n  src/img2nl/features/colors.py:\n    e: _hex,analyze_colors\n    _hex(rgb)\n    analyze_colors(im)\n  src/img2nl/i18n/offline.py:\n    e: TranslateResult,argostranslate_available,_require_argos,_update_index,list_installed_pairs,list_available_pairs,ensure_language_pair,translate_summary_offline\n    TranslateResult: to_dict(0)\n    argostranslate_available()\n    _require_argos()\n    _update_index(package_mod)\n    list_installed_pairs()\n    list_available_pairs()\n    ensure_language_pair(from_code;to_code)\n    translate_summary_offline(text;target_lang)\n  src/img2nl/features/semantic.py:\n    e: _should_detect,_get_model,analyze_semantic\n    _should_detect(features)\n    _get_model()\n    analyze_semantic(im)\n  packages/uri2img2nl/src/uri2img2nl/query.py:\n    e: QueryResult,query_uri\n    QueryResult: to_dict(0)\n    query_uri(uri)\n  packages/dsl2img2nl/src/dsl2img2nl/cli.py:\n    e: main\n    main(argv)\n  packages/dsl2img2nl/src/dsl2img2nl/bus.py:\n    e: dispatch,execute_dsl_line\n    dispatch(envelope)\n    execute_dsl_line(line)\n  src/img2nl/features/patterns.py:\n    e: analyze_patterns\n    analyze_patterns(im)\n  src/img2nl/i18n/locales.py:\n    e: normalize_locale,supported_locales,is_european_locale\n    normalize_locale(locale)\n    supported_locales()\n    is_european_locale(locale)\n  src/img2nl/features/ocr_text.py:\n    e: _should_ocr,_preview,analyze_ocr\n    _should_ocr(features)\n    _preview(lines)\n    analyze_ocr(im)\n  packages/dsl2img2nl/src/dsl2img2nl/handlers.py:\n    e: handle_analyze,handle_query,handle_llm_hint,handle_from_tokens\n    handle_analyze(cmd)\n    handle_query(cmd)\n    handle_llm_hint(cmd)\n    handle_from_tokens(line;tokens;cmd)\n  src/img2nl/features/edges.py:\n    e: _unavailable,analyze_edges\n    _unavailable(reason)\n    analyze_edges(im)\n  src/img2nl/features/noise.py:\n    e: analyze_noise\n    analyze_noise(im)\n  src/img2nl/analyze.py:\n    e: analyze_image\n    analyze_image(image_path)\n  packages/cli2img2nl/src/cli2img2nl/cli.py:\n    e: main\n    main(argv)\n  src/img2nl/features/similarity.py:\n    e: fingerprint_hamming,compare_fingerprints,compare_images_ssim\n    fingerprint_hamming(a;b)\n    compare_fingerprints(current;reference)\n    compare_images_ssim(im_a;im_b)\n  src/img2nl/i18n/translate.py:\n    e: t\n    t()\n  src/img2nl/features/barcodes.py:\n    e: _suppress_zbar_stderr,_should_scan,analyze_barcodes\n    _suppress_zbar_stderr()\n    _should_scan(features)\n    analyze_barcodes(im)\n  packages/uri2img2nl/src/uri2img2nl/uri.py:\n    e: Img2NlUri,is_img2nl_uri,uri_for_analyze,uri_for_llm_hint,parse_img2nl_uri\n    Img2NlUri:\n    is_img2nl_uri(uri)\n    uri_for_analyze(path)\n    uri_for_llm_hint(path)\n    parse_img2nl_uri(uri)\n  packages/uri2img2nl/src/uri2img2nl/cli.py:\n    e: main\n    main(argv)\n  src/img2nl/thumbnail.py:\n    e: make_thumbnail\n    make_thumbnail(image_path)\n  src/img2nl/features/fingerprint.py:\n    e: _unavailable,analyze_fingerprint\n    _unavailable(reason)\n    analyze_fingerprint(im)\n  src/img2nl/i18n/catalog.py:\n    e: _load_messages\n    _load_messages()\n  src/img2nl/features/dynamics.py:\n    e: analyze_dynamics\n    analyze_dynamics(im)\n  src/img2nl/result.py:\n    e: Img2NlResult\n    Img2NlResult: to_dict(0)\n  src/img2nl/features/special_hits.py:\n    e: analyze_special_hits\n    analyze_special_hits(im;features)\n  packages/dsl2img2nl/src/dsl2img2nl/result.py:\n    e: DslResult\n    DslResult: to_dict(0)\n  Makefile:\n  pyproject.toml:\n  install-dev.sh:\n  project.sh:\n  packages/cli2img2nl/pyproject.toml:\n  goal.yaml:\n  packages/uri2img2nl/pyproject.toml:\n  packages/dsl2img2nl/pyproject.toml:\n  tree.sh:\n  src/img2nl/__init__.py:\n  src/img2nl/features/__init__.py:\n  src/img2nl/i18n/__init__.py:\n  src/img2nl/i18n/messages.json:\n  scripts/messages.extra.json:\n  packages/uri2img2nl/src/uri2img2nl/__init__.py:\n  packages/dsl2img2nl/src/dsl2img2nl/__init__.py:\n  scripts/build_i18n_catalog.py:\n", "is_subdir": false}, {"name": "planfile-tickets.yaml", "rel_path": "planfile-tickets.yaml", "path": "planfile-tickets.yaml", "size": "16.8KB", "icon": "⚙️", "type": "yaml", "type_name": "YAML", "content": "source: code2llm\n# generated in 0.07s\nschema: code2llm.planfile_tickets.v1\nproject_root: /home/tom/github/wronai/img2nl\ntickets:\n- signal: code2llm_cc\n  title: 'Reduce cyclomatic complexity: src.img2nl.llm_gate.llm_transport_hint (CC=27)'\n  description: 'code2llm reports `src.img2nl.llm_gate.llm_transport_hint` at `src/img2nl/llm_gate.py:8`\n    with cyclomatic complexity 27 (limit 15).\n\n\n    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run\n    code2llm after the change and keep tests green.'\n  priority: high\n  labels:\n  - llm-ready\n  - code2llm\n  - complexity\n  - refactor\n  files:\n  - src/img2nl/llm_gate.py\n  dedupe_key: code2llm:cc:src/img2nl/llm_gate.py:src.img2nl.llm_gate.llm_transport_hint\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: _largest_regions'\n  description: 'code2llm reports `God Function: _largest_regions` in `src/img2nl/features/objects.py:9`.\n\n\n    Function ''_largest_regions'' is oversized: CC=14, fan-out=11, mutations=32.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: high\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/features/objects.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/objects.py:9:God Function:\n    _largest_regions'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: analyze_colors'\n  description: 'code2llm reports `God Function: analyze_colors` in `src/img2nl/features/colors.py:13`.\n\n\n    Function ''analyze_colors'' is oversized: CC=13, fan-out=13, mutations=22.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: high\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/features/colors.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/colors.py:13:God Function:\n    analyze_colors'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: analyze_objects'\n  description: 'code2llm reports `God Function: analyze_objects` in `src/img2nl/features/objects.py:47`.\n\n\n    Function ''analyze_objects'' is oversized: CC=11, fan-out=15, mutations=34.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: high\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/features/objects.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/objects.py:47:God Function:\n    analyze_objects'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: main'\n  description: 'code2llm reports `God Function: main` in `src/img2nl/cli.py:12`.\n\n\n    Function ''main'' is oversized: CC=14, fan-out=15, mutations=20.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: high\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/cli.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/cli.py:12:God Function: main'\n- signal: code2llm_smell_shotgun_surgery\n  title: 'Address code smell: Shotgun Surgery: objects'\n  description: 'code2llm reports `Shotgun Surgery: objects` in `src/img2nl/llm_gate.py:8`.\n\n\n    Mutation of variable ''objects'' spans 5 functions. Changing this logic requires\n    work in many places.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: high\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - shotgun-surgery\n  files:\n  - src/img2nl/llm_gate.py\n  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/llm_gate.py:8:Shotgun Surgery:\n    objects'\n- signal: code2llm_smell_shotgun_surgery\n  title: 'Address code smell: Shotgun Surgery: package_mod'\n  description: 'code2llm reports `Shotgun Surgery: package_mod` in `src/img2nl/i18n/offline.py:63`.\n\n\n    Mutation of variable ''package_mod'' spans 5 functions. Changing this logic requires\n    work in many places.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: high\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - shotgun-surgery\n  files:\n  - src/img2nl/i18n/offline.py\n  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/i18n/offline.py:63:Shotgun\n    Surgery: package_mod'\n- signal: code2llm_smell_shotgun_surgery\n  title: 'Address code smell: Shotgun Surgery: path'\n  description: 'code2llm reports `Shotgun Surgery: path` in `packages/dsl2img2nl/src/dsl2img2nl/handlers.py:50`.\n\n\n    Mutation of variable ''path'' spans 5 functions. Changing this logic requires\n    work in many places.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: high\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - shotgun-surgery\n  files:\n  - packages/dsl2img2nl/src/dsl2img2nl/handlers.py\n  dedupe_key: 'code2llm:smell:shotgun_surgery:packages/dsl2img2nl/src/dsl2img2nl/handlers.py:50:Shotgun\n    Surgery: path'\n- signal: code2llm_smell_shotgun_surgery\n  title: 'Address code smell: Shotgun Surgery: result'\n  description: 'code2llm reports `Shotgun Surgery: result` in `packages/uri2img2nl/src/uri2img2nl/query.py:36`.\n\n\n    Mutation of variable ''result'' spans 10 functions. Changing this logic requires\n    work in many places.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: high\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - shotgun-surgery\n  files:\n  - packages/uri2img2nl/src/uri2img2nl/query.py\n  dedupe_key: 'code2llm:smell:shotgun_surgery:packages/uri2img2nl/src/uri2img2nl/query.py:36:Shotgun\n    Surgery: result'\n- signal: code2llm_smell_shotgun_surgery\n  title: 'Address code smell: Shotgun Surgery: rgb'\n  description: 'code2llm reports `Shotgun Surgery: rgb` in `src/img2nl/features/fingerprint.py:18`.\n\n\n    Mutation of variable ''rgb'' spans 7 functions. Changing this logic requires work\n    in many places.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: high\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - shotgun-surgery\n  files:\n  - src/img2nl/features/fingerprint.py\n  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/features/fingerprint.py:18:Shotgun\n    Surgery: rgb'\n- signal: code2llm_smell_shotgun_surgery\n  title: 'Address code smell: Shotgun Surgery: scene'\n  description: 'code2llm reports `Shotgun Surgery: scene` in `src/img2nl/features/ocr_text.py:8`.\n\n\n    Mutation of variable ''scene'' spans 5 functions. Changing this logic requires\n    work in many places.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: high\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - shotgun-surgery\n  files:\n  - src/img2nl/features/ocr_text.py\n  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/features/ocr_text.py:8:Shotgun\n    Surgery: scene'\n- signal: code2llm_cc\n  title: 'Reduce cyclomatic complexity: src.img2nl.describe._describe_catalog (CC=17)'\n  description: 'code2llm reports `src.img2nl.describe._describe_catalog` at `src/img2nl/describe.py:12`\n    with cyclomatic complexity 17 (limit 15).\n\n\n    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run\n    code2llm after the change and keep tests green.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - complexity\n  - refactor\n  files:\n  - src/img2nl/describe.py\n  dedupe_key: code2llm:cc:src/img2nl/describe.py:src.img2nl.describe._describe_catalog\n- signal: code2llm_cc\n  title: 'Reduce cyclomatic complexity: src.img2nl.features.scene.classify_scene (CC=18)'\n  description: 'code2llm reports `src.img2nl.features.scene.classify_scene` at `src/img2nl/features/scene.py:8`\n    with cyclomatic complexity 18 (limit 15).\n\n\n    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run\n    code2llm after the change and keep tests green.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - complexity\n  - refactor\n  files:\n  - src/img2nl/features/scene.py\n  dedupe_key: code2llm:cc:src/img2nl/features/scene.py:src.img2nl.features.scene.classify_scene\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: analyze_dynamics'\n  description: 'code2llm reports `God Function: analyze_dynamics` in `src/img2nl/features/dynamics.py:8`.\n\n\n    Function ''analyze_dynamics'' is oversized: CC=1, fan-out=4, mutations=8.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/features/dynamics.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/dynamics.py:8:God Function:\n    analyze_dynamics'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: analyze_edges'\n  description: 'code2llm reports `God Function: analyze_edges` in `src/img2nl/features/edges.py:20`.\n\n\n    Function ''analyze_edges'' is oversized: CC=6, fan-out=17, mutations=17.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/features/edges.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/edges.py:20:God Function:\n    analyze_edges'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: analyze_image'\n  description: 'code2llm reports `God Function: analyze_image` in `src/img2nl/analyze.py:27`.\n\n\n    Function ''analyze_image'' is oversized: CC=6, fan-out=21, mutations=17.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/analyze.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/analyze.py:27:God Function:\n    analyze_image'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: analyze_noise'\n  description: 'code2llm reports `God Function: analyze_noise` in `src/img2nl/features/noise.py:8`.\n\n\n    Function ''analyze_noise'' is oversized: CC=6, fan-out=13, mutations=9.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/features/noise.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/noise.py:8:God Function:\n    analyze_noise'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: analyze_ocr'\n  description: 'code2llm reports `God Function: analyze_ocr` in `src/img2nl/features/ocr_text.py:25`.\n\n\n    Function ''analyze_ocr'' is oversized: CC=7, fan-out=11, mutations=8.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/features/ocr_text.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/ocr_text.py:25:God\n    Function: analyze_ocr'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: analyze_patterns'\n  description: 'code2llm reports `God Function: analyze_patterns` in `src/img2nl/features/patterns.py:8`.\n\n\n    Function ''analyze_patterns'' is oversized: CC=8, fan-out=13, mutations=11.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/features/patterns.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/patterns.py:8:God Function:\n    analyze_patterns'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: analyze_semantic'\n  description: 'code2llm reports `God Function: analyze_semantic` in `src/img2nl/features/semantic.py:26`.\n\n\n    Function ''analyze_semantic'' is oversized: CC=9, fan-out=15, mutations=12.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/features/semantic.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/semantic.py:26:God\n    Function: analyze_semantic'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: compare_images_ssim'\n  description: 'code2llm reports `God Function: compare_images_ssim` in `src/img2nl/features/similarity.py:46`.\n\n\n    Function ''compare_images_ssim'' is oversized: CC=2, fan-out=9, mutations=7.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/features/similarity.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/similarity.py:46:God\n    Function: compare_images_ssim'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: ensure_language_pair'\n  description: 'code2llm reports `God Function: ensure_language_pair` in `src/img2nl/i18n/offline.py:95`.\n\n\n    Function ''ensure_language_pair'' is oversized: CC=11, fan-out=10, mutations=13.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/i18n/offline.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/i18n/offline.py:95:God Function:\n    ensure_language_pair'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: main'\n  description: 'code2llm reports `God Function: main` in `packages/dsl2img2nl/src/dsl2img2nl/cli.py:12`.\n\n\n    Function ''main'' is oversized: CC=8, fan-out=11, mutations=9.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - packages/dsl2img2nl/src/dsl2img2nl/cli.py\n  dedupe_key: 'code2llm:smell:god_function:packages/dsl2img2nl/src/dsl2img2nl/cli.py:12:God\n    Function: main'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: main'\n  description: 'code2llm reports `God Function: main` in `packages/uri2img2nl/src/uri2img2nl/cli.py:12`.\n\n\n    Function ''main'' is oversized: CC=4, fan-out=9, mutations=8.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - packages/uri2img2nl/src/uri2img2nl/cli.py\n  dedupe_key: 'code2llm:smell:god_function:packages/uri2img2nl/src/uri2img2nl/cli.py:12:God\n    Function: main'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: main'\n  description: 'code2llm reports `God Function: main` in `packages/cli2img2nl/src/cli2img2nl/cli.py:12`.\n\n\n    Function ''main'' is oversized: CC=6, fan-out=9, mutations=9.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - packages/cli2img2nl/src/cli2img2nl/cli.py\n  dedupe_key: 'code2llm:smell:god_function:packages/cli2img2nl/src/cli2img2nl/cli.py:12:God\n    Function: main'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: make_thumbnail'\n  description: 'code2llm reports `God Function: make_thumbnail` in `src/img2nl/thumbnail.py:8`.\n\n\n    Function ''make_thumbnail'' is oversized: CC=4, fan-out=11, mutations=4.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/thumbnail.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/thumbnail.py:8:God Function:\n    make_thumbnail'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: parse_line'\n  description: 'code2llm reports `God Function: parse_line` in `packages/dsl2img2nl/src/dsl2img2nl/grammar.py:14`.\n\n\n    Function ''parse_line'' is oversized: CC=14, fan-out=5, mutations=16.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - packages/dsl2img2nl/src/dsl2img2nl/grammar.py\n  dedupe_key: 'code2llm:smell:god_function:packages/dsl2img2nl/src/dsl2img2nl/grammar.py:14:God\n    Function: parse_line'\n- signal: code2llm_smell_god_function\n  title: 'Address code smell: God Function: translate_summary_offline'\n  description: 'code2llm reports `God Function: translate_summary_offline` in `src/img2nl/i18n/offline.py:133`.\n\n\n    Function ''translate_summary_offline'' is oversized: CC=7, fan-out=9, mutations=7.\n\n\n    Make the smallest refactor that removes the smell and run local tests.'\n  priority: normal\n  labels:\n  - llm-ready\n  - code2llm\n  - code-smell\n  - god-function\n  files:\n  - src/img2nl/i18n/offline.py\n  dedupe_key: 'code2llm:smell:god_function:src/img2nl/i18n/offline.py:133:God Function:\n    translate_summary_offline'\napplied: []\nskipped: []\n", "is_subdir": false}, {"name": "project.toon.yaml", "rel_path": "project.toon.yaml", "path": "project.toon.yaml", "size": "2.3KB", "icon": "⚙️", "type": "yaml", "type_name": "YAML", "content": "# img2nl | 63 func | 32f | 4200L | python | 2026-06-09\n# generated in 0.00s\n\nHEALTH:\n  CC̄=5.3  critical=9 (limit:10)  dup=0  cycles=0\n\nALERTS[19]:\n  !!! cc_exceeded      llm_transport_hint = 27 (limit:15)\n  !!! high_fan_out     analyze_image = 21 (limit:10)\n  !!  high_fan_out     analyze_edges = 17 (limit:10)\n  !!  high_fan_out     _describe_catalog = 16 (limit:10)\n  !!  high_fan_out     main = 15 (limit:10)\n  !!  high_fan_out     analyze_semantic = 15 (limit:10)\n  !!  high_fan_out     analyze_objects = 15 (limit:10)\n  !   cc_exceeded      classify_scene = 18 (limit:15)\n  !   cc_exceeded      _describe_catalog = 17 (limit:15)\n  !   high_fan_out     llm_transport_hint = 14 (limit:10)\n\nMODULES[49] (top by size):\n  M[src/img2nl/i18n/messages.json] 1122L C:0 F:0 CC↑0 D:0 (json)\n  M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)\n  M[scripts/messages.extra.json] 277L C:0 F:0 CC↑0 D:0 (json)\n  M[src/img2nl/i18n/offline.py] 189L C:1 F:8 CC↑11 D:2 (python)\n  M[src/img2nl/describe.py] 132L C:0 F:2 CC↑17 D:1 (python)\n  M[packages/uri2img2nl/src/uri2img2nl/query.py] 106L C:1 F:2 CC↑9 D:2 (python)\n  M[src/img2nl/features/objects.py] 103L C:0 F:2 CC↑14 D:1 (python)\n  M[src/img2nl/analyze.py] 95L C:0 F:1 CC↑6 D:3 (python)\n  M[src/img2nl/llm_gate.py] 88L C:0 F:1 CC↑27 D:1 (python)\n  M[src/img2nl/cli.py] 85L C:0 F:1 CC↑14 D:0 (python)\n  M[src/img2nl/features/semantic.py] 84L C:0 F:3 CC↑9 D:1 (python)\n  M[pyproject.toml] 82L C:0 F:0 CC↑0 D:0 (toml)\n  M[src/img2nl/features/barcodes.py] 78L C:0 F:3 CC↑5 D:1 (python)\n  M[packages/dsl2img2nl/src/dsl2img2nl/handlers.py] 77L C:0 F:4 CC↑6 D:1 (python)\n  M[src/img2nl/features/ocr_text.py] 73L C:0 F:3 CC↑7 D:1 (python)\n  LANGS: python:38/toml:4/shell:3/json:2/other:1/yaml:1\n\nHOTSPOTS[10]:\n  ★ analyze_image fan=21  // Analysis pipeline, 21 stages\n  ★ analyze_edges fan=17  // Analysis pipeline, 17 stages\n  ★ _describe_catalog fan=16  // Orchestrates 16 calls\n  ★ main fan=15  // Orchestrates 15 calls\n  ★ analyze_semantic fan=15  // Analysis pipeline, 15 stages\n\nREFACTOR[8]:\n  [1] H/L Split llm_transport_hint (CC=27)\n  [2] H/H Split god module goal.yaml (512L, 0 classes)\n  [3] H/H Split god module src/img2nl/i18n/messages.json (1122L, 0 classes)\n  [4] M/L Split classify_scene (CC=18)\n  [5] M/L Split _describe_catalog (CC=17)\n\nEVOLUTION:\n  2026-06-09 CC̄=5.3 crit=9 4200L // Automated analysis\n", "is_subdir": false}];
+        let currentFile = null;
+
+        function renderFileList(filter = '') {
+            const list = document.getElementById('fileList');
+            const filtered = files.filter(f =>
+                f.name.toLowerCase().includes(filter.toLowerCase()) ||
+                f.path.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<div class="empty-state">No files found</div>';
+                return;
+            }
+
+            // Group by type
+            const groups = {};
+            for (const file of filtered) {
+                const type = file.type_name;
+                if (!groups[type]) groups[type] = [];
+                groups[type].push(file);
+            }
+
+            let html = '';
+            for (const [typeName, groupFiles] of Object.entries(groups)) {
+                html += `
+                    <div class="file-group">
+                        <div class="file-group-title">${typeName} Files (${groupFiles.length})</div>
+                        ${groupFiles.map(f => `
+                            <div class="file-item ${currentFile?.name === f.name ? 'active' : ''}"
+                                 onclick="selectFile('${f.name}')">
+                                <span class="file-icon">${f.icon}</span>
+                                <div class="file-info">
+                                    <div class="file-name">${f.name}</div>
+                                    <div class="file-meta">${f.path}</div>
+                                </div>
+                                <span class="file-size">${f.size}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            list.innerHTML = html;
+        }
+
+        function selectFile(name) {
+            const file = files.find(f => f.name === name);
+            if (!file) return;
+
+            currentFile = file;
+
+            document.getElementById('contentIcon').textContent = file.icon;
+            document.getElementById('contentTitle').textContent = file.name;
+
+            // Actions
+            const actions = document.getElementById('contentActions');
+            actions.innerHTML = `
+                <a href="${file.rel_path}" download class="btn">⬇ Download</a>
+                <a href="${file.rel_path}" target="_blank" class="btn btn-primary">↗ Open Raw</a>
+            `;
+
+            // Content
+            const body = document.getElementById('contentBody');
+            if (file.type === 'markdown') {
+                // Render markdown as HTML using marked.js
+                body.innerHTML = `<div class="markdown-content">${marked.parse(file.content)}</div>`;
+            } else if (file.type === 'html') {
+                // For HTML files, show in iframe for safety
+                body.innerHTML = `<iframe src="${file.rel_path}" style="width:100%;height:100%;border:none;border-radius:0.5rem;"></iframe>`;  # noqa: E501
+            } else if (file.type === 'image') {
+                // For images, display the actual image
+                body.innerHTML = `<div class="image-preview"><img src="${file.rel_path}" alt="${file.name}" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:0.5rem;"></div>`;  # noqa: E501
+            } else if (file.type === 'mermaid') {
+                // Render mermaid diagram
+                const diagramId = 'mermaid-diagram-' + Date.now();
+                body.innerHTML = `<div class="mermaid-content"><pre class="mermaid" id="${diagramId}">${file.content}</pre></div>`;  # noqa: E501
+                // Initialize mermaid on the new element
+                setTimeout(() => {
+                    mermaid.init(undefined, document.getElementById(diagramId));
+                }, 0);
+            } else if (file.type === 'json') {
+                try {
+                    const json = JSON.parse(file.content.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&'));  # noqa: E501
+                    const formatted = JSON.stringify(json, null, 2);
+                    body.innerHTML = `<pre><code class="language-json">${formatted.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;  # noqa: E501
+                    hljs.highlightElement(body.querySelector('code'));
+                } catch {
+                    body.innerHTML = `<pre>${file.content}</pre>`;
+                }
+            } else if (file.type === 'yaml') {
+                // YAML with syntax highlighting
+                body.innerHTML = `<pre><code class="language-yaml">${file.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;  # noqa: E501
+                hljs.highlightElement(body.querySelector('code'));
+            } else if (file.type === 'toon') {
+                // TOON with simple highlighting (use ini as closest match for key: value format)
+                body.innerHTML = `<pre><code class="language-ini">${file.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;  # noqa: E501
+                hljs.highlightElement(body.querySelector('code'));
+            } else if (file.type === 'code') {
+                // Code files with auto-highlighting
+                body.innerHTML = `<pre><code>${file.content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;  # noqa: E501
+                hljs.highlightElement(body.querySelector('code'));
+            } else {
+                body.innerHTML = `<pre>${file.content}</pre>`;
+            }
+
+            renderFileList(document.getElementById('search').value);
+        }
+
+        function filterFiles(query) {
+            renderFileList(query);
+        }
+
+        function renderStats() {
+            const stats = {};
+            for (const f of files) {
+                stats[f.type_name] = (stats[f.type_name] || 0) + 1;
+            }
+
+            const grid = document.getElementById('statsGrid');
+            grid.innerHTML = Object.entries(stats)
+                .sort((a, b) => b[1] - a[1])
+                .map(([type, count]) => `
+                    <div class="stat-card">
+                        <div class="stat-value">${count}</div>
+                        <div class="stat-label">${type}</div>
+                    </div>
+                `).join('');
+        }
+
+        // Initialize
+        renderStats();
+        renderFileList();
+
+        // Select first file if available
+        if (files.length > 0) {
+            selectFile(files[0].name);
+        }
+    </script>
+</body>
+</html>

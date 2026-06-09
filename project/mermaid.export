@@ -1,0 +1,129 @@
+flowchart TD
+%% generated in 0.00s
+    subgraph packages__cli2img2nl
+        packages__cli2img2nl__src__cli2img2nl__cli__main["main"]
+    end
+    subgraph packages__dsl2img2nl
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_analyze["handle_analyze"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query["handle_query"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_llm_hint["handle_llm_hint"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens["handle_from_tokens"]
+        packages__dsl2img2nl__src__dsl2img2nl__cli__main("main CC=8")
+        packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch("dispatch CC=8")
+        packages__dsl2img2nl__src__dsl2img2nl__bus__execute_dsl_line["execute_dsl_line"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar__split_command["split_command"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar__parse_line("parse_line CC=14")
+        packages__dsl2img2nl__src__dsl2img2nl__result__DslResult__to_dict["to_dict"]
+    end
+    subgraph packages__uri2img2nl
+        packages__uri2img2nl__src__uri2img2nl__cli__main["main"]
+        packages__uri2img2nl__src__uri2img2nl__uri__is_img2nl_uri["is_img2nl_uri"]
+        packages__uri2img2nl__src__uri2img2nl__uri__uri_for_analyze["uri_for_analyze"]
+        packages__uri2img2nl__src__uri2img2nl__uri__uri_for_llm_hint["uri_for_llm_hint"]
+        packages__uri2img2nl__src__uri2img2nl__uri__parse_img2nl_uri["parse_img2nl_uri"]
+        packages__uri2img2nl__src__uri2img2nl__query__QueryResult__to_dict["to_dict"]
+        packages__uri2img2nl__src__uri2img2nl__query__query_uri("query_uri CC=9")
+    end
+    subgraph src__img2nl
+        src__img2nl__features__dynamics__analyze_dynamics["analyze_dynamics"]
+        src__img2nl__cli__main("main CC=14")
+        src__img2nl__features__edges___unavailable["_unavailable"]
+        src__img2nl__features__edges__analyze_edges["analyze_edges"]
+        src__img2nl__features__colors___hex["_hex"]
+        src__img2nl__features__colors__analyze_colors("analyze_colors CC=13")
+        src__img2nl__features__ocr_text___should_ocr["_should_ocr"]
+        src__img2nl__features__ocr_text___preview["_preview"]
+        src__img2nl__features__ocr_text__analyze_ocr["analyze_ocr"]
+        src__img2nl__features__semantic___should_detect["_should_detect"]
+        src__img2nl__features__semantic___get_model["_get_model"]
+        src__img2nl__features__semantic__analyze_semantic("analyze_semantic CC=9")
+        src__img2nl__features__scene__classify_scene{{classify_scene CC=18}}
+        src__img2nl__result__Img2NlResult__to_dict["to_dict"]
+        src__img2nl__features__fingerprint___unavailable["_unavailable"]
+        src__img2nl__features__fingerprint__analyze_fingerprint["analyze_fingerprint"]
+        src__img2nl__features__objects___largest_regions("_largest_regions CC=14")
+        src__img2nl__features__objects__analyze_objects("analyze_objects CC=11")
+        src__img2nl__features__similarity__fingerprint_hamming["fingerprint_hamming"]
+        src__img2nl__features__similarity__compare_fingerprints["compare_fingerprints"]
+        src__img2nl__features__similarity__compare_images_ssim["compare_images_ssim"]
+        src__img2nl__features__noise__analyze_noise["analyze_noise"]
+        src__img2nl__features__special_hits__analyze_special_hits["analyze_special_hits"]
+        src__img2nl__i18n__translate__t["t"]
+        src__img2nl__features__patterns__analyze_patterns("analyze_patterns CC=8")
+        src__img2nl__i18n__catalog___load_messages["_load_messages"]
+        src__img2nl__features__barcodes___suppress_zbar_stderr["_suppress_zbar_stderr"]
+        src__img2nl__features__barcodes___should_scan["_should_scan"]
+        src__img2nl__features__barcodes__analyze_barcodes["analyze_barcodes"]
+        src__img2nl__i18n__locales__normalize_locale("normalize_locale CC=8")
+        src__img2nl__i18n__locales__supported_locales["supported_locales"]
+        src__img2nl__i18n__locales__is_european_locale["is_european_locale"]
+        src__img2nl__analyze__analyze_image["analyze_image"]
+        src__img2nl__i18n__offline__TranslateResult__to_dict["to_dict"]
+        src__img2nl__i18n__offline__argostranslate_available["argostranslate_available"]
+        src__img2nl__i18n__offline___require_argos["_require_argos"]
+        src__img2nl__i18n__offline___update_index["_update_index"]
+        src__img2nl__i18n__offline__list_installed_pairs["list_installed_pairs"]
+        src__img2nl__i18n__offline__list_available_pairs["list_available_pairs"]
+        src__img2nl__i18n__offline__ensure_language_pair("ensure_language_pair CC=11")
+        src__img2nl__i18n__offline__translate_summary_offline["translate_summary_offline"]
+        src__img2nl__thumbnail__make_thumbnail["make_thumbnail"]
+        src__img2nl__describe___describe_catalog{{_describe_catalog CC=17}}
+        src__img2nl__describe__describe_image("describe_image CC=8")
+        src__img2nl__llm_gate__llm_transport_hint{{llm_transport_hint CC=27}}
+    end
+    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_analyze --> src__img2nl__analyze__analyze_image
+    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query --> packages__uri2img2nl__src__uri2img2nl__query__query_uri
+    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query --> packages__uri2img2nl__src__uri2img2nl__uri__uri_for_analyze
+    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_llm_hint --> src__img2nl__analyze__analyze_image
+    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens --> packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_analyze
+    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens --> packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query
+    packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens --> packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_llm_hint
+    packages__dsl2img2nl__src__dsl2img2nl__cli__main --> packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch
+    packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch --> packages__dsl2img2nl__src__dsl2img2nl__grammar__split_command
+    packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch --> packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens
+    packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch --> packages__dsl2img2nl__src__dsl2img2nl__grammar__parse_line
+    packages__dsl2img2nl__src__dsl2img2nl__bus__execute_dsl_line --> packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch
+    src__img2nl__features__edges__analyze_edges --> src__img2nl__features__edges___unavailable
+    src__img2nl__features__ocr_text__analyze_ocr --> src__img2nl__features__ocr_text___preview
+    src__img2nl__features__ocr_text__analyze_ocr --> src__img2nl__features__ocr_text___should_ocr
+    src__img2nl__features__semantic__analyze_semantic --> src__img2nl__features__semantic___get_model
+    src__img2nl__features__semantic__analyze_semantic --> src__img2nl__features__semantic___should_detect
+    src__img2nl__features__fingerprint__analyze_fingerprint --> src__img2nl__features__fingerprint___unavailable
+    src__img2nl__features__similarity__compare_fingerprints --> src__img2nl__features__similarity__fingerprint_hamming
+    src__img2nl__features__special_hits__analyze_special_hits --> src__img2nl__features__barcodes__analyze_barcodes
+    src__img2nl__features__special_hits__analyze_special_hits --> src__img2nl__features__ocr_text__analyze_ocr
+    src__img2nl__i18n__translate__t --> src__img2nl__i18n__locales__normalize_locale
+    src__img2nl__features__barcodes__analyze_barcodes --> src__img2nl__features__barcodes___suppress_zbar_stderr
+    src__img2nl__features__barcodes__analyze_barcodes --> src__img2nl__features__barcodes___should_scan
+    src__img2nl__i18n__locales__is_european_locale --> src__img2nl__i18n__locales__normalize_locale
+    src__img2nl__analyze__analyze_image --> src__img2nl__features__scene__classify_scene
+    src__img2nl__analyze__analyze_image --> src__img2nl__features__special_hits__analyze_special_hits
+    src__img2nl__analyze__analyze_image --> src__img2nl__i18n__locales__normalize_locale
+    src__img2nl__analyze__analyze_image --> src__img2nl__describe__describe_image
+    src__img2nl__analyze__analyze_image --> src__img2nl__llm_gate__llm_transport_hint
+    src__img2nl__analyze__analyze_image --> src__img2nl__features__semantic__analyze_semantic
+    src__img2nl__analyze__analyze_image --> src__img2nl__features__colors__analyze_colors
+    packages__uri2img2nl__src__uri2img2nl__cli__main --> packages__uri2img2nl__src__uri2img2nl__query__query_uri
+    src__img2nl__i18n__offline__list_installed_pairs --> src__img2nl__i18n__offline___require_argos
+    src__img2nl__i18n__offline__list_installed_pairs --> src__img2nl__i18n__offline__argostranslate_available
+    src__img2nl__i18n__offline__list_available_pairs --> src__img2nl__i18n__offline___require_argos
+    src__img2nl__i18n__offline__list_available_pairs --> src__img2nl__i18n__offline___update_index
+    src__img2nl__i18n__offline__ensure_language_pair --> src__img2nl__i18n__locales__normalize_locale
+    src__img2nl__i18n__offline__ensure_language_pair --> src__img2nl__i18n__offline___require_argos
+    src__img2nl__i18n__offline__ensure_language_pair --> src__img2nl__i18n__offline___update_index
+    src__img2nl__i18n__offline__translate_summary_offline --> src__img2nl__i18n__locales__normalize_locale
+    src__img2nl__i18n__offline__translate_summary_offline --> src__img2nl__i18n__offline___require_argos
+    src__img2nl__i18n__offline__translate_summary_offline --> src__img2nl__i18n__offline__argostranslate_available
+    src__img2nl__i18n__offline__translate_summary_offline --> src__img2nl__i18n__offline__ensure_language_pair
+    packages__dsl2img2nl__src__dsl2img2nl__grammar__parse_line --> packages__dsl2img2nl__src__dsl2img2nl__grammar__split_command
+    packages__cli2img2nl__src__cli2img2nl__cli__main --> packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch
+    src__img2nl__describe__describe_image --> src__img2nl__i18n__locales__normalize_locale
+    src__img2nl__describe__describe_image --> src__img2nl__describe___describe_catalog
+    src__img2nl__describe__describe_image --> src__img2nl__i18n__offline__translate_summary_offline
+    packages__uri2img2nl__src__uri2img2nl__query__query_uri --> packages__uri2img2nl__src__uri2img2nl__uri__parse_img2nl_uri
+    packages__uri2img2nl__src__uri2img2nl__query__query_uri --> src__img2nl__analyze__analyze_image
+
+    classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
+    class src__img2nl__features__scene__classify_scene,src__img2nl__describe___describe_catalog,src__img2nl__llm_gate__llm_transport_hint highCC
+    class packages__dsl2img2nl__src__dsl2img2nl__cli__main,packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch,src__img2nl__cli__main,src__img2nl__features__colors__analyze_colors,src__img2nl__features__semantic__analyze_semantic,src__img2nl__features__objects___largest_regions,src__img2nl__features__objects__analyze_objects,src__img2nl__features__patterns__analyze_patterns,src__img2nl__i18n__locales__normalize_locale,src__img2nl__i18n__offline__ensure_language_pair,packages__dsl2img2nl__src__dsl2img2nl__grammar__parse_line,src__img2nl__describe__describe_image,packages__uri2img2nl__src__uri2img2nl__query__query_uri medCC

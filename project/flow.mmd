@@ -1,0 +1,30 @@
+flowchart TD
+%% generated in 0.01s
+
+    %% Entry points (blue)
+    classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
+
+    subgraph CLI
+        packages__cli2img2nl__src__cli2img2nl__cli__main["main"]
+    end
+
+    subgraph Core
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query["handle_query"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens["handle_from_tokens"]
+        packages__dsl2img2nl__src__dsl2img2nl__cli__main["main"]
+        packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch("dispatch CC=8")
+        packages__dsl2img2nl__src__dsl2img2nl__bus__execute_dsl_line["execute_dsl_line"]
+        src__img2nl__cli__main["main"]
+        src__img2nl__features__scene__classify_scene{{classify_scene CC=18}}
+        src__img2nl__result__Img2NlResult__to_dict["to_dict"]
+        src__img2nl__features__similarity__compare_images_ssim["compare_images_ssim"]
+        src__img2nl__i18n__translate__t["t"]
+        src__img2nl__i18n__catalog___load_messages["_load_messages"]
+        src__img2nl__i18n__locales__normalize_locale("normalize_locale CC=8")
+        src__img2nl__i18n__locales__supported_locales["supported_locales"]
+        src__img2nl__i18n__locales__is_european_locale["is_european_locale"]
+        src__img2nl__analyze__analyze_image["analyze_image"]
+        ...["+10 more"]
+    end
+
+    class packages__dsl2img2nl__src__dsl2img2nl__cli__main,packages__dsl2img2nl__src__dsl2img2nl__bus__execute_dsl_line,src__img2nl__cli__main,src__img2nl__result__Img2NlResult__to_dict,src__img2nl__features__similarity__compare_images_ssim,src__img2nl__i18n__catalog___load_messages,src__img2nl__i18n__locales__supported_locales,src__img2nl__i18n__locales__is_european_locale,packages__uri2img2nl__src__uri2img2nl__cli__main,src__img2nl__i18n__offline__TranslateResult__to_dict entry

@@ -2,7 +2,25 @@
 
 from __future__ import annotations
 
+import contextlib
+import os
+import sys
 from typing import Any
+
+
+@contextlib.contextmanager
+def _suppress_zbar_stderr():
+    """Silence benign zbar C-library databar warnings on UI screenshots."""
+    stderr_fd = sys.stderr.fileno()
+    devnull = os.open(os.devnull, os.O_WRONLY)
+    saved = os.dup(stderr_fd)
+    try:
+        os.dup2(devnull, stderr_fd)
+        yield
+    finally:
+        os.dup2(saved, stderr_fd)
+        os.close(saved)
+        os.close(devnull)
 
 
 def _should_scan(features: dict[str, Any]) -> bool:
@@ -38,7 +56,8 @@ def analyze_barcodes(im, *, features: dict[str, Any] | None = None) -> dict[str,
         }
 
     rgb = im.convert("RGB")
-    decoded = decode(np.array(rgb))
+    with _suppress_zbar_stderr():
+        decoded = decode(np.array(rgb))
     codes: list[dict[str, Any]] = []
     for item in decoded:
         rect = item.rect

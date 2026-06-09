@@ -1,0 +1,203 @@
+# img2nl | 49f 4200L | toml:4,shell:3,yaml:1,python:38,json:2 | 2026-06-09
+# generated in 0.02s
+# stats: 63 func | 0 cls | 49 mod | CC̄=5.3 | critical:3 | cycles:0
+# alerts[5]: CC llm_transport_hint=27; fan-out analyze_image=21; CC classify_scene=18; CC _describe_catalog=17; fan-out analyze_edges=17
+# hotspots[5]: analyze_image fan=21; analyze_edges fan=17; _describe_catalog fan=16; main fan=15; analyze_semantic fan=15
+# evolution: baseline
+# Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
+M[49]:
+  Makefile,21
+  goal.yaml,512
+  install-dev.sh,11
+  packages/cli2img2nl/pyproject.toml,18
+  packages/cli2img2nl/src/cli2img2nl/cli.py,32
+  packages/dsl2img2nl/pyproject.toml,18
+  packages/dsl2img2nl/src/dsl2img2nl/__init__.py,6
+  packages/dsl2img2nl/src/dsl2img2nl/bus.py,29
+  packages/dsl2img2nl/src/dsl2img2nl/cli.py,33
+  packages/dsl2img2nl/src/dsl2img2nl/grammar.py,45
+  packages/dsl2img2nl/src/dsl2img2nl/handlers.py,77
+  packages/dsl2img2nl/src/dsl2img2nl/result.py,26
+  packages/uri2img2nl/pyproject.toml,18
+  packages/uri2img2nl/src/uri2img2nl/__init__.py,6
+  packages/uri2img2nl/src/uri2img2nl/cli.py,28
+  packages/uri2img2nl/src/uri2img2nl/query.py,106
+  packages/uri2img2nl/src/uri2img2nl/uri.py,46
+  project.sh,59
+  pyproject.toml,82
+  scripts/build_i18n_catalog.py,62
+  scripts/messages.extra.json,277
+  src/img2nl/__init__.py,25
+  src/img2nl/analyze.py,95
+  src/img2nl/cli.py,85
+  src/img2nl/describe.py,132
+  src/img2nl/features/__init__.py,31
+  src/img2nl/features/barcodes.py,78
+  src/img2nl/features/colors.py,51
+  src/img2nl/features/dynamics.py,28
+  src/img2nl/features/edges.py,54
+  src/img2nl/features/fingerprint.py,30
+  src/img2nl/features/noise.py,29
+  src/img2nl/features/objects.py,103
+  src/img2nl/features/ocr_text.py,73
+  src/img2nl/features/patterns.py,53
+  src/img2nl/features/scene.py,65
+  src/img2nl/features/semantic.py,84
+  src/img2nl/features/similarity.py,73
+  src/img2nl/features/special_hits.py,19
+  src/img2nl/i18n/__init__.py,26
+  src/img2nl/i18n/catalog.py,16
+  src/img2nl/i18n/locales.py,59
+  src/img2nl/i18n/messages.json,1122
+  src/img2nl/i18n/offline.py,189
+  src/img2nl/i18n/translate.py,16
+  src/img2nl/llm_gate.py,88
+  src/img2nl/result.py,34
+  src/img2nl/thumbnail.py,29
+  tree.sh,1
+D:
+  src/img2nl/llm_gate.py:
+    e: llm_transport_hint
+    llm_transport_hint(features)
+  src/img2nl/features/scene.py:
+    e: classify_scene
+    classify_scene(features)
+  src/img2nl/describe.py:
+    e: _describe_catalog,describe_image
+    _describe_catalog(features;lang)
+    describe_image(features)
+  src/img2nl/cli.py:
+    e: main
+    main(argv)
+  src/img2nl/features/objects.py:
+    e: _largest_regions,analyze_objects
+    _largest_regions(mask)
+    analyze_objects(im)
+  packages/dsl2img2nl/src/dsl2img2nl/grammar.py:
+    e: split_command,parse_line
+    split_command(line)
+    parse_line(line)
+  src/img2nl/features/colors.py:
+    e: _hex,analyze_colors
+    _hex(rgb)
+    analyze_colors(im)
+  src/img2nl/i18n/offline.py:
+    e: TranslateResult,argostranslate_available,_require_argos,_update_index,list_installed_pairs,list_available_pairs,ensure_language_pair,translate_summary_offline
+    TranslateResult: to_dict(0)
+    argostranslate_available()
+    _require_argos()
+    _update_index(package_mod)
+    list_installed_pairs()
+    list_available_pairs()
+    ensure_language_pair(from_code;to_code)
+    translate_summary_offline(text;target_lang)
+  src/img2nl/features/semantic.py:
+    e: _should_detect,_get_model,analyze_semantic
+    _should_detect(features)
+    _get_model()
+    analyze_semantic(im)
+  packages/uri2img2nl/src/uri2img2nl/query.py:
+    e: QueryResult,query_uri
+    QueryResult: to_dict(0)
+    query_uri(uri)
+  packages/dsl2img2nl/src/dsl2img2nl/cli.py:
+    e: main
+    main(argv)
+  packages/dsl2img2nl/src/dsl2img2nl/bus.py:
+    e: dispatch,execute_dsl_line
+    dispatch(envelope)
+    execute_dsl_line(line)
+  src/img2nl/features/patterns.py:
+    e: analyze_patterns
+    analyze_patterns(im)
+  src/img2nl/i18n/locales.py:
+    e: normalize_locale,supported_locales,is_european_locale
+    normalize_locale(locale)
+    supported_locales()
+    is_european_locale(locale)
+  src/img2nl/features/ocr_text.py:
+    e: _should_ocr,_preview,analyze_ocr
+    _should_ocr(features)
+    _preview(lines)
+    analyze_ocr(im)
+  packages/dsl2img2nl/src/dsl2img2nl/handlers.py:
+    e: handle_analyze,handle_query,handle_llm_hint,handle_from_tokens
+    handle_analyze(cmd)
+    handle_query(cmd)
+    handle_llm_hint(cmd)
+    handle_from_tokens(line;tokens;cmd)
+  src/img2nl/features/edges.py:
+    e: _unavailable,analyze_edges
+    _unavailable(reason)
+    analyze_edges(im)
+  src/img2nl/features/noise.py:
+    e: analyze_noise
+    analyze_noise(im)
+  src/img2nl/analyze.py:
+    e: analyze_image
+    analyze_image(image_path)
+  packages/cli2img2nl/src/cli2img2nl/cli.py:
+    e: main
+    main(argv)
+  src/img2nl/features/similarity.py:
+    e: fingerprint_hamming,compare_fingerprints,compare_images_ssim
+    fingerprint_hamming(a;b)
+    compare_fingerprints(current;reference)
+    compare_images_ssim(im_a;im_b)
+  src/img2nl/i18n/translate.py:
+    e: t
+    t()
+  src/img2nl/features/barcodes.py:
+    e: _suppress_zbar_stderr,_should_scan,analyze_barcodes
+    _suppress_zbar_stderr()
+    _should_scan(features)
+    analyze_barcodes(im)
+  packages/uri2img2nl/src/uri2img2nl/uri.py:
+    e: Img2NlUri,is_img2nl_uri,uri_for_analyze,uri_for_llm_hint,parse_img2nl_uri
+    Img2NlUri:
+    is_img2nl_uri(uri)
+    uri_for_analyze(path)
+    uri_for_llm_hint(path)
+    parse_img2nl_uri(uri)
+  packages/uri2img2nl/src/uri2img2nl/cli.py:
+    e: main
+    main(argv)
+  src/img2nl/thumbnail.py:
+    e: make_thumbnail
+    make_thumbnail(image_path)
+  src/img2nl/features/fingerprint.py:
+    e: _unavailable,analyze_fingerprint
+    _unavailable(reason)
+    analyze_fingerprint(im)
+  src/img2nl/i18n/catalog.py:
+    e: _load_messages
+    _load_messages()
+  src/img2nl/features/dynamics.py:
+    e: analyze_dynamics
+    analyze_dynamics(im)
+  src/img2nl/result.py:
+    e: Img2NlResult
+    Img2NlResult: to_dict(0)
+  src/img2nl/features/special_hits.py:
+    e: analyze_special_hits
+    analyze_special_hits(im;features)
+  packages/dsl2img2nl/src/dsl2img2nl/result.py:
+    e: DslResult
+    DslResult: to_dict(0)
+  Makefile:
+  pyproject.toml:
+  install-dev.sh:
+  project.sh:
+  packages/cli2img2nl/pyproject.toml:
+  goal.yaml:
+  packages/uri2img2nl/pyproject.toml:
+  packages/dsl2img2nl/pyproject.toml:
+  tree.sh:
+  src/img2nl/__init__.py:
+  src/img2nl/features/__init__.py:
+  src/img2nl/i18n/__init__.py:
+  src/img2nl/i18n/messages.json:
+  scripts/messages.extra.json:
+  packages/uri2img2nl/src/uri2img2nl/__init__.py:
+  packages/dsl2img2nl/src/dsl2img2nl/__init__.py:
+  scripts/build_i18n_catalog.py:

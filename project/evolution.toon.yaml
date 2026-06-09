@@ -1,0 +1,62 @@
+# code2llm/evolution | 63 func | 32f | 2026-06-09
+# generated in 0.01s
+
+NEXT[5] (ranked by impact):
+  [1] !! SPLIT-FUNC      llm_transport_hint  CC=27  fan=14
+      WHY: CC=27 exceeds 15
+      EFFORT: ~1h  IMPACT: 378
+
+  [2] !  SPLIT-FUNC      _describe_catalog  CC=17  fan=16
+      WHY: CC=17 exceeds 15
+      EFFORT: ~1h  IMPACT: 272
+
+  [3] !  SPLIT-FUNC      classify_scene  CC=18  fan=10
+      WHY: CC=18 exceeds 15
+      EFFORT: ~1h  IMPACT: 180
+
+  [4] !! SPLIT           src/img2nl/i18n/messages.json
+      WHY: 1122L, 0 classes, max CC=0
+      EFFORT: ~4h  IMPACT: 0
+
+  [5] !! SPLIT           goal.yaml
+      WHY: 512L, 0 classes, max CC=0
+      EFFORT: ~4h  IMPACT: 0
+
+
+RISKS[2]:
+  ⚠ Splitting src/img2nl/i18n/messages.json may break 0 import paths
+  ⚠ Splitting goal.yaml may break 0 import paths
+
+METRICS-TARGET:
+  CC̄:          5.3 → ≤3.7
+  max-CC:      27 → ≤13
+  god-modules: 2 → 0
+  high-CC(≥15): 3 → ≤1
+  hub-types:   0 → ≤0
+
+PATTERNS (language parser shared logic):
+  _extract_declarations() in base.py — unified extraction for:
+    - TypeScript: interfaces, types, classes, functions, arrow funcs
+    - PHP: namespaces, traits, classes, functions, includes
+    - Ruby: modules, classes, methods, requires
+    - C++: classes, structs, functions, #includes
+    - C#: classes, interfaces, methods, usings
+    - Java: classes, interfaces, methods, imports
+    - Go: packages, functions, structs
+    - Rust: modules, functions, traits, use statements
+
+  Shared regex patterns per language:
+    - import: language-specific import/require/using patterns
+    - class: class/struct/trait declarations with inheritance
+    - function: function/method signatures with visibility
+    - brace_tracking: for C-family languages ({ })
+    - end_keyword_tracking: for Ruby (module/class/def...end)
+
+  Benefits:
+    - Consistent extraction logic across all languages
+    - Reduced code duplication (~70% reduction in parser LOC)
+    - Easier maintenance: fix once, apply everywhere
+    - Standardized FunctionInfo/ClassInfo models
+
+HISTORY:
+  (first run — no previous data)
