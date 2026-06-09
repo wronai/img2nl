@@ -21,6 +21,7 @@ class Img2NlResult:
     goal: str = "describe"
     targets: dict[str, Any] = field(default_factory=dict)
     capture: dict[str, Any] = field(default_factory=dict)
+    click_result: dict[str, Any] = field(default_factory=dict)
     error: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
@@ -38,5 +39,6 @@ class Img2NlResult:
             "goal": self.goal,
             "targets": self.targets,
             "capture": self.capture,
+            "click_result": self.click_result,
             "error": self.error,
         }

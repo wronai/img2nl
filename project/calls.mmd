@@ -4,145 +4,153 @@ flowchart LR
         packages__cli2img2nl__src__cli2img2nl__cli__main["main"]
     end
     subgraph packages__dsl2img2nl
-        packages__dsl2img2nl__src__dsl2img2nl__grammar___apply_positional["_apply_positional"]
-        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_capture_analyze["handle_capture_analyze"]
-        packages__dsl2img2nl__src__dsl2img2nl__bus__execute_dsl_line["execute_dsl_line"]
-        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens["handle_from_tokens"]
-        packages__dsl2img2nl__src__dsl2img2nl__grammar__parse_line["parse_line"]
-        packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch["dispatch"]
-        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query["handle_query"]
-        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_analyze["handle_analyze"]
-        packages__dsl2img2nl__src__dsl2img2nl__grammar___parse_bool["_parse_bool"]
-        packages__dsl2img2nl__src__dsl2img2nl__grammar___consume_kv["_consume_kv"]
-        packages__dsl2img2nl__src__dsl2img2nl__grammar___try_bool_flag["_try_bool_flag"]
-        packages__dsl2img2nl__src__dsl2img2nl__grammar___normalize_token["_normalize_token"]
-        packages__dsl2img2nl__src__dsl2img2nl__grammar__split_command["split_command"]
-        packages__dsl2img2nl__src__dsl2img2nl__cli__main["main"]
-        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_llm_hint["handle_llm_hint"]
-        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_capture["handle_capture"]
-        packages__dsl2img2nl__src__dsl2img2nl__grammar___try_kv_token["_try_kv_token"]
-        packages__dsl2img2nl__src__dsl2img2nl__grammar___finalize_cmd["_finalize_cmd"]
         packages__dsl2img2nl__src__dsl2img2nl__grammar___consume_token["_consume_token"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar___finalize_cmd["_finalize_cmd"]
         packages__dsl2img2nl__src__dsl2img2nl__handlers___require_path["_require_path"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar___parse_bool["_parse_bool"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar___apply_positional["_apply_positional"]
         packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_targets["handle_targets"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_llm_hint["handle_llm_hint"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_capture_analyze["handle_capture_analyze"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query["handle_query"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_capture["handle_capture"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar__split_command["split_command"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar___normalize_token["_normalize_token"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar__parse_line["parse_line"]
+        packages__dsl2img2nl__src__dsl2img2nl__cli__main["main"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar___try_kv_token["_try_kv_token"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar___try_bool_flag["_try_bool_flag"]
+        packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch["dispatch"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens["handle_from_tokens"]
+        packages__dsl2img2nl__src__dsl2img2nl__bus__execute_dsl_line["execute_dsl_line"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar___consume_kv["_consume_kv"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_analyze["handle_analyze"]
     end
     subgraph packages__uri2img2nl
-        packages__uri2img2nl__src__uri2img2nl__uri__uri_for_analyze["uri_for_analyze"]
+        packages__uri2img2nl__src__uri2img2nl__query__query_uri["query_uri"]
+        packages__uri2img2nl__src__uri2img2nl__query_handlers__handle_analyze["handle_analyze"]
         packages__uri2img2nl__src__uri2img2nl__query_handlers__handle_llm_hint["handle_llm_hint"]
-        packages__uri2img2nl__src__uri2img2nl__uri__parse_img2nl_uri["parse_img2nl_uri"]
+        packages__uri2img2nl__src__uri2img2nl__query_handlers__cmd_from_uri["cmd_from_uri"]
         packages__uri2img2nl__src__uri2img2nl__query_handlers___missing_path["_missing_path"]
         packages__uri2img2nl__src__uri2img2nl__uri___encode_params["_encode_params"]
-        packages__uri2img2nl__src__uri2img2nl__uri___bool_param["_bool_param"]
-        packages__uri2img2nl__src__uri2img2nl__uri__uri_for_targets["uri_for_targets"]
-        packages__uri2img2nl__src__uri2img2nl__query__query_uri["query_uri"]
-        packages__uri2img2nl__src__uri2img2nl__query_handlers__handle_targets["handle_targets"]
-        packages__uri2img2nl__src__uri2img2nl__query_handlers___analyze_failure["_analyze_failure"]
-        packages__uri2img2nl__src__uri2img2nl__query_handlers__cmd_from_uri["cmd_from_uri"]
-        packages__uri2img2nl__src__uri2img2nl__query_handlers__handle_capture_analyze["handle_capture_analyze"]
-        packages__uri2img2nl__src__uri2img2nl__uri__uri_for_capture_analyze["uri_for_capture_analyze"]
         packages__uri2img2nl__src__uri2img2nl__query_handlers__handle_text["handle_text"]
-        packages__uri2img2nl__src__uri2img2nl__query_handlers__handle_analyze["handle_analyze"]
+        packages__uri2img2nl__src__uri2img2nl__uri__uri_for_capture_analyze["uri_for_capture_analyze"]
+        packages__uri2img2nl__src__uri2img2nl__uri__uri_for_analyze["uri_for_analyze"]
+        packages__uri2img2nl__src__uri2img2nl__query_handlers__handle_capture_analyze["handle_capture_analyze"]
+        packages__uri2img2nl__src__uri2img2nl__uri__parse_img2nl_uri["parse_img2nl_uri"]
+        packages__uri2img2nl__src__uri2img2nl__uri___bool_param["_bool_param"]
+        packages__uri2img2nl__src__uri2img2nl__query_handlers___analyze_failure["_analyze_failure"]
+        packages__uri2img2nl__src__uri2img2nl__query_handlers__handle_targets["handle_targets"]
         packages__uri2img2nl__src__uri2img2nl__cli__main["main"]
+        packages__uri2img2nl__src__uri2img2nl__uri__uri_for_targets["uri_for_targets"]
     end
     subgraph src__img2nl
-        src__img2nl__features__colors__analyze_colors["analyze_colors"]
-        src__img2nl__cli_commands__cmd_capture["cmd_capture"]
-        src__img2nl__cli_commands___profile_kwargs["_profile_kwargs"]
-        src__img2nl__features__similarity__compare_fingerprints["compare_fingerprints"]
-        src__img2nl__profiles__list_profiles["list_profiles"]
-        src__img2nl__features__targets___bbox_center["_bbox_center"]
-        src__img2nl__i18n__offline__argostranslate_available["argostranslate_available"]
-        src__img2nl__capture__capture_and_analyze["capture_and_analyze"]
-        src__img2nl__features__router___active_adapters["_active_adapters"]
         src__img2nl__describe__describe_image["describe_image"]
-        src__img2nl__features__scene___scene_from_heuristics["_scene_from_heuristics"]
-        src__img2nl__features__semantic___should_detect["_should_detect"]
-        src__img2nl__features__identify_matchers__identify_from_features["identify_from_features"]
-        src__img2nl__describe___describe_brightness_dynamics["_describe_brightness_dynamics"]
-        src__img2nl__features__matchers_common__match_ui_role["match_ui_role"]
-        src__img2nl__features__similarity__fingerprint_hamming["fingerprint_hamming"]
-        src__img2nl__features__router__execute_target_plan["execute_target_plan"]
-        src__img2nl__i18n__offline__list_installed_pairs["list_installed_pairs"]
-        src__img2nl__features__scene___scene_from_special["_scene_from_special"]
-        src__img2nl__features__barcodes___suppress_zbar_stderr["_suppress_zbar_stderr"]
-        src__img2nl__context__infer_source_type["infer_source_type"]
-        src__img2nl__features__edges__analyze_edges["analyze_edges"]
-        src__img2nl__thumbnail__make_thumbnail["make_thumbnail"]
-        src__img2nl__features__ui_adapter___try_imgl_local["_try_imgl_local"]
-        src__img2nl__features__ui_adapter__analyze_ui_targets["analyze_ui_targets"]
-        src__img2nl__features__scene__classify_scene["classify_scene"]
-        src__img2nl__features__fingerprint___unavailable["_unavailable"]
-        src__img2nl__context__default_targets["default_targets"]
-        src__img2nl__features__ui_adapter___from_imgl_elements["_from_imgl_elements"]
-        src__img2nl__features__semantic__analyze_semantic["analyze_semantic"]
-        src__img2nl__features__extractors__extract_base_features["extract_base_features"]
-        src__img2nl__cli_commands__cmd_translate_install["cmd_translate_install"]
-        src__img2nl__i18n__locales__normalize_locale["normalize_locale"]
-        src__img2nl__features__presence_matchers__match_ui["match_ui"]
         src__img2nl__api__targets_from_cmd["targets_from_cmd"]
-        src__img2nl__cli___add_translate_install_parser["_add_translate_install_parser"]
-        src__img2nl__plan__should_run_ui_detect["should_run_ui_detect"]
-        src__img2nl__cli___add_capture_analyze_parser["_add_capture_analyze_parser"]
-        src__img2nl__profiles__get_profile["get_profile"]
-        src__img2nl__features__ocr_text___preview["_preview"]
-        src__img2nl__features__router__analyze_targets["analyze_targets"]
-        src__img2nl__features__objects__analyze_objects["analyze_objects"]
-        src__img2nl__analyze__analyze_image["analyze_image"]
-        src__img2nl__capture__capture_screenshot["capture_screenshot"]
-        src__img2nl__plan__build_execution_plan["build_execution_plan"]
-        src__img2nl__analyze___assemble_result["_assemble_result"]
-        src__img2nl__features__fingerprint__analyze_fingerprint["analyze_fingerprint"]
-        src__img2nl__features__scene___scene_from_similarity["_scene_from_similarity"]
-        src__img2nl__features__scene___scene_dense_from_edges["_scene_dense_from_edges"]
-        src__img2nl__i18n__offline__ensure_language_pair["ensure_language_pair"]
-        src__img2nl__features__targets__find_click_point["find_click_point"]
-        src__img2nl__profiles__analyze_kwargs_from_cmd["analyze_kwargs_from_cmd"]
-        src__img2nl__api__capture_analyze_from_cmd["capture_analyze_from_cmd"]
-        src__img2nl__features__barcodes__analyze_barcodes["analyze_barcodes"]
-        src__img2nl__cli_commands___target_list["_target_list"]
-        src__img2nl__api__capture_from_cmd["capture_from_cmd"]
-        src__img2nl__i18n__offline___require_argos["_require_argos"]
-        src__img2nl__i18n__translate__t["t"]
-        src__img2nl__features__semantic___get_model["_get_model"]
-        src__img2nl__plan__should_run_identify["should_run_identify"]
-        src__img2nl__analyze___open_image["_open_image"]
-        src__img2nl__i18n__locales__is_european_locale["is_european_locale"]
-        src__img2nl__i18n__offline__list_available_pairs["list_available_pairs"]
-        src__img2nl__plan__resolve_targets["resolve_targets"]
-        src__img2nl__features__scene___scene_general_fallback["_scene_general_fallback"]
-        src__img2nl__features__ui_adapter___try_imgl_bridge["_try_imgl_bridge"]
-        src__img2nl__i18n__offline__translate_summary_offline["translate_summary_offline"]
-        src__img2nl__i18n__offline___update_index["_update_index"]
-        src__img2nl__cli_commands__cmd_analyze["cmd_analyze"]
+        src__img2nl__features__matchers_common__match_ui_role["match_ui_role"]
+        src__img2nl__capture__capture_and_analyze["capture_and_analyze"]
+        src__img2nl__features__dynamics__analyze_dynamics["analyze_dynamics"]
+        src__img2nl__features__identify_matchers__identify_from_features["identify_from_features"]
         src__img2nl__features__presence_matchers__match_semantic["match_semantic"]
-        src__img2nl__features__special_hits__analyze_special_hits["analyze_special_hits"]
-        src__img2nl__plan__should_run_semantic["should_run_semantic"]
-        src__img2nl__api__analyze_from_cmd["analyze_from_cmd"]
-        src__img2nl__features__ocr_text__analyze_ocr["analyze_ocr"]
+        src__img2nl__api__capture_from_cmd["capture_from_cmd"]
         src__img2nl__api__llm_hint_from_path["llm_hint_from_path"]
+        src__img2nl__profiles__analyze_kwargs_from_cmd["analyze_kwargs_from_cmd"]
+        src__img2nl__analyze___open_image["_open_image"]
+        src__img2nl__actions__click_target["click_target"]
+        src__img2nl__profiles__get_profile["get_profile"]
+        src__img2nl__features__ui_adapter__analyze_ui_targets["analyze_ui_targets"]
+        src__img2nl__cli___add_capture_analyze_parser["_add_capture_analyze_parser"]
+        src__img2nl__features__extractors___run_layer["_run_layer"]
+        src__img2nl__features__barcodes__analyze_barcodes["analyze_barcodes"]
+        src__img2nl__i18n__offline___update_index["_update_index"]
+        src__img2nl__analyze__analyze_image["analyze_image"]
+        src__img2nl__api__capture_analyze_from_cmd["capture_analyze_from_cmd"]
+        src__img2nl__features__semantic__analyze_semantic["analyze_semantic"]
+        src__img2nl__features__semantic___should_detect["_should_detect"]
+        src__img2nl__features__barcodes___suppress_zbar_stderr["_suppress_zbar_stderr"]
+        src__img2nl__features__edges__analyze_edges["analyze_edges"]
+        src__img2nl__cli___add_capture_parser["_add_capture_parser"]
+        src__img2nl__features__similarity__compare_fingerprints["compare_fingerprints"]
+        src__img2nl__features__fingerprint__analyze_fingerprint["analyze_fingerprint"]
+        src__img2nl__api__text_from_path["text_from_path"]
+        src__img2nl__plan__resolve_base_layers["resolve_base_layers"]
+        src__img2nl__actions__build_click_action["build_click_action"]
+        src__img2nl__features__ocr_text___should_ocr["_should_ocr"]
+        src__img2nl__features__presence_matchers__presence_from_features["presence_from_features"]
+        src__img2nl__cli_commands___profile_kwargs["_profile_kwargs"]
+        src__img2nl__features__similarity__fingerprint_hamming["fingerprint_hamming"]
         src__img2nl__features__extractors__apply_semantic_layer["apply_semantic_layer"]
+        src__img2nl__profiles__list_profiles["list_profiles"]
+        src__img2nl__features__targets__find_click_point["find_click_point"]
         src__img2nl__cli___add_analyze_parser["_add_analyze_parser"]
         src__img2nl__cli__build_parser["build_parser"]
-        src__img2nl__features__identify_matchers__collect_ui["collect_ui"]
-        src__img2nl__features__dynamics__analyze_dynamics["analyze_dynamics"]
-        src__img2nl__cli___add_capture_parser["_add_capture_parser"]
-        src__img2nl__analyze___require_pillow["_require_pillow"]
-        src__img2nl__cli__main["main"]
-        src__img2nl__features__targets__best_detection["best_detection"]
-        src__img2nl__cli_commands__cmd_capture_analyze["cmd_capture_analyze"]
-        src__img2nl__features__presence_matchers__presence_from_features["presence_from_features"]
-        src__img2nl__features__presence_matchers___best_semantic_object["_best_semantic_object"]
-        src__img2nl__profiles__apply_profile["apply_profile"]
-        src__img2nl__describe___describe_color_parts["_describe_color_parts"]
-        src__img2nl__features__targets__build_target_report["build_target_report"]
-        src__img2nl__describe___describe_catalog["_describe_catalog"]
-        src__img2nl__features__presence_matchers___absent["_absent"]
-        src__img2nl__api__text_from_path["text_from_path"]
-        src__img2nl__features__noise__analyze_noise["analyze_noise"]
-        src__img2nl__features__patterns__analyze_patterns["analyze_patterns"]
+        src__img2nl__cli_commands__cmd_analyze["cmd_analyze"]
+        src__img2nl__i18n__locales__normalize_locale["normalize_locale"]
+        src__img2nl__features__ui_adapter___try_imgl_local["_try_imgl_local"]
         src__img2nl__llm_gate__llm_transport_hint["llm_transport_hint"]
+        src__img2nl__features__presence_matchers___absent["_absent"]
+        src__img2nl__i18n__offline__list_available_pairs["list_available_pairs"]
+        src__img2nl__plan__should_run_semantic["should_run_semantic"]
+        src__img2nl__plan__should_run_identify["should_run_identify"]
+        src__img2nl__cli__main["main"]
+        src__img2nl__plan__should_run_ui_detect["should_run_ui_detect"]
+        src__img2nl__features__router__execute_target_plan["execute_target_plan"]
+        src__img2nl__cli___add_translate_install_parser["_add_translate_install_parser"]
+        src__img2nl__features__ocr_text__analyze_ocr["analyze_ocr"]
+        src__img2nl__plan__resolve_targets["resolve_targets"]
+        src__img2nl__profiles__apply_profile["apply_profile"]
+        src__img2nl__features__ui_adapter___try_imgl_bridge["_try_imgl_bridge"]
+        src__img2nl__actions__execute_click_action["execute_click_action"]
+        src__img2nl__describe___describe_catalog["_describe_catalog"]
+        src__img2nl__cli_commands__cmd_capture["cmd_capture"]
+        src__img2nl__features__extractors__extract_base_features["extract_base_features"]
+        src__img2nl__features__ocr_text___preview["_preview"]
+        src__img2nl__i18n__translate__t["t"]
+        src__img2nl__plan__build_execution_plan["build_execution_plan"]
+        src__img2nl__features__router___active_adapters["_active_adapters"]
+        src__img2nl__i18n__offline__list_installed_pairs["list_installed_pairs"]
+        src__img2nl__analyze___require_pillow["_require_pillow"]
+        src__img2nl__thumbnail__make_thumbnail["make_thumbnail"]
+        src__img2nl__features__special_hits__analyze_special_hits["analyze_special_hits"]
+        src__img2nl__features__fingerprint___unavailable["_unavailable"]
+        src__img2nl__features__targets___bbox_center["_bbox_center"]
+        src__img2nl__features__scene___scene_dense_from_edges["_scene_dense_from_edges"]
+        src__img2nl__i18n__offline__argostranslate_available["argostranslate_available"]
+        src__img2nl__features__scene___scene_from_heuristics["_scene_from_heuristics"]
+        src__img2nl__i18n__offline___require_argos["_require_argos"]
+        src__img2nl__features__semantic___get_model["_get_model"]
+        src__img2nl__features__scene__classify_scene["classify_scene"]
+        src__img2nl__api__analyze_from_cmd["analyze_from_cmd"]
+        src__img2nl__cli_commands__cmd_translate_install["cmd_translate_install"]
+        src__img2nl__features__patterns__analyze_patterns["analyze_patterns"]
+        src__img2nl__context__default_targets["default_targets"]
+        src__img2nl__cli_commands__cmd_capture_analyze["cmd_capture_analyze"]
+        src__img2nl__features__identify_matchers__collect_ui["collect_ui"]
+        src__img2nl__cli_commands___target_list["_target_list"]
+        src__img2nl__features__ui_adapter___from_imgl_elements["_from_imgl_elements"]
+        src__img2nl__capture__capture_screenshot["capture_screenshot"]
+        src__img2nl__features__objects__analyze_objects["analyze_objects"]
+        src__img2nl__features__colors__analyze_colors["analyze_colors"]
+        src__img2nl__context__infer_source_type["infer_source_type"]
+        src__img2nl__i18n__offline__ensure_language_pair["ensure_language_pair"]
+        src__img2nl__actions__click_from_result["click_from_result"]
+        src__img2nl__features__targets__best_detection["best_detection"]
+        src__img2nl__api__click_target_from_cmd["click_target_from_cmd"]
+        src__img2nl__describe___describe_brightness_dynamics["_describe_brightness_dynamics"]
         src__img2nl__features__barcodes___should_scan["_should_scan"]
-        src__img2nl__features__ocr_text___should_ocr["_should_ocr"]
+        src__img2nl__plan__should_run_special_hits["should_run_special_hits"]
+        src__img2nl__features__scene___scene_from_special["_scene_from_special"]
+        src__img2nl__i18n__locales__is_european_locale["is_european_locale"]
+        src__img2nl__describe___describe_color_parts["_describe_color_parts"]
+        src__img2nl__i18n__offline__translate_summary_offline["translate_summary_offline"]
+        src__img2nl__features__targets__build_target_report["build_target_report"]
+        src__img2nl__features__presence_matchers___best_semantic_object["_best_semantic_object"]
+        src__img2nl__features__scene___scene_from_similarity["_scene_from_similarity"]
+        src__img2nl__features__presence_matchers__match_ui["match_ui"]
+        src__img2nl__features__router__analyze_targets["analyze_targets"]
+        src__img2nl__features__noise__analyze_noise["analyze_noise"]
+        src__img2nl__features__scene___scene_general_fallback["_scene_general_fallback"]
+        src__img2nl__analyze___assemble_result["_assemble_result"]
     end
     packages__cli2img2nl__src__cli2img2nl__cli__main --> packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch
     packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch --> packages__dsl2img2nl__src__dsl2img2nl__grammar__split_command
@@ -190,62 +198,9 @@ flowchart LR
     src__img2nl__describe__describe_image --> src__img2nl__i18n__locales__normalize_locale
     src__img2nl__describe__describe_image --> src__img2nl__describe___describe_catalog
     src__img2nl__describe__describe_image --> src__img2nl__i18n__offline__translate_summary_offline
-    src__img2nl__cli__build_parser --> src__img2nl__cli___add_analyze_parser
-    src__img2nl__cli__build_parser --> src__img2nl__cli___add_capture_parser
-    src__img2nl__cli__build_parser --> src__img2nl__cli___add_capture_analyze_parser
-    src__img2nl__cli__build_parser --> src__img2nl__cli___add_translate_install_parser
-    src__img2nl__cli__main --> src__img2nl__cli__build_parser
-    src__img2nl__analyze___assemble_result --> src__img2nl__describe__describe_image
-    src__img2nl__analyze___assemble_result --> src__img2nl__llm_gate__llm_transport_hint
-    src__img2nl__analyze___assemble_result --> src__img2nl__thumbnail__make_thumbnail
-    src__img2nl__analyze__analyze_image --> src__img2nl__analyze___require_pillow
-    src__img2nl__analyze__analyze_image --> src__img2nl__analyze___open_image
-    src__img2nl__analyze__analyze_image --> src__img2nl__features__extractors__extract_base_features
-    src__img2nl__analyze__analyze_image --> src__img2nl__plan__build_execution_plan
-    src__img2nl__analyze__analyze_image --> src__img2nl__features__extractors__apply_semantic_layer
-    src__img2nl__analyze__analyze_image --> src__img2nl__features__router__execute_target_plan
-    src__img2nl__plan__resolve_targets --> src__img2nl__context__default_targets
-    src__img2nl__plan__build_execution_plan --> src__img2nl__context__infer_source_type
-    src__img2nl__plan__build_execution_plan --> src__img2nl__plan__resolve_targets
-    src__img2nl__plan__build_execution_plan --> src__img2nl__plan__should_run_ui_detect
-    src__img2nl__plan__build_execution_plan --> src__img2nl__plan__should_run_semantic
-    src__img2nl__plan__build_execution_plan --> src__img2nl__plan__should_run_identify
-    src__img2nl__capture__capture_and_analyze --> src__img2nl__capture__capture_screenshot
-    src__img2nl__capture__capture_and_analyze --> src__img2nl__analyze__analyze_image
-    src__img2nl__api__analyze_from_cmd --> src__img2nl__analyze__analyze_image
-    src__img2nl__api__analyze_from_cmd --> src__img2nl__profiles__analyze_kwargs_from_cmd
-    src__img2nl__api__targets_from_cmd --> src__img2nl__profiles__analyze_kwargs_from_cmd
-    src__img2nl__api__targets_from_cmd --> src__img2nl__analyze__analyze_image
-    src__img2nl__api__capture_from_cmd --> src__img2nl__capture__capture_screenshot
-    src__img2nl__api__capture_analyze_from_cmd --> src__img2nl__profiles__analyze_kwargs_from_cmd
-    src__img2nl__api__capture_analyze_from_cmd --> src__img2nl__capture__capture_and_analyze
-    src__img2nl__api__llm_hint_from_path --> src__img2nl__analyze__analyze_image
-    src__img2nl__api__text_from_path --> src__img2nl__analyze__analyze_image
     src__img2nl__profiles__get_profile --> src__img2nl__profiles__list_profiles
     src__img2nl__profiles__apply_profile --> src__img2nl__profiles__get_profile
     src__img2nl__profiles__analyze_kwargs_from_cmd --> src__img2nl__profiles__get_profile
-    src__img2nl__cli_commands___profile_kwargs --> src__img2nl__profiles__analyze_kwargs_from_cmd
-    src__img2nl__cli_commands__cmd_analyze --> src__img2nl__cli_commands___target_list
-    src__img2nl__cli_commands__cmd_analyze --> src__img2nl__cli_commands___profile_kwargs
-    src__img2nl__cli_commands__cmd_analyze --> src__img2nl__analyze__analyze_image
-    src__img2nl__cli_commands__cmd_capture --> src__img2nl__capture__capture_screenshot
-    src__img2nl__cli_commands__cmd_capture_analyze --> src__img2nl__cli_commands___target_list
-    src__img2nl__cli_commands__cmd_capture_analyze --> src__img2nl__cli_commands___profile_kwargs
-    src__img2nl__cli_commands__cmd_capture_analyze --> src__img2nl__capture__capture_and_analyze
-    src__img2nl__cli_commands__cmd_translate_install --> src__img2nl__i18n__offline__ensure_language_pair
-    src__img2nl__cli_commands__cmd_translate_install --> src__img2nl__i18n__offline__argostranslate_available
-    src__img2nl__cli_commands__cmd_translate_install --> src__img2nl__i18n__offline__list_installed_pairs
-    src__img2nl__cli_commands__cmd_translate_install --> src__img2nl__i18n__offline__list_available_pairs
-    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__scene__classify_scene
-    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__special_hits__analyze_special_hits
-    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__colors__analyze_colors
-    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__dynamics__analyze_dynamics
-    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__noise__analyze_noise
-    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__objects__analyze_objects
-    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__patterns__analyze_patterns
-    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__edges__analyze_edges
-    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__fingerprint__analyze_fingerprint
-    src__img2nl__features__extractors__apply_semantic_layer --> src__img2nl__features__semantic__analyze_semantic
     src__img2nl__features__ocr_text__analyze_ocr --> src__img2nl__features__ocr_text___preview
     src__img2nl__features__ocr_text__analyze_ocr --> src__img2nl__features__ocr_text___should_ocr
     src__img2nl__features__scene___scene_from_heuristics --> src__img2nl__features__scene___scene_general_fallback
@@ -289,3 +244,70 @@ flowchart LR
     src__img2nl__i18n__offline__translate_summary_offline --> src__img2nl__i18n__locales__normalize_locale
     src__img2nl__i18n__offline__translate_summary_offline --> src__img2nl__i18n__offline___require_argos
     src__img2nl__i18n__offline__translate_summary_offline --> src__img2nl__i18n__offline__argostranslate_available
+    src__img2nl__cli__build_parser --> src__img2nl__cli___add_analyze_parser
+    src__img2nl__cli__build_parser --> src__img2nl__cli___add_capture_parser
+    src__img2nl__cli__build_parser --> src__img2nl__cli___add_capture_analyze_parser
+    src__img2nl__cli__build_parser --> src__img2nl__cli___add_translate_install_parser
+    src__img2nl__cli__main --> src__img2nl__cli__build_parser
+    src__img2nl__analyze___assemble_result --> src__img2nl__describe__describe_image
+    src__img2nl__analyze___assemble_result --> src__img2nl__llm_gate__llm_transport_hint
+    src__img2nl__analyze___assemble_result --> src__img2nl__thumbnail__make_thumbnail
+    src__img2nl__analyze__analyze_image --> src__img2nl__analyze___require_pillow
+    src__img2nl__analyze__analyze_image --> src__img2nl__analyze___open_image
+    src__img2nl__analyze__analyze_image --> src__img2nl__plan__build_execution_plan
+    src__img2nl__analyze__analyze_image --> src__img2nl__features__extractors__extract_base_features
+    src__img2nl__analyze__analyze_image --> src__img2nl__features__extractors__apply_semantic_layer
+    src__img2nl__analyze__analyze_image --> src__img2nl__features__router__execute_target_plan
+    src__img2nl__plan__resolve_targets --> src__img2nl__context__default_targets
+    src__img2nl__plan__build_execution_plan --> src__img2nl__context__infer_source_type
+    src__img2nl__plan__build_execution_plan --> src__img2nl__plan__resolve_targets
+    src__img2nl__plan__build_execution_plan --> src__img2nl__plan__should_run_ui_detect
+    src__img2nl__plan__build_execution_plan --> src__img2nl__plan__should_run_semantic
+    src__img2nl__plan__build_execution_plan --> src__img2nl__plan__should_run_identify
+    src__img2nl__plan__build_execution_plan --> src__img2nl__plan__resolve_base_layers
+    src__img2nl__plan__build_execution_plan --> src__img2nl__plan__should_run_special_hits
+    src__img2nl__actions__build_click_action --> src__img2nl__features__targets__find_click_point
+    src__img2nl__actions__click_target --> src__img2nl__actions__build_click_action
+    src__img2nl__actions__click_target --> src__img2nl__actions__execute_click_action
+    src__img2nl__actions__click_from_result --> src__img2nl__actions__click_target
+    src__img2nl__capture__capture_and_analyze --> src__img2nl__capture__capture_screenshot
+    src__img2nl__capture__capture_and_analyze --> src__img2nl__analyze__analyze_image
+    src__img2nl__capture__capture_and_analyze --> src__img2nl__actions__click_from_result
+    src__img2nl__api__analyze_from_cmd --> src__img2nl__analyze__analyze_image
+    src__img2nl__api__analyze_from_cmd --> src__img2nl__profiles__analyze_kwargs_from_cmd
+    src__img2nl__api__targets_from_cmd --> src__img2nl__profiles__analyze_kwargs_from_cmd
+    src__img2nl__api__targets_from_cmd --> src__img2nl__analyze__analyze_image
+    src__img2nl__api__capture_from_cmd --> src__img2nl__capture__capture_screenshot
+    src__img2nl__api__capture_analyze_from_cmd --> src__img2nl__profiles__analyze_kwargs_from_cmd
+    src__img2nl__api__capture_analyze_from_cmd --> src__img2nl__capture__capture_and_analyze
+    src__img2nl__api__click_target_from_cmd --> src__img2nl__profiles__analyze_kwargs_from_cmd
+    src__img2nl__api__click_target_from_cmd --> src__img2nl__analyze__analyze_image
+    src__img2nl__api__click_target_from_cmd --> src__img2nl__actions__click_from_result
+    src__img2nl__api__llm_hint_from_path --> src__img2nl__analyze__analyze_image
+    src__img2nl__api__text_from_path --> src__img2nl__analyze__analyze_image
+    src__img2nl__cli_commands___profile_kwargs --> src__img2nl__profiles__analyze_kwargs_from_cmd
+    src__img2nl__cli_commands__cmd_analyze --> src__img2nl__cli_commands___target_list
+    src__img2nl__cli_commands__cmd_analyze --> src__img2nl__cli_commands___profile_kwargs
+    src__img2nl__cli_commands__cmd_analyze --> src__img2nl__analyze__analyze_image
+    src__img2nl__cli_commands__cmd_capture --> src__img2nl__capture__capture_screenshot
+    src__img2nl__cli_commands__cmd_capture_analyze --> src__img2nl__cli_commands___target_list
+    src__img2nl__cli_commands__cmd_capture_analyze --> src__img2nl__cli_commands___profile_kwargs
+    src__img2nl__cli_commands__cmd_capture_analyze --> src__img2nl__capture__capture_and_analyze
+    src__img2nl__cli_commands__cmd_translate_install --> src__img2nl__i18n__offline__ensure_language_pair
+    src__img2nl__cli_commands__cmd_translate_install --> src__img2nl__i18n__offline__argostranslate_available
+    src__img2nl__cli_commands__cmd_translate_install --> src__img2nl__i18n__offline__list_installed_pairs
+    src__img2nl__cli_commands__cmd_translate_install --> src__img2nl__i18n__offline__list_available_pairs
+    src__img2nl__features__extractors___run_layer --> src__img2nl__features__colors__analyze_colors
+    src__img2nl__features__extractors___run_layer --> src__img2nl__features__dynamics__analyze_dynamics
+    src__img2nl__features__extractors___run_layer --> src__img2nl__features__noise__analyze_noise
+    src__img2nl__features__extractors___run_layer --> src__img2nl__features__objects__analyze_objects
+    src__img2nl__features__extractors___run_layer --> src__img2nl__features__patterns__analyze_patterns
+    src__img2nl__features__extractors___run_layer --> src__img2nl__features__edges__analyze_edges
+    src__img2nl__features__extractors___run_layer --> src__img2nl__features__fingerprint__analyze_fingerprint
+    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__scene__classify_scene
+    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__extractors___run_layer
+    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__colors__analyze_colors
+    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__fingerprint__analyze_fingerprint
+    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__similarity__compare_fingerprints
+    src__img2nl__features__extractors__extract_base_features --> src__img2nl__features__special_hits__analyze_special_hits
+    src__img2nl__features__extractors__apply_semantic_layer --> src__img2nl__features__semantic__analyze_semantic

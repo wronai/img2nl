@@ -1,45 +1,45 @@
-# img2nl | 169 func | 47f | 7133L | python | 2026-06-09
+# img2nl | 177 func | 48f | 7423L | python | 2026-06-09
 # generated in 0.00s
 
 HEALTH:
-  CC̄=3.7  critical=10 (limit:10)  dup=0  cycles=0
+  CC̄=3.8  critical=12 (limit:10)  dup=0  cycles=0
 
 ALERTS[17]:
   !!  high_fan_out     analyze_edges = 17 (limit:10)
   !!  high_fan_out     analyze_semantic = 15 (limit:10)
   !!  high_fan_out     analyze_objects = 15 (limit:10)
   !!  high_fan_out     build_target_report = 15 (limit:10)
-  !   high_fan_out     analyze_image = 13 (limit:10)
+  !   high_fan_out     analyze_image = 14 (limit:10)
   !   high_fan_out     analyze_colors = 13 (limit:10)
   !   high_fan_out     analyze_patterns = 13 (limit:10)
   !   high_fan_out     analyze_noise = 13 (limit:10)
   !   high_fan_out     main = 11 (limit:10)
   !   high_fan_out     make_thumbnail = 11 (limit:10)
 
-MODULES[68] (top by size):
+MODULES[69] (top by size):
   M[src/img2nl/i18n/messages.json] 1122L C:0 F:0 CC↑0 D:0 (json)
   M[planfile.yaml] 1033L C:0 F:0 CC↑0 D:0 (yaml)
   M[goal.yaml] 512L C:0 F:0 CC↑0 D:0 (yaml)
   M[scripts/messages.extra.json] 277L C:0 F:0 CC↑0 D:0 (json)
   M[src/img2nl/i18n/offline.py] 189L C:1 F:8 CC↑11 D:2 (python)
   M[src/img2nl/describe.py] 179L C:0 F:7 CC↑8 D:1 (python)
+  M[src/img2nl/plan.py] 178L C:1 F:7 CC↑11 D:2 (python)
   M[packages/uri2img2nl/src/uri2img2nl/query_handlers.py] 156L C:0 F:8 CC↑4 D:0 (python)
+  M[src/img2nl/analyze.py] 152L C:0 F:4 CC↑7 D:3 (python)
   M[src/img2nl/llm_gate.py] 149L C:0 F:7 CC↑8 D:1 (python)
   M[packages/uri2img2nl/src/uri2img2nl/uri.py] 148L C:1 F:8 CC↑14 D:2 (python)
   M[packages/dsl2img2nl/src/dsl2img2nl/handlers.py] 148L C:0 F:8 CC↑6 D:1 (python)
   M[src/img2nl/features/presence_matchers.py] 134L C:0 F:7 CC↑9 D:1 (python)
   M[src/img2nl/features/identify_matchers.py] 132L C:0 F:5 CC↑10 D:1 (python)
-  M[src/img2nl/cli_commands.py] 123L C:0 F:6 CC↑8 D:0 (python)
-  M[src/img2nl/analyze.py] 120L C:0 F:4 CC↑4 D:3 (python)
-  M[packages/dsl2img2nl/src/dsl2img2nl/grammar.py] 118L C:0 F:11 CC↑4 D:1 (python)
-  LANGS: python:54/yaml:4/toml:4/shell:3/json:2/other:1
+  M[src/img2nl/cli_commands.py] 128L C:0 F:6 CC↑8 D:0 (python)
+  LANGS: python:55/yaml:4/toml:4/shell:3/json:2/other:1
 
 HOTSPOTS[10]:
   ★ analyze_edges fan=17  // Analysis pipeline, 17 stages
   ★ analyze_semantic fan=15  // Analysis pipeline, 15 stages
   ★ analyze_objects fan=15  // Analysis pipeline, 15 stages
   ★ build_target_report fan=15  // Orchestrates 15 calls
-  ★ analyze_image fan=13  // Analysis pipeline, 13 stages
+  ★ analyze_image fan=14  // Analysis pipeline, 14 stages
 
 REFACTOR[6]:
   [1] H/H Split god module goal.yaml (512L, 0 classes)
@@ -49,4 +49,4 @@ REFACTOR[6]:
   [5] M/M Reduce analyze_semantic fan-out (currently 15)
 
 EVOLUTION:
-  2026-06-09 CC̄=3.7 crit=10 7133L // Automated analysis
+  2026-06-09 CC̄=3.8 crit=12 7423L // Automated analysis

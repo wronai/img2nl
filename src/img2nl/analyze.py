@@ -89,7 +89,9 @@ def analyze_image(
     try:
         im = _open_image(path)
         w, h = im.size
-        features = extract_base_features(im, reference_fingerprint=reference_fingerprint)
+        from img2nl.features import analyze_colors
+
+        prelude = {"colors": analyze_colors(im)}
         plan = build_execution_plan(
             explicit_source=source_type,
             goal=goal,
@@ -99,8 +101,38 @@ def analyze_image(
             enable_ui_detect=enable_ui_detect,
             width=w,
             height=h,
-            features=features,
+            features=prelude,
         )
+        features = extract_base_features(
+            im,
+            plan=plan,
+            reference_fingerprint=reference_fingerprint,
+        )
+        if source_type == "auto":
+            refined = build_execution_plan(
+                explicit_source=source_type,
+                goal=goal,
+                targets=targets,
+                speed=speed,
+                enable_detect=enable_detect,
+                enable_ui_detect=enable_ui_detect,
+                width=w,
+                height=h,
+                features=features,
+            )
+            if (
+                refined.base_layers != plan.base_layers
+                or refined.source_type != plan.source_type
+            ):
+                plan = refined
+                features = extract_base_features(
+                    im,
+                    plan=plan,
+                    reference_fingerprint=reference_fingerprint,
+                    existing=features,
+                )
+            else:
+                plan = refined
         apply_semantic_layer(im, features, enabled=plan.run_semantic)
         features["target_analysis"] = execute_target_plan(path, features, plan)
 

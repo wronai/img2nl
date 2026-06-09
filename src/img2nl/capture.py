@@ -67,6 +67,8 @@ def capture_and_analyze(
     targets: list[str] | None = None,
     speed: SpeedMode = "fast",
     enable_ui_detect: bool = True,
+    click_target: str | None = None,
+    execute_click: bool = False,
     **analyze_kw: Any,
 ) -> Img2NlResult:
     capture = capture_screenshot(output, monitor=monitor, backend=backend)
@@ -88,4 +90,12 @@ def capture_and_analyze(
         **analyze_kw,
     )
     result.capture = capture
+    if click_target:
+        from img2nl.actions import click_from_result
+
+        result.click_result = click_from_result(
+            result,
+            click_target,
+            dry_run=not execute_click,
+        )
     return result

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from img2nl.actions import click_from_result
 from img2nl.analyze import analyze_image
 from img2nl.capture import capture_and_analyze, capture_screenshot
 from img2nl.profiles import analyze_kwargs_from_cmd
@@ -40,12 +41,27 @@ def capture_analyze_from_cmd(cmd: dict[str, Any]) -> Img2NlResult:
     kwargs.setdefault("source_type", "screenshot")
     kwargs.setdefault("goal", "click")
     kwargs.setdefault("enable_ui_detect", True)
+    click_target_name = cmd.get("click_target") or cmd.get("click")
+    execute_click = bool(cmd.get("execute_click") or cmd.get("execute"))
     return capture_and_analyze(
         out,
         monitor=int(cmd.get("monitor", 1)),
         backend=str(cmd.get("backend", "auto")),
+        click_target=str(click_target_name) if click_target_name else None,
+        execute_click=execute_click,
         **kwargs,
     )
+
+
+def click_target_from_cmd(cmd: dict[str, Any]) -> dict[str, Any]:
+    kwargs = analyze_kwargs_from_cmd(cmd)
+    kwargs.setdefault("goal", "click")
+    kwargs.setdefault("enable_ui_detect", True)
+    kwargs["skip_thumbnail"] = True
+    result = analyze_image(cmd["path"], **kwargs)
+    target = str(cmd.get("click_target") or cmd.get("target") or "button")
+    dry_run = not bool(cmd.get("execute_click") or cmd.get("execute"))
+    return click_from_result(result, target, dry_run=dry_run)
 
 
 def llm_hint_from_path(path: str) -> dict[str, Any]:

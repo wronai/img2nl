@@ -5,11 +5,11 @@
 
 - **Project**: /home/tom/github/wronai/img2nl
 - **Primary Language**: python
-- **Languages**: python: 54, yaml: 4, toml: 4, shell: 3, json: 2
+- **Languages**: python: 55, yaml: 4, toml: 4, shell: 3, json: 2
 - **Analysis Mode**: static
-- **Total Functions**: 169
+- **Total Functions**: 177
 - **Total Classes**: 7
-- **Modules**: 68
+- **Modules**: 69
 - **Entry Points**: 60
 
 ## Architecture by Module
@@ -48,17 +48,14 @@
 - **Functions**: 7
 - **File**: `presence_matchers.py`
 
-### src.img2nl.cli
-- **Functions**: 6
-- **File**: `cli.py`
+### src.img2nl.plan
+- **Functions**: 7
+- **Classes**: 1
+- **File**: `plan.py`
 
 ### src.img2nl.api
-- **Functions**: 6
+- **Functions**: 7
 - **File**: `api.py`
-
-### src.img2nl.cli_commands
-- **Functions**: 6
-- **File**: `cli_commands.py`
 
 ### src.img2nl.features.scene
 - **Functions**: 6
@@ -68,10 +65,13 @@
 - **Functions**: 6
 - **File**: `router.py`
 
-### src.img2nl.plan
-- **Functions**: 5
-- **Classes**: 1
-- **File**: `plan.py`
+### src.img2nl.cli
+- **Functions**: 6
+- **File**: `cli.py`
+
+### src.img2nl.cli_commands
+- **Functions**: 6
+- **File**: `cli_commands.py`
 
 ### src.img2nl.features.identify_matchers
 - **Functions**: 5
@@ -86,24 +86,30 @@
 - **Functions**: 5
 - **File**: `ui_adapter.py`
 
-### src.img2nl.analyze
-- **Functions**: 4
-- **File**: `analyze.py`
-
 ### src.img2nl.profiles
 - **Functions**: 4
 - **File**: `profiles.py`
 
-### src.img2nl.features.ocr_text
-- **Functions**: 3
-- **File**: `ocr_text.py`
+### src.img2nl.analyze
+- **Functions**: 4
+- **File**: `analyze.py`
+
+### src.img2nl.actions
+- **Functions**: 4
+- **File**: `actions.py`
 
 ## Key Entry Points
 
 Main execution flows into the system:
 
+### src.img2nl.cli_commands.cmd_capture_analyze
+- **Calls**: src.img2nl.cli_commands._target_list, src.img2nl.cli_commands._profile_kwargs, src.img2nl.capture.capture_and_analyze, print, print, result.targets.get, json.dumps, print
+
 ### src.img2nl.features.identify_matchers.collect_ui
 - **Calls**: features.get, ui.get, ui.get, str, str, element.get, element.get, hits.append
+
+### src.img2nl.api.capture_analyze_from_cmd
+- **Calls**: src.img2nl.profiles.analyze_kwargs_from_cmd, kwargs.setdefault, kwargs.setdefault, kwargs.setdefault, bool, src.img2nl.capture.capture_and_analyze, cmd.get, cmd.get
 
 ### src.img2nl.cli_commands.cmd_analyze
 - **Calls**: src.img2nl.cli_commands._target_list, src.img2nl.cli_commands._profile_kwargs, src.img2nl.analyze.analyze_image, print, print, print, result.targets.get, print
@@ -114,9 +120,6 @@ Main execution flows into the system:
 ### src.img2nl.features.presence_matchers.match_ui
 - **Calls**: features.get, ui.get, TargetDetection, ui.get, str, str, float, element.get
 
-### src.img2nl.cli_commands.cmd_capture_analyze
-- **Calls**: src.img2nl.cli_commands._target_list, src.img2nl.cli_commands._profile_kwargs, src.img2nl.capture.capture_and_analyze, print, print, result.targets.get, json.dumps, print
-
 ### src.img2nl.features.identify_matchers.collect_semantic
 - **Calls**: SEMANTIC_TARGETS.intersection, None.get, None.lower, features.get, hits.append, str, TargetDetection, obj.get
 
@@ -126,8 +129,8 @@ Main execution flows into the system:
 ### packages.cli2img2nl.src.cli2img2nl.cli.main
 - **Calls**: argparse.ArgumentParser, parser.add_subparsers, sub.add_parser, e.add_argument, e.add_argument, parser.parse_args, packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch, print
 
-### src.img2nl.api.capture_analyze_from_cmd
-- **Calls**: src.img2nl.profiles.analyze_kwargs_from_cmd, kwargs.setdefault, kwargs.setdefault, kwargs.setdefault, src.img2nl.capture.capture_and_analyze, cmd.get, cmd.get, int
+### src.img2nl.api.click_target_from_cmd
+- **Calls**: src.img2nl.profiles.analyze_kwargs_from_cmd, kwargs.setdefault, kwargs.setdefault, src.img2nl.analyze.analyze_image, str, src.img2nl.actions.click_from_result, bool, cmd.get
 
 ### src.img2nl.features.identify_matchers.collect_barcodes
 - **Calls**: None.get, barcodes.get, TargetDetection, features.get, barcodes.get, str, list, code.get
@@ -141,23 +144,20 @@ Main execution flows into the system:
 ### packages.uri2img2nl.src.uri2img2nl.cli.main
 - **Calls**: argparse.ArgumentParser, parser.add_subparsers, sub.add_parser, q.add_argument, parser.parse_args, packages.uri2img2nl.src.uri2img2nl.query.query_uri, print, json.dumps
 
-### src.img2nl.features.targets.find_click_point
-- **Calls**: src.img2nl.features.targets.best_detection, det.get, det.get, isinstance, len, src.img2nl.features.targets._bbox_center, len, float
-
 ### packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query
 - **Calls**: packages.uri2img2nl.src.uri2img2nl.query.query_uri, DslResult, cmd.get, cmd.get, packages.uri2img2nl.src.uri2img2nl.uri.uri_for_analyze, DslResult, result.to_dict, cmd.get
 
 ### packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint
 - **Calls**: api.llm_hint_from_path, DslResult, packages.dsl2img2nl.src.dsl2img2nl.handlers._require_path, DslResult, payload.get, DslResult, json.dumps, payload.get
 
+### src.img2nl.features.presence_matchers.match_semantic
+- **Calls**: src.img2nl.features.presence_matchers._best_semantic_object, TargetDetection, float, str, list, obj.get, obj.get, obj.get
+
 ### src.img2nl.cli_commands.cmd_capture
 - **Calls**: src.img2nl.capture.capture_screenshot, print, result.get, result.get, json.dumps, print, print, result.get
 
 ### src.img2nl.cli_commands.cmd_translate_install
 - **Calls**: src.img2nl.i18n.offline.ensure_language_pair, print, src.img2nl.i18n.offline.argostranslate_available, print, src.img2nl.i18n.offline.list_installed_pairs, src.img2nl.i18n.offline.list_available_pairs, print, print
-
-### src.img2nl.features.presence_matchers.match_semantic
-- **Calls**: src.img2nl.features.presence_matchers._best_semantic_object, TargetDetection, float, str, list, obj.get, obj.get, obj.get
 
 ### packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_targets
 - **Calls**: api.targets_from_cmd, DslResult, packages.dsl2img2nl.src.dsl2img2nl.handlers._require_path, DslResult, payload.get, json.dumps, payload.get
@@ -196,32 +196,7 @@ Main execution flows into the system:
 
 Key execution flows identified:
 
-### Flow 1: collect_ui
-```
-collect_ui [src.img2nl.features.identify_matchers]
-```
-
-### Flow 2: cmd_analyze
-```
-cmd_analyze [src.img2nl.cli_commands]
-  └─> _target_list
-  └─> _profile_kwargs
-      └─ →> analyze_kwargs_from_cmd
-  └─ →> analyze_image
-      └─> _require_pillow
-```
-
-### Flow 3: main
-```
-main [packages.dsl2img2nl.src.dsl2img2nl.cli]
-```
-
-### Flow 4: match_ui
-```
-match_ui [src.img2nl.features.presence_matchers]
-```
-
-### Flow 5: cmd_capture_analyze
+### Flow 1: cmd_capture_analyze
 ```
 cmd_capture_analyze [src.img2nl.cli_commands]
   └─> _target_list
@@ -233,35 +208,58 @@ cmd_capture_analyze [src.img2nl.cli_commands]
           └─> _require_pillow
 ```
 
-### Flow 6: collect_semantic
+### Flow 2: collect_ui
+```
+collect_ui [src.img2nl.features.identify_matchers]
+```
+
+### Flow 3: capture_analyze_from_cmd
+```
+capture_analyze_from_cmd [src.img2nl.api]
+  └─ →> analyze_kwargs_from_cmd
+```
+
+### Flow 4: cmd_analyze
+```
+cmd_analyze [src.img2nl.cli_commands]
+  └─> _target_list
+  └─> _profile_kwargs
+      └─ →> analyze_kwargs_from_cmd
+  └─ →> analyze_image
+      └─> _require_pillow
+```
+
+### Flow 5: main
+```
+main [packages.dsl2img2nl.src.dsl2img2nl.cli]
+```
+
+### Flow 6: match_ui
+```
+match_ui [src.img2nl.features.presence_matchers]
+```
+
+### Flow 7: collect_semantic
 ```
 collect_semantic [src.img2nl.features.identify_matchers]
 ```
 
-### Flow 7: compare_images_ssim
+### Flow 8: compare_images_ssim
 ```
 compare_images_ssim [src.img2nl.features.similarity]
 ```
 
-### Flow 8: capture_analyze_from_cmd
+### Flow 9: click_target_from_cmd
 ```
-capture_analyze_from_cmd [src.img2nl.api]
+click_target_from_cmd [src.img2nl.api]
   └─ →> analyze_kwargs_from_cmd
-  └─ →> capture_and_analyze
-      └─> capture_screenshot
-      └─ →> analyze_image
-          └─> _require_pillow
+  └─ →> analyze_image
+      └─> _require_pillow
 ```
 
-### Flow 9: collect_barcodes
+### Flow 10: collect_barcodes
 ```
 collect_barcodes [src.img2nl.features.identify_matchers]
-```
-
-### Flow 10: handle_capture
-```
-handle_capture [packages.dsl2img2nl.src.dsl2img2nl.handlers]
-  └─> _require_path
 ```
 
 ## Key Classes
@@ -278,10 +276,6 @@ handle_capture [packages.dsl2img2nl.src.dsl2img2nl.handlers]
 - **Methods**: 1
 - **Key Methods**: packages.uri2img2nl.src.uri2img2nl.query_result.QueryResult.to_dict
 
-### src.img2nl.result.Img2NlResult
-- **Methods**: 1
-- **Key Methods**: src.img2nl.result.Img2NlResult.to_dict
-
 ### src.img2nl.features.targets.TargetDetection
 - **Methods**: 1
 - **Key Methods**: src.img2nl.features.targets.TargetDetection.to_dict
@@ -289,6 +283,10 @@ handle_capture [packages.dsl2img2nl.src.dsl2img2nl.handlers]
 ### src.img2nl.i18n.offline.TranslateResult
 - **Methods**: 1
 - **Key Methods**: src.img2nl.i18n.offline.TranslateResult.to_dict
+
+### src.img2nl.result.Img2NlResult
+- **Methods**: 1
+- **Key Methods**: src.img2nl.result.Img2NlResult.to_dict
 
 ### src.img2nl.plan.ExecutionPlan
 - **Methods**: 0
@@ -332,19 +330,20 @@ Functions exposed as public API (no underscore prefix):
 - `src.img2nl.features.objects.analyze_objects` - 26 calls
 - `src.img2nl.features.colors.analyze_colors` - 25 calls
 - `src.img2nl.features.edges.analyze_edges` - 21 calls
+- `src.img2nl.analyze.analyze_image` - 21 calls
 - `packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri` - 19 calls
 - `src.img2nl.llm_gate.llm_transport_hint` - 19 calls
-- `src.img2nl.analyze.analyze_image` - 18 calls
 - `src.img2nl.capture.capture_screenshot` - 18 calls
+- `src.img2nl.cli_commands.cmd_capture_analyze` - 18 calls
 - `src.img2nl.features.semantic.analyze_semantic` - 17 calls
 - `src.img2nl.features.identify_matchers.collect_ui` - 17 calls
-- `src.img2nl.cli_commands.cmd_analyze` - 16 calls
+- `src.img2nl.api.capture_analyze_from_cmd` - 17 calls
 - `src.img2nl.features.targets.build_target_report` - 16 calls
+- `src.img2nl.cli_commands.cmd_analyze` - 16 calls
 - `packages.dsl2img2nl.src.dsl2img2nl.cli.main` - 15 calls
 - `src.img2nl.features.noise.analyze_noise` - 15 calls
 - `src.img2nl.features.presence_matchers.match_ui` - 14 calls
 - `src.img2nl.i18n.offline.translate_summary_offline` - 14 calls
-- `src.img2nl.cli_commands.cmd_capture_analyze` - 13 calls
 - `src.img2nl.thumbnail.make_thumbnail` - 12 calls
 - `src.img2nl.features.ocr_text.analyze_ocr` - 12 calls
 - `src.img2nl.features.identify_matchers.collect_semantic` - 12 calls
@@ -353,21 +352,20 @@ Functions exposed as public API (no underscore prefix):
 - `src.img2nl.i18n.offline.ensure_language_pair` - 12 calls
 - `packages.cli2img2nl.src.cli2img2nl.cli.main` - 11 calls
 - `packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch` - 11 calls
-- `src.img2nl.api.capture_analyze_from_cmd` - 11 calls
 - `src.img2nl.profiles.analyze_kwargs_from_cmd` - 11 calls
-- `src.img2nl.features.extractors.extract_base_features` - 11 calls
+- `src.img2nl.api.click_target_from_cmd` - 11 calls
 - `src.img2nl.features.identify_matchers.collect_barcodes` - 10 calls
+- `src.img2nl.features.extractors.extract_base_features` - 10 calls
 - `packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_capture` - 9 calls
 - `packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_targets` - 9 calls
 - `packages.uri2img2nl.src.uri2img2nl.cli.main` - 9 calls
 - `src.img2nl.features.scene.classify_scene` - 9 calls
 - `src.img2nl.features.barcodes.analyze_barcodes` - 9 calls
 - `src.img2nl.features.targets.find_click_point` - 9 calls
+- `src.img2nl.actions.execute_click_action` - 9 calls
 - `packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query` - 8 calls
 - `packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint` - 8 calls
 - `packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens` - 8 calls
-- `src.img2nl.context.infer_source_type` - 8 calls
-- `src.img2nl.cli_commands.cmd_capture` - 8 calls
 
 ## System Interactions
 
@@ -375,8 +373,15 @@ How components interact:
 
 ```mermaid
 graph TD
+    cmd_capture_analyze --> _target_list
+    cmd_capture_analyze --> _profile_kwargs
+    cmd_capture_analyze --> capture_and_analyze
+    cmd_capture_analyze --> print
     collect_ui --> get
     collect_ui --> str
+    capture_analyze_from --> analyze_kwargs_from_
+    capture_analyze_from --> setdefault
+    capture_analyze_from --> bool
     cmd_analyze --> _target_list
     cmd_analyze --> _profile_kwargs
     cmd_analyze --> analyze_image
@@ -387,10 +392,6 @@ graph TD
     match_ui --> get
     match_ui --> TargetDetection
     match_ui --> str
-    cmd_capture_analyze --> _target_list
-    cmd_capture_analyze --> _profile_kwargs
-    cmd_capture_analyze --> capture_and_analyze
-    cmd_capture_analyze --> print
     collect_semantic --> intersection
     collect_semantic --> get
     collect_semantic --> lower
@@ -400,11 +401,8 @@ graph TD
     compare_images_ssim --> float
     main --> add_subparsers
     main --> add_parser
-    capture_analyze_from --> analyze_kwargs_from_
-    capture_analyze_from --> setdefault
-    capture_analyze_from --> capture_and_analyze
-    collect_barcodes --> get
-    collect_barcodes --> TargetDetection
+    click_target_from_cm --> analyze_kwargs_from_
+    click_target_from_cm --> setdefault
 ```
 
 ## Reverse Engineering Guidelines

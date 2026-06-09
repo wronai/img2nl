@@ -86,6 +86,8 @@ def cmd_capture_analyze(args: argparse.Namespace) -> int:
         args.output,
         monitor=args.monitor,
         backend=args.backend,
+        click_target=args.click_target or None,
+        execute_click=args.execute_click,
         **profile_kw,
     )
     if args.json:
@@ -96,6 +98,9 @@ def cmd_capture_analyze(args: argparse.Namespace) -> int:
             print(f"capture: {result.capture.get('backend')} -> {result.path}")
         if result.targets.get("hit_count"):
             print(f"targets: {result.targets['hit_count']}/{result.targets.get('target_count', 0)}")
+        if result.click_result:
+            cr = result.click_result
+            print(f"click: {cr.get('method')} ok={cr.get('ok')} {cr.get('message', cr.get('error', ''))}")
     return 0 if result.ok else 1
 
 

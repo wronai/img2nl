@@ -1,15 +1,15 @@
-# redup/duplication | 2 groups | 54f 3829L | 2026-06-09
+# redup/duplication | 2 groups | 55f 4119L | 2026-06-09
 
 SUMMARY:
-  files_scanned: 54
-  total_lines:   3829
+  files_scanned: 55
+  total_lines:   4119
   dup_groups:    2
   dup_fragments: 4
   saved_lines:   22
-  scan_ms:       3791
+  scan_ms:       6115
 
 HOTSPOTS[2] (files with most duplication):
-  packages/dsl2img2nl/src/dsl2img2nl/handlers.py  dup=35L  groups=1  frags=2  (0.9%)
+  packages/dsl2img2nl/src/dsl2img2nl/handlers.py  dup=35L  groups=1  frags=2  (0.8%)
   src/img2nl/features/scene.py  dup=11L  groups=1  frags=2  (0.3%)
 
 DUPLICATES[2] (ranked by impact):

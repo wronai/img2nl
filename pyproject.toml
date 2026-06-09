@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "img2nl"
-version = "0.1.6"
+version = "0.1.7"
 description = "Image → natural language summary with heuristics, thumbnails, and LLM transport hints"
 readme = "README.md"
 requires-python = ">=3.10"

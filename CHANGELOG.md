@@ -106,6 +106,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `describe.py` / `llm_gate.py` — use `scene_class`, `special_hits`, `similarity`
 - `README.md` — detection layers, VQL integration, API examples
 
+## [0.1.7] - 2026-06-09
+
+### Docs
+- Update README.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/test_lazy_extractors.py
+
+### Other
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- Update project/calls.yaml
+- Update project/duplication.toon.yaml
+- Update project/evolution.toon.yaml
+- Update project/flow.mmd
+- Update project/flow.png
+- Update project/index.html
+- ... and 4 more files
+
 ## [0.1.6] - 2026-06-09
 
 ### Docs

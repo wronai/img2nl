@@ -1,49 +1,49 @@
 # code2llm call graph | /home/tom/github/wronai/img2nl
-# generated in 0.07s
-# nodes: 136 | edges: 145 | modules: 43
-# CC̄=3.7
+# generated in 0.10s
+# nodes: 144 | edges: 159 | modules: 44
+# CC̄=3.8
 
 HUBS[20]:
   src.img2nl.features.patterns.analyze_patterns
     CC=8  in:1  out:31  total:32
-  src.img2nl.features.objects.analyze_objects
-    CC=11  in:1  out:26  total:27
+  src.img2nl.analyze.analyze_image
+    CC=7  in:7  out:21  total:28
+  src.img2nl.features.colors.analyze_colors
+    CC=13  in:3  out:25  total:28
   src.img2nl.i18n.translate.t
     CC=5  in:19  out:8  total:27
-  src.img2nl.features.colors.analyze_colors
-    CC=13  in:1  out:25  total:26
-  src.img2nl.analyze.analyze_image
-    CC=4  in:6  out:18  total:24
+  src.img2nl.features.objects.analyze_objects
+    CC=11  in:1  out:26  total:27
   src.img2nl.describe._describe_catalog
     CC=1  in:3  out:21  total:24
   src.img2nl.features.edges.analyze_edges
     CC=6  in:1  out:21  total:22
   src.img2nl.capture.capture_screenshot
     CC=11  in:3  out:18  total:21
-  packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri
-    CC=14  in:1  out:19  total:20
   src.img2nl.llm_gate.llm_transport_hint
     CC=3  in:1  out:19  total:20
+  packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri
+    CC=14  in:1  out:19  total:20
   src.img2nl.features.semantic.analyze_semantic
     CC=9  in:1  out:17  total:18
+  src.img2nl.cli_commands.cmd_capture_analyze
+    CC=8  in:0  out:18  total:18
+  src.img2nl.api.capture_analyze_from_cmd
+    CC=6  in:0  out:17  total:17
   src.img2nl.features.identify_matchers.collect_ui
     CC=6  in:0  out:17  total:17
   src.img2nl.features.targets.build_target_report
     CC=8  in:1  out:16  total:17
-  src.img2nl.cli_commands.cmd_analyze
-    CC=7  in:0  out:16  total:16
+  src.img2nl.profiles.analyze_kwargs_from_cmd
+    CC=10  in:5  out:11  total:16
   src.img2nl.cli._add_analyze_parser
     CC=1  in:1  out:15  total:16
+  src.img2nl.cli_commands.cmd_analyze
+    CC=7  in:0  out:16  total:16
   src.img2nl.features.noise.analyze_noise
     CC=6  in:1  out:15  total:16
-  src.img2nl.profiles.analyze_kwargs_from_cmd
-    CC=10  in:4  out:11  total:15
-  src.img2nl.i18n.offline.translate_summary_offline
-    CC=7  in:1  out:14  total:15
-  packages.dsl2img2nl.src.dsl2img2nl.cli.main
-    CC=8  in:0  out:15  total:15
-  src.img2nl.features.presence_matchers.match_ui
-    CC=7  in:0  out:14  total:14
+  src.img2nl.cli._add_capture_analyze_parser
+    CC=1  in:1  out:14  total:15
 
 MODULES:
   packages.cli2img2nl.src.cli2img2nl.cli  [1 funcs]
@@ -93,24 +93,30 @@ MODULES:
     uri_for_analyze  CC=4  out:1
     uri_for_capture_analyze  CC=1  out:1
     uri_for_targets  CC=1  out:1
+  src.img2nl.actions  [4 funcs]
+    build_click_action  CC=2  out:5
+    click_from_result  CC=4  out:2
+    click_target  CC=2  out:2
+    execute_click_action  CC=5  out:9
   src.img2nl.analyze  [4 funcs]
     _assemble_result  CC=2  out:6
     _open_image  CC=1  out:1
     _require_pillow  CC=2  out:0
-    analyze_image  CC=4  out:18
-  src.img2nl.api  [6 funcs]
+    analyze_image  CC=7  out:21
+  src.img2nl.api  [7 funcs]
     analyze_from_cmd  CC=1  out:2
-    capture_analyze_from_cmd  CC=3  out:11
+    capture_analyze_from_cmd  CC=6  out:17
     capture_from_cmd  CC=3  out:7
+    click_target_from_cmd  CC=4  out:11
     llm_hint_from_path  CC=2  out:1
     targets_from_cmd  CC=3  out:5
     text_from_path  CC=3  out:2
   src.img2nl.capture  [2 funcs]
-    capture_and_analyze  CC=2  out:7
+    capture_and_analyze  CC=3  out:8
     capture_screenshot  CC=11  out:18
   src.img2nl.cli  [6 funcs]
     _add_analyze_parser  CC=1  out:15
-    _add_capture_analyze_parser  CC=1  out:12
+    _add_capture_analyze_parser  CC=1  out:14
     _add_capture_parser  CC=1  out:6
     _add_translate_install_parser  CC=1  out:6
     build_parser  CC=1  out:6
@@ -120,7 +126,7 @@ MODULES:
     _target_list  CC=4  out:3
     cmd_analyze  CC=7  out:16
     cmd_capture  CC=4  out:8
-    cmd_capture_analyze  CC=6  out:13
+    cmd_capture_analyze  CC=8  out:18
     cmd_translate_install  CC=8  out:8
   src.img2nl.context  [2 funcs]
     default_targets  CC=1  out:2
@@ -140,9 +146,10 @@ MODULES:
     analyze_dynamics  CC=1  out:5
   src.img2nl.features.edges  [1 funcs]
     analyze_edges  CC=6  out:21
-  src.img2nl.features.extractors  [2 funcs]
+  src.img2nl.features.extractors  [3 funcs]
+    _run_layer  CC=1  out:7
     apply_semantic_layer  CC=1  out:1
-    extract_base_features  CC=2  out:11
+    extract_base_features  CC=12  out:10
   src.img2nl.features.fingerprint  [2 funcs]
     _unavailable  CC=1  out:0
     analyze_fingerprint  CC=2  out:8
@@ -212,11 +219,13 @@ MODULES:
     t  CC=5  out:8
   src.img2nl.llm_gate  [1 funcs]
     llm_transport_hint  CC=3  out:19
-  src.img2nl.plan  [5 funcs]
-    build_execution_plan  CC=1  out:6
+  src.img2nl.plan  [7 funcs]
+    build_execution_plan  CC=1  out:8
+    resolve_base_layers  CC=11  out:8
     resolve_targets  CC=6  out:4
     should_run_identify  CC=2  out:0
     should_run_semantic  CC=5  out:0
+    should_run_special_hits  CC=4  out:1
     should_run_ui_detect  CC=3  out:0
   src.img2nl.profiles  [4 funcs]
     analyze_kwargs_from_cmd  CC=10  out:11
@@ -273,7 +282,7 @@ EDGES:
   src.img2nl.describe.describe_image → src.img2nl.i18n.locales.normalize_locale
   src.img2nl.describe.describe_image → src.img2nl.describe._describe_catalog
   src.img2nl.describe.describe_image → src.img2nl.i18n.offline.translate_summary_offline
-  src.img2nl.cli.build_parser → src.img2nl.cli._add_analyze_parser
-  src.img2nl.cli.build_parser → src.img2nl.cli._add_capture_parser
-  src.img2nl.cli.build_parser → src.img2nl.cli._add_capture_analyze_parser
-  src.img2nl.cli.build_parser → src.img2nl.cli._add_translate_install_parser
+  src.img2nl.profiles.get_profile → src.img2nl.profiles.list_profiles
+  src.img2nl.profiles.apply_profile → src.img2nl.profiles.get_profile
+  src.img2nl.profiles.analyze_kwargs_from_cmd → src.img2nl.profiles.get_profile
+  src.img2nl.features.ocr_text.analyze_ocr → src.img2nl.features.ocr_text._preview

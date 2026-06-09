@@ -71,6 +71,16 @@ def _add_capture_analyze_parser(sub: argparse._SubParsersAction) -> None:
         default="fast_ui",
         choices=["fast_ui", "fast_photo", "fast_document", "full_desktop"],
     )
+    parser.add_argument(
+        "--click-target",
+        default="",
+        help="After analysis, resolve click point for this target (e.g. button)",
+    )
+    parser.add_argument(
+        "--execute-click",
+        action="store_true",
+        help="Execute desktop click (requires xdotool); default is dry-run",
+    )
     parser.set_defaults(func=cmd_capture_analyze)
 
 
