@@ -1,27 +1,25 @@
 # code2llm call graph | /home/tom/github/wronai/img2nl
-# generated in 0.07s
-# nodes: 43 | edges: 47 | modules: 21
-# CC̄=5.3
+# generated in 0.03s
+# nodes: 50 | edges: 54 | modules: 21
+# CC̄=4.5
 
 HUBS[20]:
-  src.img2nl.describe._describe_catalog
-    CC=17  in:3  out:72  total:75
-  src.img2nl.llm_gate.llm_transport_hint
-    CC=27  in:1  out:54  total:55
   src.img2nl.analyze.analyze_image
     CC=6  in:6  out:29  total:35
-  src.img2nl.features.scene.classify_scene
-    CC=18  in:2  out:28  total:30
   src.img2nl.i18n.translate.t
     CC=5  in:19  out:8  total:27
+  src.img2nl.describe._describe_catalog
+    CC=1  in:3  out:19  total:22
+  src.img2nl.llm_gate.llm_transport_hint
+    CC=3  in:1  out:19  total:20
   packages.uri2img2nl.src.uri2img2nl.query.query_uri
     CC=9  in:2  out:17  total:19
   src.img2nl.features.semantic.analyze_semantic
     CC=9  in:1  out:17  total:18
-  packages.dsl2img2nl.src.dsl2img2nl.cli.main
-    CC=8  in:0  out:15  total:15
   src.img2nl.i18n.offline.translate_summary_offline
     CC=7  in:1  out:14  total:15
+  packages.dsl2img2nl.src.dsl2img2nl.cli.main
+    CC=8  in:0  out:15  total:15
   packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
     CC=8  in:3  out:11  total:14
   src.img2nl.i18n.offline.ensure_language_pair
@@ -30,20 +28,22 @@ HUBS[20]:
     CC=7  in:1  out:12  total:13
   src.img2nl.i18n.locales.normalize_locale
     CC=8  in:8  out:4  total:12
-  packages.cli2img2nl.src.cli2img2nl.cli.main
-    CC=6  in:0  out:11  total:11
+  src.img2nl.features.scene._scene_from_heuristics
+    CC=11  in:1  out:11  total:12
   packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line
     CC=14  in:1  out:10  total:11
+  src.img2nl.describe._describe_brightness_dynamics
+    CC=3  in:1  out:10  total:11
+  src.img2nl.describe._describe_color_parts
+    CC=3  in:1  out:10  total:11
+  packages.cli2img2nl.src.cli2img2nl.cli.main
+    CC=6  in:0  out:11  total:11
+  src.img2nl.features.scene.classify_scene
+    CC=3  in:2  out:9  total:11
   src.img2nl.features.barcodes.analyze_barcodes
     CC=5  in:1  out:9  total:10
-  src.img2nl.features.fingerprint.analyze_fingerprint
-    CC=2  in:1  out:8  total:9
-  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens
-    CC=4  in:1  out:8  total:9
   packages.uri2img2nl.src.uri2img2nl.cli.main
     CC=4  in:0  out:9  total:9
-  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query
-    CC=6  in:1  out:8  total:9
 
 MODULES:
   packages.cli2img2nl.src.cli2img2nl.cli  [1 funcs]
@@ -70,8 +70,10 @@ MODULES:
     uri_for_analyze  CC=2  out:1
   src.img2nl.analyze  [1 funcs]
     analyze_image  CC=6  out:29
-  src.img2nl.describe  [2 funcs]
-    _describe_catalog  CC=17  out:72
+  src.img2nl.describe  [4 funcs]
+    _describe_brightness_dynamics  CC=3  out:10
+    _describe_catalog  CC=1  out:19
+    _describe_color_parts  CC=3  out:10
     describe_image  CC=8  out:5
   src.img2nl.features.barcodes  [3 funcs]
     _should_scan  CC=3  out:7
@@ -84,8 +86,13 @@ MODULES:
     _preview  CC=2  out:3
     _should_ocr  CC=3  out:5
     analyze_ocr  CC=7  out:12
-  src.img2nl.features.scene  [1 funcs]
-    classify_scene  CC=18  out:28
+  src.img2nl.features.scene  [6 funcs]
+    _scene_dense_from_edges  CC=4  out:5
+    _scene_from_heuristics  CC=11  out:11
+    _scene_from_similarity  CC=2  out:2
+    _scene_from_special  CC=2  out:2
+    _scene_general_fallback  CC=4  out:4
+    classify_scene  CC=3  out:9
   src.img2nl.features.semantic  [3 funcs]
     _get_model  CC=2  out:1
     _should_detect  CC=2  out:2
@@ -109,9 +116,15 @@ MODULES:
   src.img2nl.i18n.translate  [1 funcs]
     t  CC=5  out:8
   src.img2nl.llm_gate  [1 funcs]
-    llm_transport_hint  CC=27  out:54
+    llm_transport_hint  CC=3  out:19
 
 EDGES:
+  packages.cli2img2nl.src.cli2img2nl.cli.main → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
+  packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch → packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command
+  packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch → packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens
+  packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch → packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line
+  packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
+  packages.dsl2img2nl.src.dsl2img2nl.cli.main → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
   packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze → src.img2nl.analyze.analyze_image
   packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query → packages.uri2img2nl.src.uri2img2nl.query.query_uri
   packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query → packages.uri2img2nl.src.uri2img2nl.uri.uri_for_analyze
@@ -119,29 +132,27 @@ EDGES:
   packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens → packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze
   packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens → packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query
   packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens → packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint
-  packages.dsl2img2nl.src.dsl2img2nl.cli.main → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
-  packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch → packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command
-  packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch → packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens
-  packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch → packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line
-  packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
-  src.img2nl.features.ocr_text.analyze_ocr → src.img2nl.features.ocr_text._preview
-  src.img2nl.features.ocr_text.analyze_ocr → src.img2nl.features.ocr_text._should_ocr
-  src.img2nl.features.semantic.analyze_semantic → src.img2nl.features.semantic._get_model
-  src.img2nl.features.semantic.analyze_semantic → src.img2nl.features.semantic._should_detect
-  src.img2nl.features.fingerprint.analyze_fingerprint → src.img2nl.features.fingerprint._unavailable
-  src.img2nl.features.similarity.compare_fingerprints → src.img2nl.features.similarity.fingerprint_hamming
-  src.img2nl.features.special_hits.analyze_special_hits → src.img2nl.features.barcodes.analyze_barcodes
-  src.img2nl.features.special_hits.analyze_special_hits → src.img2nl.features.ocr_text.analyze_ocr
-  src.img2nl.i18n.translate.t → src.img2nl.i18n.locales.normalize_locale
-  src.img2nl.features.barcodes.analyze_barcodes → src.img2nl.features.barcodes._suppress_zbar_stderr
-  src.img2nl.features.barcodes.analyze_barcodes → src.img2nl.features.barcodes._should_scan
-  src.img2nl.i18n.locales.is_european_locale → src.img2nl.i18n.locales.normalize_locale
+  packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line → packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command
+  packages.uri2img2nl.src.uri2img2nl.cli.main → packages.uri2img2nl.src.uri2img2nl.query.query_uri
+  packages.uri2img2nl.src.uri2img2nl.query.query_uri → packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri
+  packages.uri2img2nl.src.uri2img2nl.query.query_uri → src.img2nl.analyze.analyze_image
   src.img2nl.analyze.analyze_image → src.img2nl.features.scene.classify_scene
   src.img2nl.analyze.analyze_image → src.img2nl.features.special_hits.analyze_special_hits
   src.img2nl.analyze.analyze_image → src.img2nl.i18n.locales.normalize_locale
   src.img2nl.analyze.analyze_image → src.img2nl.describe.describe_image
   src.img2nl.analyze.analyze_image → src.img2nl.llm_gate.llm_transport_hint
-  packages.uri2img2nl.src.uri2img2nl.cli.main → packages.uri2img2nl.src.uri2img2nl.query.query_uri
+  src.img2nl.features.ocr_text.analyze_ocr → src.img2nl.features.ocr_text._preview
+  src.img2nl.features.ocr_text.analyze_ocr → src.img2nl.features.ocr_text._should_ocr
+  src.img2nl.features.semantic.analyze_semantic → src.img2nl.features.semantic._get_model
+  src.img2nl.features.semantic.analyze_semantic → src.img2nl.features.semantic._should_detect
+  src.img2nl.features.similarity.compare_fingerprints → src.img2nl.features.similarity.fingerprint_hamming
+  src.img2nl.features.fingerprint.analyze_fingerprint → src.img2nl.features.fingerprint._unavailable
+  src.img2nl.features.barcodes.analyze_barcodes → src.img2nl.features.barcodes._suppress_zbar_stderr
+  src.img2nl.features.barcodes.analyze_barcodes → src.img2nl.features.barcodes._should_scan
+  src.img2nl.features.special_hits.analyze_special_hits → src.img2nl.features.barcodes.analyze_barcodes
+  src.img2nl.features.special_hits.analyze_special_hits → src.img2nl.features.ocr_text.analyze_ocr
+  src.img2nl.i18n.translate.t → src.img2nl.i18n.locales.normalize_locale
+  src.img2nl.i18n.locales.is_european_locale → src.img2nl.i18n.locales.normalize_locale
   src.img2nl.i18n.offline.list_installed_pairs → src.img2nl.i18n.offline._require_argos
   src.img2nl.i18n.offline.list_installed_pairs → src.img2nl.i18n.offline.argostranslate_available
   src.img2nl.i18n.offline.list_available_pairs → src.img2nl.i18n.offline._require_argos
@@ -152,10 +163,9 @@ EDGES:
   src.img2nl.i18n.offline.translate_summary_offline → src.img2nl.i18n.locales.normalize_locale
   src.img2nl.i18n.offline.translate_summary_offline → src.img2nl.i18n.offline._require_argos
   src.img2nl.i18n.offline.translate_summary_offline → src.img2nl.i18n.offline.argostranslate_available
-  packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line → packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command
-  packages.cli2img2nl.src.cli2img2nl.cli.main → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
+  src.img2nl.describe._describe_color_parts → src.img2nl.i18n.translate.t
+  src.img2nl.describe._describe_brightness_dynamics → src.img2nl.i18n.translate.t
   src.img2nl.describe.describe_image → src.img2nl.i18n.locales.normalize_locale
   src.img2nl.describe.describe_image → src.img2nl.describe._describe_catalog
   src.img2nl.describe.describe_image → src.img2nl.i18n.offline.translate_summary_offline
-  packages.uri2img2nl.src.uri2img2nl.query.query_uri → packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri
-  packages.uri2img2nl.src.uri2img2nl.query.query_uri → src.img2nl.analyze.analyze_image
+  src.img2nl.features.scene._scene_from_heuristics → src.img2nl.features.scene._scene_general_fallback

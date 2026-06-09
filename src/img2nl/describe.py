@@ -8,20 +8,19 @@ from img2nl.i18n import normalize_locale, t
 
 TranslateMode = Literal["auto", "catalog", "offline"]
 
+_SCENE_KEYS = {
+    "empty_dark_screen": "scene_empty_dark",
+    "ui_blocks": "scene_ui_blocks",
+    "ui_with_text": "scene_ui_text",
+    "dense_ui_or_code": "scene_dense_ui",
+    "flat_monochrome": "scene_flat_mono",
+    "unchanged_screen": "scene_unchanged",
+    "barcode_present": "scene_barcode",
+}
 
-def _describe_catalog(features: dict[str, Any], lang: str) -> str:
-    colors = features.get("colors", {})
-    dynamics = features.get("dynamics", {})
-    noise = features.get("noise", {})
-    objects = features.get("objects", {})
-    patterns = features.get("patterns", {})
-    scene = features.get("scene", {})
-    special = features.get("special_hits", {})
-    semantic = features.get("semantic_hits", {})
-    w, h = colors.get("size", [0, 0])
 
-    parts: list[str] = [t("image_size", lang, w=w, h=h)]
-
+def _describe_color_parts(colors: dict[str, Any], lang: str) -> list[str]:
+    parts: list[str] = []
     if colors.get("is_monochrome"):
         parts.append(t("monochrome", lang))
     else:
@@ -30,7 +29,15 @@ def _describe_catalog(features: dict[str, Any], lang: str) -> str:
         dom = colors.get("dominant_colors", [])[:3]
         if dom:
             parts.append(t("dominant_colors", lang, colors=", ".join(dom)))
+    return parts
 
+
+def _describe_brightness_dynamics(
+    colors: dict[str, Any],
+    dynamics: dict[str, Any],
+    lang: str,
+) -> list[str]:
+    parts: list[str] = []
     br = colors.get("brightness_range", [0, 255])
     parts.append(
         t(
@@ -41,12 +48,20 @@ def _describe_catalog(features: dict[str, Any], lang: str) -> str:
             dynamic=dynamics.get("dynamic_range", 0),
         )
     )
-
     if dynamics.get("low_contrast"):
         parts.append(t("low_contrast", lang))
     elif dynamics.get("high_contrast"):
         parts.append(t("high_contrast", lang))
+    return parts
 
+
+def _describe_noise_objects_patterns(
+    noise: dict[str, Any],
+    objects: dict[str, Any],
+    patterns: dict[str, Any],
+    lang: str,
+) -> list[str]:
+    parts: list[str] = []
     if noise.get("is_flat"):
         parts.append(t("flat_surface", lang))
     elif noise.get("is_noisy"):
@@ -66,17 +81,17 @@ def _describe_catalog(features: dict[str, Any], lang: str) -> str:
         parts.append(
             t("regular_patterns", lang, hints=", ".join(hints) or t("pattern_grid", lang))
         )
+    return parts
 
-    scene_class = scene.get("scene_class", "")
-    scene_key = {
-        "empty_dark_screen": "scene_empty_dark",
-        "ui_blocks": "scene_ui_blocks",
-        "ui_with_text": "scene_ui_text",
-        "dense_ui_or_code": "scene_dense_ui",
-        "flat_monochrome": "scene_flat_mono",
-        "unchanged_screen": "scene_unchanged",
-        "barcode_present": "scene_barcode",
-    }.get(scene_class)
+
+def _describe_scene_special_semantic(
+    scene: dict[str, Any],
+    special: dict[str, Any],
+    semantic: dict[str, Any],
+    lang: str,
+) -> list[str]:
+    parts: list[str] = []
+    scene_key = _SCENE_KEYS.get(scene.get("scene_class", ""))
     if scene_key:
         parts.append(t(scene_key, lang))
 
@@ -92,7 +107,25 @@ def _describe_catalog(features: dict[str, Any], lang: str) -> str:
         parts.append(
             t("special_objects_found", lang, labels=", ".join(semantic["labels"][:6]))
         )
+    return parts
 
+
+def _describe_catalog(features: dict[str, Any], lang: str) -> str:
+    colors = features.get("colors", {})
+    dynamics = features.get("dynamics", {})
+    noise = features.get("noise", {})
+    objects = features.get("objects", {})
+    patterns = features.get("patterns", {})
+    scene = features.get("scene", {})
+    special = features.get("special_hits", {})
+    semantic = features.get("semantic_hits", {})
+    w, h = colors.get("size", [0, 0])
+
+    parts: list[str] = [t("image_size", lang, w=w, h=h)]
+    parts.extend(_describe_color_parts(colors, lang))
+    parts.extend(_describe_brightness_dynamics(colors, dynamics, lang))
+    parts.extend(_describe_noise_objects_patterns(noise, objects, patterns, lang))
+    parts.extend(_describe_scene_special_semantic(scene, special, semantic, lang))
     return " ".join(parts)
 
 

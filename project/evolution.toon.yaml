@@ -1,37 +1,30 @@
-# code2llm/evolution | 63 func | 32f | 2026-06-09
-# generated in 0.01s
+# code2llm/evolution | 78 func | 32f | 2026-06-09
+# generated in 0.00s
 
-NEXT[5] (ranked by impact):
-  [1] !! SPLIT-FUNC      llm_transport_hint  CC=27  fan=14
-      WHY: CC=27 exceeds 15
-      EFFORT: ~1h  IMPACT: 378
-
-  [2] !  SPLIT-FUNC      _describe_catalog  CC=17  fan=16
-      WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 272
-
-  [3] !  SPLIT-FUNC      classify_scene  CC=18  fan=10
-      WHY: CC=18 exceeds 15
-      EFFORT: ~1h  IMPACT: 180
-
-  [4] !! SPLIT           src/img2nl/i18n/messages.json
+NEXT[3] (ranked by impact):
+  [1] !! SPLIT           src/img2nl/i18n/messages.json
       WHY: 1122L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
-  [5] !! SPLIT           goal.yaml
+  [2] !! SPLIT           planfile.yaml
+      WHY: 773L, 0 classes, max CC=0
+      EFFORT: ~4h  IMPACT: 0
+
+  [3] !! SPLIT           goal.yaml
       WHY: 512L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
 
-RISKS[2]:
+RISKS[3]:
   ⚠ Splitting src/img2nl/i18n/messages.json may break 0 import paths
+  ⚠ Splitting planfile.yaml may break 0 import paths
   ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          5.3 → ≤3.7
-  max-CC:      27 → ≤13
-  god-modules: 2 → 0
-  high-CC(≥15): 3 → ≤1
+  CC̄:          4.5 → ≤3.1
+  max-CC:      14 → ≤7
+  god-modules: 3 → 0
+  high-CC(≥15): 0 → ≤0
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -59,4 +52,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  (first run — no previous data)
+  prev CC̄=5.3 → now CC̄=4.5

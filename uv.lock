@@ -1521,7 +1521,7 @@ wheels = [
 
 [[package]]
 name = "img2nl"
-version = "0.1.4"
+version = "0.1.5"
 source = { editable = "." }
 
 [package.optional-dependencies]

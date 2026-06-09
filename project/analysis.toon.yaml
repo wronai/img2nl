@@ -1,53 +1,49 @@
-# code2llm | 49f 4200L | python:38,toml:4,shell:3,json:2,yaml:1 | 2026-06-09
-# generated in 0.03s
-# CC̅=5.3 | critical:3/63 | dups:0 | cycles:0
+# code2llm | 52f 5213L | python:38,yaml:4,toml:4,shell:3,json:2 | 2026-06-09
+# generated in 0.01s
+# CC̅=4.5 | critical:0/78 | dups:0 | cycles:0
 
-HEALTH[3]:
-  🟡 CC    classify_scene CC=18 (limit:15)
-  🟡 CC    _describe_catalog CC=17 (limit:15)
-  🟡 CC    llm_transport_hint CC=27 (limit:15)
+HEALTH[0]: ok
 
-REFACTOR[1]:
-  1. split 3 high-CC methods  (CC>15)
+REFACTOR[0]: none needed
 
 PIPELINES[11]:
   [1] Src [main]: main → dispatch → split_command
       PURITY: 100% pure
   [2] Src [execute_dsl_line]: execute_dsl_line → dispatch → split_command
       PURITY: 100% pure
-  [3] Src [main]: main → analyze_image → classify_scene
+  [3] Src [main]: main → dispatch → split_command
       PURITY: 100% pure
-  [4] Src [compare_images_ssim]: compare_images_ssim
+  [4] Src [main]: main → query_uri → parse_img2nl_uri
       PURITY: 100% pure
-  [5] Src [_load_messages]: _load_messages
+  [5] Src [is_img2nl_uri]: is_img2nl_uri
       PURITY: 100% pure
-  [6] Src [supported_locales]: supported_locales
+  [6] Src [uri_for_llm_hint]: uri_for_llm_hint
       PURITY: 100% pure
-  [7] Src [is_european_locale]: is_european_locale → normalize_locale
+  [7] Src [main]: main → analyze_image → classify_scene → _scene_from_heuristics → ...(1 more)
       PURITY: 100% pure
-  [8] Src [main]: main → query_uri → parse_img2nl_uri
+  [8] Src [compare_images_ssim]: compare_images_ssim
       PURITY: 100% pure
-  [9] Src [main]: main → dispatch → split_command
+  [9] Src [_load_messages]: _load_messages
       PURITY: 100% pure
-  [10] Src [is_img2nl_uri]: is_img2nl_uri
+  [10] Src [supported_locales]: supported_locales
       PURITY: 100% pure
-  [11] Src [uri_for_llm_hint]: uri_for_llm_hint
+  [11] Src [is_european_locale]: is_european_locale → normalize_locale
       PURITY: 100% pure
 
 LAYERS:
-  src/                            CC̄=5.7    ←in:0  →out:0
+  src/                            CC̄=4.6    ←in:0  →out:0
   │ !! messages.json             1122L  0C    0m  CC=0.0    ←0
   │ offline                    189L  1C    8m  CC=11     ←2
-  │ !! describe                   132L  0C    2m  CC=17     ←1
+  │ describe                   165L  0C    6m  CC=8      ←1
+  │ llm_gate                   149L  0C    7m  CC=8      ←1
   │ objects                    103L  0C    2m  CC=14     ←1
+  │ scene                       97L  0C    6m  CC=11     ←1
   │ analyze                     95L  0C    1m  CC=6      ←3
-  │ !! llm_gate                    88L  0C    1m  CC=27     ←1
   │ cli                         85L  0C    1m  CC=14     ←0
   │ semantic                    84L  0C    3m  CC=9      ←1
   │ barcodes                    78L  0C    3m  CC=5      ←1
   │ ocr_text                    73L  0C    3m  CC=7      ←1
   │ similarity                  73L  0C    3m  CC=5      ←1
-  │ !! scene                       65L  0C    1m  CC=18     ←1
   │ locales                     59L  0C    3m  CC=8      ←4
   │ edges                       54L  0C    2m  CC=6      ←1
   │ patterns                    53L  0C    1m  CC=8      ←1
@@ -55,8 +51,8 @@ LAYERS:
   │ result                      34L  1C    1m  CC=1      ←0
   │ __init__                    31L  0C    0m  CC=0.0    ←0
   │ fingerprint                 30L  0C    2m  CC=2      ←1
-  │ noise                       29L  0C    1m  CC=6      ←1
   │ thumbnail                   29L  0C    1m  CC=4      ←1
+  │ noise                       29L  0C    1m  CC=6      ←1
   │ dynamics                    28L  0C    1m  CC=1      ←1
   │ __init__                    26L  0C    0m  CC=0.0    ←0
   │ __init__                    25L  0C    0m  CC=0.0    ←0
@@ -81,7 +77,9 @@ LAYERS:
   │ __init__                     6L  0C    0m  CC=0.0    ←0
   │
   ./                              CC̄=0.0    ←in:0  →out:0
+  │ !! planfile.yaml              773L  0C    0m  CC=0.0    ←0
   │ !! goal.yaml                  512L  0C    0m  CC=0.0    ←0
+  │ prefact.yaml                94L  0C    0m  CC=0.0    ←0
   │ pyproject.toml              82L  0C    0m  CC=0.0    ←0
   │ project.sh                  59L  0C    0m  CC=0.0    ←0
   │ Makefile                    21L  0C    0m  CC=0.0    ←0
@@ -91,6 +89,9 @@ LAYERS:
   scripts/                        CC̄=0.0    ←in:0  →out:0
   │ messages.extra.json        277L  0C    0m  CC=0.0    ←0
   │ build_i18n_catalog          62L  0C    0m  CC=0.0    ←0
+  │
+  testql-scenarios/               CC̄=0.0    ←in:0  →out:0
+  │ generated-cli-tests.testql.toon.yaml    20L  0C    0m  CC=0.0    ←0
   │
 
 COUPLING:

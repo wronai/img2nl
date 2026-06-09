@@ -1,65 +1,16 @@
 project: /home/tom/github/wronai/img2nl
 generated_from: code2llm call graph analysis
 stats:
-  total_nodes: 43
-  total_edges: 47
+  total_nodes: 50
+  total_edges: 54
   modules_count: 21
 nodes:
-  packages.dsl2img2nl.src.dsl2img2nl.cli.main:
-    name: main
-    module: packages.dsl2img2nl.src.dsl2img2nl.cli
-    line: 12
-    cyclomatic_complexity: 8
-    calls_out: 15
-    calls_in: 0
-  src.img2nl.features.fingerprint.analyze_fingerprint:
-    name: analyze_fingerprint
-    module: src.img2nl.features.fingerprint
-    line: 18
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 1
-  src.img2nl.features.barcodes.analyze_barcodes:
-    name: analyze_barcodes
-    module: src.img2nl.features.barcodes
-    line: 35
-    cyclomatic_complexity: 5
-    calls_out: 9
-    calls_in: 1
-  src.img2nl.features.semantic._get_model:
-    name: _get_model
-    module: src.img2nl.features.semantic
-    line: 17
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 1
-  src.img2nl.features.barcodes._suppress_zbar_stderr:
-    name: _suppress_zbar_stderr
-    module: src.img2nl.features.barcodes
-    line: 12
-    cyclomatic_complexity: 1
-    calls_out: 7
-    calls_in: 1
-  packages.cli2img2nl.src.cli2img2nl.cli.main:
-    name: main
-    module: packages.cli2img2nl.src.cli2img2nl.cli
-    line: 12
-    cyclomatic_complexity: 6
-    calls_out: 11
-    calls_in: 0
-  packages.uri2img2nl.src.uri2img2nl.uri.uri_for_analyze:
-    name: uri_for_analyze
-    module: packages.uri2img2nl.src.uri2img2nl.uri
-    line: 27
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 1
-  packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line:
-    name: parse_line
-    module: packages.dsl2img2nl.src.dsl2img2nl.grammar
-    line: 14
-    cyclomatic_complexity: 14
-    calls_out: 10
+  src.img2nl.i18n.offline.translate_summary_offline:
+    name: translate_summary_offline
+    module: src.img2nl.i18n.offline
+    line: 133
+    cyclomatic_complexity: 7
+    calls_out: 14
     calls_in: 1
   src.img2nl.features.special_hits.analyze_special_hits:
     name: analyze_special_hits
@@ -68,13 +19,6 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 4
     calls_in: 1
-  src.img2nl.features.semantic.analyze_semantic:
-    name: analyze_semantic
-    module: src.img2nl.features.semantic
-    line: 26
-    cyclomatic_complexity: 9
-    calls_out: 17
-    calls_in: 1
   packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch:
     name: dispatch
     module: packages.dsl2img2nl.src.dsl2img2nl.bus
@@ -82,27 +26,181 @@ nodes:
     cyclomatic_complexity: 8
     calls_out: 11
     calls_in: 3
-  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze:
-    name: handle_analyze
-    module: packages.dsl2img2nl.src.dsl2img2nl.handlers
-    line: 11
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 1
-  packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri:
-    name: parse_img2nl_uri
+  src.img2nl.i18n.locales.normalize_locale:
+    name: normalize_locale
+    module: src.img2nl.i18n.locales
+    line: 37
+    cyclomatic_complexity: 8
+    calls_out: 4
+    calls_in: 8
+  src.img2nl.describe._describe_catalog:
+    name: _describe_catalog
+    module: src.img2nl.describe
+    line: 113
+    cyclomatic_complexity: 1
+    calls_out: 19
+    calls_in: 3
+  packages.uri2img2nl.src.uri2img2nl.uri.uri_for_analyze:
+    name: uri_for_analyze
     module: packages.uri2img2nl.src.uri2img2nl.uri
-    line: 38
-    cyclomatic_complexity: 5
-    calls_out: 7
+    line: 27
+    cyclomatic_complexity: 2
+    calls_out: 1
     calls_in: 1
-  src.img2nl.i18n.translate.t:
-    name: t
-    module: src.img2nl.i18n.translate
-    line: 9
-    cyclomatic_complexity: 5
+  packages.dsl2img2nl.src.dsl2img2nl.cli.main:
+    name: main
+    module: packages.dsl2img2nl.src.dsl2img2nl.cli
+    line: 12
+    cyclomatic_complexity: 8
+    calls_out: 15
+    calls_in: 0
+  src.img2nl.i18n.offline._update_index:
+    name: _update_index
+    module: src.img2nl.i18n.offline
+    line: 63
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
+  src.img2nl.features.scene._scene_general_fallback:
+    name: _scene_general_fallback
+    module: src.img2nl.features.scene
+    line: 33
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  src.img2nl.i18n.offline.list_installed_pairs:
+    name: list_installed_pairs
+    module: src.img2nl.i18n.offline
+    line: 71
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  src.img2nl.features.scene._scene_from_heuristics:
+    name: _scene_from_heuristics
+    module: src.img2nl.features.scene
+    line: 45
+    cyclomatic_complexity: 11
+    calls_out: 11
+    calls_in: 1
+  src.img2nl.i18n.offline.argostranslate_available:
+    name: argostranslate_available
+    module: src.img2nl.i18n.offline
+    line: 40
+    cyclomatic_complexity: 2
+    calls_out: 0
+    calls_in: 3
+  packages.uri2img2nl.src.uri2img2nl.cli.main:
+    name: main
+    module: packages.uri2img2nl.src.uri2img2nl.cli
+    line: 12
+    cyclomatic_complexity: 4
+    calls_out: 9
+    calls_in: 0
+  packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line:
+    name: parse_line
+    module: packages.dsl2img2nl.src.dsl2img2nl.grammar
+    line: 14
+    cyclomatic_complexity: 14
+    calls_out: 10
+    calls_in: 1
+  src.img2nl.features.ocr_text.analyze_ocr:
+    name: analyze_ocr
+    module: src.img2nl.features.ocr_text
+    line: 25
+    cyclomatic_complexity: 7
+    calls_out: 12
+    calls_in: 1
+  src.img2nl.i18n.offline._require_argos:
+    name: _require_argos
+    module: src.img2nl.i18n.offline
+    line: 50
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 4
+  packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command:
+    name: split_command
+    module: packages.dsl2img2nl.src.dsl2img2nl.grammar
+    line: 10
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 3
+  src.img2nl.i18n.offline.ensure_language_pair:
+    name: ensure_language_pair
+    module: src.img2nl.i18n.offline
+    line: 95
+    cyclomatic_complexity: 11
+    calls_out: 12
+    calls_in: 2
+  src.img2nl.describe._describe_brightness_dynamics:
+    name: _describe_brightness_dynamics
+    module: src.img2nl.describe
+    line: 35
+    cyclomatic_complexity: 3
+    calls_out: 10
+    calls_in: 1
+  src.img2nl.features.scene._scene_from_similarity:
+    name: _scene_from_similarity
+    module: src.img2nl.features.scene
+    line: 8
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  src.img2nl.features.semantic._get_model:
+    name: _get_model
+    module: src.img2nl.features.semantic
+    line: 17
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint:
+    name: handle_llm_hint
+    module: packages.dsl2img2nl.src.dsl2img2nl.handlers
+    line: 50
+    cyclomatic_complexity: 4
+    calls_out: 6
+    calls_in: 1
+  src.img2nl.features.fingerprint.analyze_fingerprint:
+    name: analyze_fingerprint
+    module: src.img2nl.features.fingerprint
+    line: 18
+    cyclomatic_complexity: 2
     calls_out: 8
-    calls_in: 19
+    calls_in: 1
+  src.img2nl.describe._describe_color_parts:
+    name: _describe_color_parts
+    module: src.img2nl.describe
+    line: 22
+    cyclomatic_complexity: 3
+    calls_out: 10
+    calls_in: 1
+  src.img2nl.features.semantic._should_detect:
+    name: _should_detect
+    module: src.img2nl.features.semantic
+    line: 10
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line:
+    name: execute_dsl_line
+    module: packages.dsl2img2nl.src.dsl2img2nl.bus
+    line: 28
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  src.img2nl.llm_gate.llm_transport_hint:
+    name: llm_transport_hint
+    module: src.img2nl.llm_gate
+    line: 118
+    cyclomatic_complexity: 3
+    calls_out: 19
+    calls_in: 1
+  src.img2nl.i18n.locales.is_european_locale:
+    name: is_european_locale
+    module: src.img2nl.i18n.locales
+    line: 58
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
   packages.uri2img2nl.src.uri2img2nl.query.query_uri:
     name: query_uri
     module: packages.uri2img2nl.src.uri2img2nl.query
@@ -110,6 +208,55 @@ nodes:
     cyclomatic_complexity: 9
     calls_out: 17
     calls_in: 2
+  src.img2nl.features.barcodes.analyze_barcodes:
+    name: analyze_barcodes
+    module: src.img2nl.features.barcodes
+    line: 35
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 1
+  src.img2nl.features.barcodes._suppress_zbar_stderr:
+    name: _suppress_zbar_stderr
+    module: src.img2nl.features.barcodes
+    line: 12
+    cyclomatic_complexity: 1
+    calls_out: 7
+    calls_in: 1
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query:
+    name: handle_query
+    module: packages.dsl2img2nl.src.dsl2img2nl.handlers
+    line: 29
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 1
+  src.img2nl.analyze.analyze_image:
+    name: analyze_image
+    module: src.img2nl.analyze
+    line: 27
+    cyclomatic_complexity: 6
+    calls_out: 29
+    calls_in: 6
+  packages.cli2img2nl.src.cli2img2nl.cli.main:
+    name: main
+    module: packages.cli2img2nl.src.cli2img2nl.cli
+    line: 12
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 0
+  src.img2nl.features.scene.classify_scene:
+    name: classify_scene
+    module: src.img2nl.features.scene
+    line: 84
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 2
+  packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri:
+    name: parse_img2nl_uri
+    module: packages.uri2img2nl.src.uri2img2nl.uri
+    line: 38
+    cyclomatic_complexity: 5
+    calls_out: 7
+    calls_in: 1
   src.img2nl.features.ocr_text._should_ocr:
     name: _should_ocr
     module: src.img2nl.features.ocr_text
@@ -124,13 +271,6 @@ nodes:
     cyclomatic_complexity: 5
     calls_out: 2
     calls_in: 1
-  src.img2nl.features.fingerprint._unavailable:
-    name: _unavailable
-    module: src.img2nl.features.fingerprint
-    line: 8
-    cyclomatic_complexity: 1
-    calls_out: 0
-    calls_in: 1
   packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens:
     name: handle_from_tokens
     module: packages.dsl2img2nl.src.dsl2img2nl.handlers
@@ -138,54 +278,33 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 8
     calls_in: 1
-  src.img2nl.i18n.offline.translate_summary_offline:
-    name: translate_summary_offline
-    module: src.img2nl.i18n.offline
-    line: 133
-    cyclomatic_complexity: 7
-    calls_out: 14
-    calls_in: 1
-  src.img2nl.i18n.offline.ensure_language_pair:
-    name: ensure_language_pair
-    module: src.img2nl.i18n.offline
-    line: 95
-    cyclomatic_complexity: 11
-    calls_out: 12
-    calls_in: 2
-  src.img2nl.features.ocr_text.analyze_ocr:
-    name: analyze_ocr
+  src.img2nl.features.ocr_text._preview:
+    name: _preview
     module: src.img2nl.features.ocr_text
-    line: 25
-    cyclomatic_complexity: 7
-    calls_out: 12
+    line: 18
+    cyclomatic_complexity: 2
+    calls_out: 3
     calls_in: 1
-  packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line:
-    name: execute_dsl_line
-    module: packages.dsl2img2nl.src.dsl2img2nl.bus
-    line: 28
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  src.img2nl.features.similarity.compare_fingerprints:
-    name: compare_fingerprints
-    module: src.img2nl.features.similarity
-    line: 21
+  src.img2nl.features.semantic.analyze_semantic:
+    name: analyze_semantic
+    module: src.img2nl.features.semantic
+    line: 26
+    cyclomatic_complexity: 9
+    calls_out: 17
+    calls_in: 1
+  src.img2nl.features.barcodes._should_scan:
+    name: _should_scan
+    module: src.img2nl.features.barcodes
+    line: 26
+    cyclomatic_complexity: 3
+    calls_out: 7
+    calls_in: 1
+  src.img2nl.features.scene._scene_dense_from_edges:
+    name: _scene_dense_from_edges
+    module: src.img2nl.features.scene
+    line: 23
     cyclomatic_complexity: 4
-    calls_out: 6
-    calls_in: 1
-  src.img2nl.describe.describe_image:
-    name: describe_image
-    module: src.img2nl.describe
-    line: 99
-    cyclomatic_complexity: 8
     calls_out: 5
-    calls_in: 1
-  src.img2nl.llm_gate.llm_transport_hint:
-    name: llm_transport_hint
-    module: src.img2nl.llm_gate
-    line: 8
-    cyclomatic_complexity: 27
-    calls_out: 54
     calls_in: 1
   src.img2nl.i18n.offline.list_available_pairs:
     name: list_available_pairs
@@ -194,119 +313,67 @@ nodes:
     cyclomatic_complexity: 5
     calls_out: 4
     calls_in: 1
-  src.img2nl.i18n.locales.is_european_locale:
-    name: is_european_locale
-    module: src.img2nl.i18n.locales
-    line: 58
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  src.img2nl.features.barcodes._should_scan:
-    name: _should_scan
-    module: src.img2nl.features.barcodes
-    line: 26
-    cyclomatic_complexity: 3
-    calls_out: 7
-    calls_in: 1
-  src.img2nl.i18n.offline.argostranslate_available:
-    name: argostranslate_available
-    module: src.img2nl.i18n.offline
-    line: 40
-    cyclomatic_complexity: 2
-    calls_out: 0
-    calls_in: 3
-  src.img2nl.features.scene.classify_scene:
-    name: classify_scene
-    module: src.img2nl.features.scene
-    line: 8
-    cyclomatic_complexity: 18
-    calls_out: 28
-    calls_in: 2
-  src.img2nl.describe._describe_catalog:
-    name: _describe_catalog
+  src.img2nl.describe.describe_image:
+    name: describe_image
     module: src.img2nl.describe
-    line: 12
-    cyclomatic_complexity: 17
-    calls_out: 72
-    calls_in: 3
-  src.img2nl.i18n.offline._update_index:
-    name: _update_index
-    module: src.img2nl.i18n.offline
-    line: 63
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 2
-  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint:
-    name: handle_llm_hint
-    module: packages.dsl2img2nl.src.dsl2img2nl.handlers
-    line: 50
+    line: 132
+    cyclomatic_complexity: 8
+    calls_out: 5
+    calls_in: 1
+  src.img2nl.features.fingerprint._unavailable:
+    name: _unavailable
+    module: src.img2nl.features.fingerprint
+    line: 8
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  src.img2nl.features.similarity.compare_fingerprints:
+    name: compare_fingerprints
+    module: src.img2nl.features.similarity
+    line: 21
     cyclomatic_complexity: 4
     calls_out: 6
     calls_in: 1
-  packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command:
-    name: split_command
-    module: packages.dsl2img2nl.src.dsl2img2nl.grammar
-    line: 10
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 3
-  src.img2nl.features.ocr_text._preview:
-    name: _preview
-    module: src.img2nl.features.ocr_text
-    line: 18
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  packages.uri2img2nl.src.uri2img2nl.cli.main:
-    name: main
-    module: packages.uri2img2nl.src.uri2img2nl.cli
-    line: 12
-    cyclomatic_complexity: 4
-    calls_out: 9
-    calls_in: 0
-  src.img2nl.i18n.locales.normalize_locale:
-    name: normalize_locale
-    module: src.img2nl.i18n.locales
-    line: 37
-    cyclomatic_complexity: 8
-    calls_out: 4
-    calls_in: 8
-  src.img2nl.i18n.offline._require_argos:
-    name: _require_argos
-    module: src.img2nl.i18n.offline
-    line: 50
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 4
-  src.img2nl.analyze.analyze_image:
-    name: analyze_image
-    module: src.img2nl.analyze
-    line: 27
-    cyclomatic_complexity: 6
-    calls_out: 29
-    calls_in: 6
-  src.img2nl.i18n.offline.list_installed_pairs:
-    name: list_installed_pairs
-    module: src.img2nl.i18n.offline
-    line: 71
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  src.img2nl.features.semantic._should_detect:
-    name: _should_detect
-    module: src.img2nl.features.semantic
-    line: 10
+  src.img2nl.features.scene._scene_from_special:
+    name: _scene_from_special
+    module: src.img2nl.features.scene
+    line: 17
     cyclomatic_complexity: 2
     calls_out: 2
     calls_in: 1
-  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query:
-    name: handle_query
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze:
+    name: handle_analyze
     module: packages.dsl2img2nl.src.dsl2img2nl.handlers
-    line: 29
-    cyclomatic_complexity: 6
-    calls_out: 8
+    line: 11
+    cyclomatic_complexity: 4
+    calls_out: 7
     calls_in: 1
+  src.img2nl.i18n.translate.t:
+    name: t
+    module: src.img2nl.i18n.translate
+    line: 9
+    cyclomatic_complexity: 5
+    calls_out: 8
+    calls_in: 19
 edges:
+- caller: packages.cli2img2nl.src.cli2img2nl.cli.main
+  callee: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
+  call_type: resolved
+- caller: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
+  callee: packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command
+  call_type: resolved
+- caller: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
+  callee: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens
+  call_type: resolved
+- caller: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
+  callee: packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line
+  call_type: resolved
+- caller: packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line
+  callee: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
+  call_type: resolved
+- caller: packages.dsl2img2nl.src.dsl2img2nl.cli.main
+  callee: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
+  call_type: resolved
 - caller: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze
   callee: src.img2nl.analyze.analyze_image
   call_type: resolved
@@ -328,56 +395,17 @@ edges:
 - caller: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens
   callee: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint
   call_type: resolved
-- caller: packages.dsl2img2nl.src.dsl2img2nl.cli.main
-  callee: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
-  call_type: resolved
-- caller: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
+- caller: packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line
   callee: packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command
   call_type: resolved
-- caller: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
-  callee: packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens
+- caller: packages.uri2img2nl.src.uri2img2nl.cli.main
+  callee: packages.uri2img2nl.src.uri2img2nl.query.query_uri
   call_type: resolved
-- caller: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
-  callee: packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line
+- caller: packages.uri2img2nl.src.uri2img2nl.query.query_uri
+  callee: packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri
   call_type: resolved
-- caller: packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line
-  callee: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
-  call_type: resolved
-- caller: src.img2nl.features.ocr_text.analyze_ocr
-  callee: src.img2nl.features.ocr_text._preview
-  call_type: resolved
-- caller: src.img2nl.features.ocr_text.analyze_ocr
-  callee: src.img2nl.features.ocr_text._should_ocr
-  call_type: resolved
-- caller: src.img2nl.features.semantic.analyze_semantic
-  callee: src.img2nl.features.semantic._get_model
-  call_type: resolved
-- caller: src.img2nl.features.semantic.analyze_semantic
-  callee: src.img2nl.features.semantic._should_detect
-  call_type: resolved
-- caller: src.img2nl.features.fingerprint.analyze_fingerprint
-  callee: src.img2nl.features.fingerprint._unavailable
-  call_type: resolved
-- caller: src.img2nl.features.similarity.compare_fingerprints
-  callee: src.img2nl.features.similarity.fingerprint_hamming
-  call_type: resolved
-- caller: src.img2nl.features.special_hits.analyze_special_hits
-  callee: src.img2nl.features.barcodes.analyze_barcodes
-  call_type: resolved
-- caller: src.img2nl.features.special_hits.analyze_special_hits
-  callee: src.img2nl.features.ocr_text.analyze_ocr
-  call_type: resolved
-- caller: src.img2nl.i18n.translate.t
-  callee: src.img2nl.i18n.locales.normalize_locale
-  call_type: resolved
-- caller: src.img2nl.features.barcodes.analyze_barcodes
-  callee: src.img2nl.features.barcodes._suppress_zbar_stderr
-  call_type: resolved
-- caller: src.img2nl.features.barcodes.analyze_barcodes
-  callee: src.img2nl.features.barcodes._should_scan
-  call_type: resolved
-- caller: src.img2nl.i18n.locales.is_european_locale
-  callee: src.img2nl.i18n.locales.normalize_locale
+- caller: packages.uri2img2nl.src.uri2img2nl.query.query_uri
+  callee: src.img2nl.analyze.analyze_image
   call_type: resolved
 - caller: src.img2nl.analyze.analyze_image
   callee: src.img2nl.features.scene.classify_scene
@@ -394,8 +422,41 @@ edges:
 - caller: src.img2nl.analyze.analyze_image
   callee: src.img2nl.llm_gate.llm_transport_hint
   call_type: resolved
-- caller: packages.uri2img2nl.src.uri2img2nl.cli.main
-  callee: packages.uri2img2nl.src.uri2img2nl.query.query_uri
+- caller: src.img2nl.features.ocr_text.analyze_ocr
+  callee: src.img2nl.features.ocr_text._preview
+  call_type: resolved
+- caller: src.img2nl.features.ocr_text.analyze_ocr
+  callee: src.img2nl.features.ocr_text._should_ocr
+  call_type: resolved
+- caller: src.img2nl.features.semantic.analyze_semantic
+  callee: src.img2nl.features.semantic._get_model
+  call_type: resolved
+- caller: src.img2nl.features.semantic.analyze_semantic
+  callee: src.img2nl.features.semantic._should_detect
+  call_type: resolved
+- caller: src.img2nl.features.similarity.compare_fingerprints
+  callee: src.img2nl.features.similarity.fingerprint_hamming
+  call_type: resolved
+- caller: src.img2nl.features.fingerprint.analyze_fingerprint
+  callee: src.img2nl.features.fingerprint._unavailable
+  call_type: resolved
+- caller: src.img2nl.features.barcodes.analyze_barcodes
+  callee: src.img2nl.features.barcodes._suppress_zbar_stderr
+  call_type: resolved
+- caller: src.img2nl.features.barcodes.analyze_barcodes
+  callee: src.img2nl.features.barcodes._should_scan
+  call_type: resolved
+- caller: src.img2nl.features.special_hits.analyze_special_hits
+  callee: src.img2nl.features.barcodes.analyze_barcodes
+  call_type: resolved
+- caller: src.img2nl.features.special_hits.analyze_special_hits
+  callee: src.img2nl.features.ocr_text.analyze_ocr
+  call_type: resolved
+- caller: src.img2nl.i18n.translate.t
+  callee: src.img2nl.i18n.locales.normalize_locale
+  call_type: resolved
+- caller: src.img2nl.i18n.locales.is_european_locale
+  callee: src.img2nl.i18n.locales.normalize_locale
   call_type: resolved
 - caller: src.img2nl.i18n.offline.list_installed_pairs
   callee: src.img2nl.i18n.offline._require_argos
@@ -427,11 +488,11 @@ edges:
 - caller: src.img2nl.i18n.offline.translate_summary_offline
   callee: src.img2nl.i18n.offline.argostranslate_available
   call_type: resolved
-- caller: packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line
-  callee: packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command
+- caller: src.img2nl.describe._describe_color_parts
+  callee: src.img2nl.i18n.translate.t
   call_type: resolved
-- caller: packages.cli2img2nl.src.cli2img2nl.cli.main
-  callee: packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
+- caller: src.img2nl.describe._describe_brightness_dynamics
+  callee: src.img2nl.i18n.translate.t
   call_type: resolved
 - caller: src.img2nl.describe.describe_image
   callee: src.img2nl.i18n.locales.normalize_locale
@@ -442,11 +503,20 @@ edges:
 - caller: src.img2nl.describe.describe_image
   callee: src.img2nl.i18n.offline.translate_summary_offline
   call_type: resolved
-- caller: packages.uri2img2nl.src.uri2img2nl.query.query_uri
-  callee: packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri
+- caller: src.img2nl.features.scene._scene_from_heuristics
+  callee: src.img2nl.features.scene._scene_general_fallback
   call_type: resolved
-- caller: packages.uri2img2nl.src.uri2img2nl.query.query_uri
-  callee: src.img2nl.analyze.analyze_image
+- caller: src.img2nl.features.scene._scene_from_heuristics
+  callee: src.img2nl.features.scene._scene_dense_from_edges
+  call_type: resolved
+- caller: src.img2nl.features.scene.classify_scene
+  callee: src.img2nl.features.scene._scene_from_heuristics
+  call_type: resolved
+- caller: src.img2nl.features.scene.classify_scene
+  callee: src.img2nl.features.scene._scene_from_similarity
+  call_type: resolved
+- caller: src.img2nl.features.scene.classify_scene
+  callee: src.img2nl.features.scene._scene_from_special
   call_type: resolved
 modules:
   packages.cli2img2nl.src.cli2img2nl.cli:
@@ -474,7 +544,9 @@ modules:
   src.img2nl.analyze:
   - src.img2nl.analyze.analyze_image
   src.img2nl.describe:
+  - src.img2nl.describe._describe_brightness_dynamics
   - src.img2nl.describe._describe_catalog
+  - src.img2nl.describe._describe_color_parts
   - src.img2nl.describe.describe_image
   src.img2nl.features.barcodes:
   - src.img2nl.features.barcodes._should_scan
@@ -488,6 +560,11 @@ modules:
   - src.img2nl.features.ocr_text._should_ocr
   - src.img2nl.features.ocr_text.analyze_ocr
   src.img2nl.features.scene:
+  - src.img2nl.features.scene._scene_dense_from_edges
+  - src.img2nl.features.scene._scene_from_heuristics
+  - src.img2nl.features.scene._scene_from_similarity
+  - src.img2nl.features.scene._scene_from_special
+  - src.img2nl.features.scene._scene_general_fallback
   - src.img2nl.features.scene.classify_scene
   src.img2nl.features.semantic:
   - src.img2nl.features.semantic._get_model

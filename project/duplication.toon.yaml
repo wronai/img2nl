@@ -1,9 +1,33 @@
-# redup/duplication | 0 groups | 38f 2061L | 2026-06-09
+# redup/duplication | 1 groups | 38f 2187L | 2026-06-09
 
 SUMMARY:
   files_scanned: 38
-  total_lines:   2061
-  dup_groups:    0
-  dup_fragments: 0
-  saved_lines:   0
-  scan_ms:       6353
+  total_lines:   2187
+  dup_groups:    1
+  dup_fragments: 2
+  saved_lines:   7
+  scan_ms:       4544
+
+HOTSPOTS[1] (files with most duplication):
+  src/img2nl/features/scene.py  dup=11L  groups=1  frags=2  (0.5%)
+
+DUPLICATES[1] (ranked by impact):
+  [a4a4c87e8e1cb6fe]   STRU  _scene_from_similarity  L=7 N=2 saved=7 sim=1.00
+      src/img2nl/features/scene.py:8-14  (_scene_from_similarity)
+      src/img2nl/features/scene.py:17-20  (_scene_from_special)
+
+REFACTOR[1] (ranked by priority):
+  [1] ○ extract_function   → src/img2nl/features/utils/_scene_from_similarity.py
+      WHY: 2 occurrences of 7-line block across 1 files — saves 7 lines
+      FILES: src/img2nl/features/scene.py
+
+QUICK_WINS[1] (low risk, high savings — do first):
+  [1] extract_function   saved=7L  → src/img2nl/features/utils/_scene_from_similarity.py
+      FILES: scene.py
+
+EFFORT_ESTIMATE (total ≈ 0.2h):
+  easy   _scene_from_similarity              saved=7L  ~14min
+
+METRICS-TARGET:
+  dup_groups:  1 → 0
+  saved_lines: 7 lines recoverable
