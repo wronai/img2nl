@@ -17,6 +17,10 @@ class Img2NlResult:
     features: dict[str, Any] = field(default_factory=dict)
     llm_hint: dict[str, Any] = field(default_factory=dict)
     locale: str = "pl"
+    source_type: str = "auto"
+    goal: str = "describe"
+    targets: dict[str, Any] = field(default_factory=dict)
+    capture: dict[str, Any] = field(default_factory=dict)
     error: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
@@ -30,5 +34,9 @@ class Img2NlResult:
             "features": self.features,
             "llm_hint": self.llm_hint,
             "locale": self.locale,
+            "source_type": self.source_type,
+            "goal": self.goal,
+            "targets": self.targets,
+            "capture": self.capture,
             "error": self.error,
         }

@@ -1521,7 +1521,7 @@ wheels = [
 
 [[package]]
 name = "img2nl"
-version = "0.1.5"
+version = "0.1.6"
 source = { editable = "." }
 
 [package.optional-dependencies]
@@ -1602,7 +1602,7 @@ requires-dist = [
     { name = "scikit-image", marker = "extra == 'similarity'", specifier = ">=0.22" },
     { name = "ultralytics", marker = "extra == 'detect'", specifier = ">=8.2" },
 ]
-provides-extras = ["analyze", "translate", "opencv", "similarity", "scan", "ocr", "detect", "full", "dev"]
+provides-extras = ["analyze", "translate", "opencv", "similarity", "scan", "ocr", "detect", "full", "capture", "ui", "desktop", "dev"]
 
 [[package]]
 name = "importlib-metadata"

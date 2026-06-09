@@ -84,6 +84,19 @@ def _describe_noise_objects_patterns(
     return parts
 
 
+def _describe_targets(features: dict[str, Any], lang: str) -> list[str]:
+    report = features.get("target_analysis", {})
+    if not report.get("hit_count"):
+        return []
+    hits = [h for h in report.get("targets", []) if h.get("present")]
+    if not hits:
+        return []
+    names = ", ".join(h["target"] for h in hits[:8])
+    if lang == "pl":
+        return [f"Wykryte elementy: {names}."]
+    return [f"Detected targets: {names}."]
+
+
 def _describe_scene_special_semantic(
     scene: dict[str, Any],
     special: dict[str, Any],
@@ -126,6 +139,7 @@ def _describe_catalog(features: dict[str, Any], lang: str) -> str:
     parts.extend(_describe_brightness_dynamics(colors, dynamics, lang))
     parts.extend(_describe_noise_objects_patterns(noise, objects, patterns, lang))
     parts.extend(_describe_scene_special_semantic(scene, special, semantic, lang))
+    parts.extend(_describe_targets(features, lang))
     return " ".join(parts)
 
 

@@ -1,49 +1,49 @@
 # code2llm call graph | /home/tom/github/wronai/img2nl
-# generated in 0.03s
-# nodes: 50 | edges: 54 | modules: 21
-# CC̄=4.5
+# generated in 0.07s
+# nodes: 136 | edges: 145 | modules: 43
+# CC̄=3.7
 
 HUBS[20]:
-  src.img2nl.analyze.analyze_image
-    CC=6  in:6  out:29  total:35
+  src.img2nl.features.patterns.analyze_patterns
+    CC=8  in:1  out:31  total:32
+  src.img2nl.features.objects.analyze_objects
+    CC=11  in:1  out:26  total:27
   src.img2nl.i18n.translate.t
     CC=5  in:19  out:8  total:27
+  src.img2nl.features.colors.analyze_colors
+    CC=13  in:1  out:25  total:26
+  src.img2nl.analyze.analyze_image
+    CC=4  in:6  out:18  total:24
   src.img2nl.describe._describe_catalog
-    CC=1  in:3  out:19  total:22
+    CC=1  in:3  out:21  total:24
+  src.img2nl.features.edges.analyze_edges
+    CC=6  in:1  out:21  total:22
+  src.img2nl.capture.capture_screenshot
+    CC=11  in:3  out:18  total:21
+  packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri
+    CC=14  in:1  out:19  total:20
   src.img2nl.llm_gate.llm_transport_hint
     CC=3  in:1  out:19  total:20
-  packages.uri2img2nl.src.uri2img2nl.query.query_uri
-    CC=9  in:2  out:17  total:19
   src.img2nl.features.semantic.analyze_semantic
     CC=9  in:1  out:17  total:18
+  src.img2nl.features.identify_matchers.collect_ui
+    CC=6  in:0  out:17  total:17
+  src.img2nl.features.targets.build_target_report
+    CC=8  in:1  out:16  total:17
+  src.img2nl.cli_commands.cmd_analyze
+    CC=7  in:0  out:16  total:16
+  src.img2nl.cli._add_analyze_parser
+    CC=1  in:1  out:15  total:16
+  src.img2nl.features.noise.analyze_noise
+    CC=6  in:1  out:15  total:16
+  src.img2nl.profiles.analyze_kwargs_from_cmd
+    CC=10  in:4  out:11  total:15
   src.img2nl.i18n.offline.translate_summary_offline
     CC=7  in:1  out:14  total:15
   packages.dsl2img2nl.src.dsl2img2nl.cli.main
     CC=8  in:0  out:15  total:15
-  packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
-    CC=8  in:3  out:11  total:14
-  src.img2nl.i18n.offline.ensure_language_pair
-    CC=11  in:2  out:12  total:14
-  src.img2nl.features.ocr_text.analyze_ocr
-    CC=7  in:1  out:12  total:13
-  src.img2nl.i18n.locales.normalize_locale
-    CC=8  in:8  out:4  total:12
-  src.img2nl.features.scene._scene_from_heuristics
-    CC=11  in:1  out:11  total:12
-  packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line
-    CC=14  in:1  out:10  total:11
-  src.img2nl.describe._describe_brightness_dynamics
-    CC=3  in:1  out:10  total:11
-  src.img2nl.describe._describe_color_parts
-    CC=3  in:1  out:10  total:11
-  packages.cli2img2nl.src.cli2img2nl.cli.main
-    CC=6  in:0  out:11  total:11
-  src.img2nl.features.scene.classify_scene
-    CC=3  in:2  out:9  total:11
-  src.img2nl.features.barcodes.analyze_barcodes
-    CC=5  in:1  out:9  total:10
-  packages.uri2img2nl.src.uri2img2nl.cli.main
-    CC=4  in:0  out:9  total:9
+  src.img2nl.features.presence_matchers.match_ui
+    CC=7  in:0  out:14  total:14
 
 MODULES:
   packages.cli2img2nl.src.cli2img2nl.cli  [1 funcs]
@@ -53,39 +53,124 @@ MODULES:
     execute_dsl_line  CC=1  out:1
   packages.dsl2img2nl.src.dsl2img2nl.cli  [1 funcs]
     main  CC=8  out:15
-  packages.dsl2img2nl.src.dsl2img2nl.grammar  [2 funcs]
-    parse_line  CC=14  out:10
+  packages.dsl2img2nl.src.dsl2img2nl.grammar  [10 funcs]
+    _apply_positional  CC=4  out:2
+    _consume_kv  CC=2  out:1
+    _consume_token  CC=3  out:2
+    _finalize_cmd  CC=3  out:0
+    _normalize_token  CC=1  out:2
+    _parse_bool  CC=1  out:2
+    _try_bool_flag  CC=4  out:5
+    _try_kv_token  CC=3  out:4
+    parse_line  CC=3  out:5
     split_command  CC=1  out:2
-  packages.dsl2img2nl.src.dsl2img2nl.handlers  [4 funcs]
-    handle_analyze  CC=4  out:7
-    handle_from_tokens  CC=4  out:8
-    handle_llm_hint  CC=4  out:6
+  packages.dsl2img2nl.src.dsl2img2nl.handlers  [8 funcs]
+    _require_path  CC=5  out:2
+    handle_analyze  CC=3  out:6
+    handle_capture  CC=3  out:9
+    handle_capture_analyze  CC=3  out:6
+    handle_from_tokens  CC=2  out:8
+    handle_llm_hint  CC=3  out:8
     handle_query  CC=6  out:8
+    handle_targets  CC=4  out:7
   packages.uri2img2nl.src.uri2img2nl.cli  [1 funcs]
     main  CC=4  out:9
   packages.uri2img2nl.src.uri2img2nl.query  [1 funcs]
-    query_uri  CC=9  out:17
-  packages.uri2img2nl.src.uri2img2nl.uri  [2 funcs]
-    parse_img2nl_uri  CC=5  out:7
-    uri_for_analyze  CC=2  out:1
-  src.img2nl.analyze  [1 funcs]
-    analyze_image  CC=6  out:29
+    query_uri  CC=3  out:6
+  packages.uri2img2nl.src.uri2img2nl.query_handlers  [8 funcs]
+    _analyze_failure  CC=1  out:1
+    _missing_path  CC=1  out:1
+    cmd_from_uri  CC=1  out:0
+    handle_analyze  CC=3  out:7
+    handle_capture_analyze  CC=3  out:7
+    handle_llm_hint  CC=3  out:7
+    handle_targets  CC=4  out:9
+    handle_text  CC=3  out:5
+  packages.uri2img2nl.src.uri2img2nl.uri  [6 funcs]
+    _bool_param  CC=2  out:3
+    _encode_params  CC=5  out:4
+    parse_img2nl_uri  CC=14  out:19
+    uri_for_analyze  CC=4  out:1
+    uri_for_capture_analyze  CC=1  out:1
+    uri_for_targets  CC=1  out:1
+  src.img2nl.analyze  [4 funcs]
+    _assemble_result  CC=2  out:6
+    _open_image  CC=1  out:1
+    _require_pillow  CC=2  out:0
+    analyze_image  CC=4  out:18
+  src.img2nl.api  [6 funcs]
+    analyze_from_cmd  CC=1  out:2
+    capture_analyze_from_cmd  CC=3  out:11
+    capture_from_cmd  CC=3  out:7
+    llm_hint_from_path  CC=2  out:1
+    targets_from_cmd  CC=3  out:5
+    text_from_path  CC=3  out:2
+  src.img2nl.capture  [2 funcs]
+    capture_and_analyze  CC=2  out:7
+    capture_screenshot  CC=11  out:18
+  src.img2nl.cli  [6 funcs]
+    _add_analyze_parser  CC=1  out:15
+    _add_capture_analyze_parser  CC=1  out:12
+    _add_capture_parser  CC=1  out:6
+    _add_translate_install_parser  CC=1  out:6
+    build_parser  CC=1  out:6
+    main  CC=1  out:3
+  src.img2nl.cli_commands  [6 funcs]
+    _profile_kwargs  CC=1  out:1
+    _target_list  CC=4  out:3
+    cmd_analyze  CC=7  out:16
+    cmd_capture  CC=4  out:8
+    cmd_capture_analyze  CC=6  out:13
+    cmd_translate_install  CC=8  out:8
+  src.img2nl.context  [2 funcs]
+    default_targets  CC=1  out:2
+    infer_source_type  CC=11  out:8
   src.img2nl.describe  [4 funcs]
     _describe_brightness_dynamics  CC=3  out:10
-    _describe_catalog  CC=1  out:19
+    _describe_catalog  CC=1  out:21
     _describe_color_parts  CC=3  out:10
     describe_image  CC=8  out:5
   src.img2nl.features.barcodes  [3 funcs]
     _should_scan  CC=3  out:7
     _suppress_zbar_stderr  CC=1  out:7
     analyze_barcodes  CC=5  out:9
+  src.img2nl.features.colors  [1 funcs]
+    analyze_colors  CC=13  out:25
+  src.img2nl.features.dynamics  [1 funcs]
+    analyze_dynamics  CC=1  out:5
+  src.img2nl.features.edges  [1 funcs]
+    analyze_edges  CC=6  out:21
+  src.img2nl.features.extractors  [2 funcs]
+    apply_semantic_layer  CC=1  out:1
+    extract_base_features  CC=2  out:11
   src.img2nl.features.fingerprint  [2 funcs]
     _unavailable  CC=1  out:0
     analyze_fingerprint  CC=2  out:8
+  src.img2nl.features.identify_matchers  [2 funcs]
+    collect_ui  CC=6  out:17
+    identify_from_features  CC=2  out:2
+  src.img2nl.features.matchers_common  [1 funcs]
+    match_ui_role  CC=2  out:4
+  src.img2nl.features.noise  [1 funcs]
+    analyze_noise  CC=6  out:15
+  src.img2nl.features.objects  [1 funcs]
+    analyze_objects  CC=11  out:26
   src.img2nl.features.ocr_text  [3 funcs]
     _preview  CC=2  out:3
     _should_ocr  CC=3  out:5
     analyze_ocr  CC=7  out:12
+  src.img2nl.features.patterns  [1 funcs]
+    analyze_patterns  CC=8  out:31
+  src.img2nl.features.presence_matchers  [5 funcs]
+    _absent  CC=1  out:1
+    _best_semantic_object  CC=9  out:5
+    match_semantic  CC=3  out:8
+    match_ui  CC=7  out:14
+    presence_from_features  CC=5  out:3
+  src.img2nl.features.router  [3 funcs]
+    _active_adapters  CC=3  out:6
+    analyze_targets  CC=3  out:6
+    execute_target_plan  CC=3  out:6
   src.img2nl.features.scene  [6 funcs]
     _scene_dense_from_edges  CC=4  out:5
     _scene_from_heuristics  CC=11  out:11
@@ -102,6 +187,16 @@ MODULES:
     fingerprint_hamming  CC=5  out:2
   src.img2nl.features.special_hits  [1 funcs]
     analyze_special_hits  CC=1  out:4
+  src.img2nl.features.targets  [4 funcs]
+    _bbox_center  CC=2  out:1
+    best_detection  CC=8  out:12
+    build_target_report  CC=8  out:16
+    find_click_point  CC=5  out:9
+  src.img2nl.features.ui_adapter  [4 funcs]
+    _from_imgl_elements  CC=2  out:4
+    _try_imgl_bridge  CC=3  out:2
+    _try_imgl_local  CC=2  out:3
+    analyze_ui_targets  CC=4  out:4
   src.img2nl.i18n.locales  [2 funcs]
     is_european_locale  CC=1  out:1
     normalize_locale  CC=8  out:4
@@ -117,6 +212,19 @@ MODULES:
     t  CC=5  out:8
   src.img2nl.llm_gate  [1 funcs]
     llm_transport_hint  CC=3  out:19
+  src.img2nl.plan  [5 funcs]
+    build_execution_plan  CC=1  out:6
+    resolve_targets  CC=6  out:4
+    should_run_identify  CC=2  out:0
+    should_run_semantic  CC=5  out:0
+    should_run_ui_detect  CC=3  out:0
+  src.img2nl.profiles  [4 funcs]
+    analyze_kwargs_from_cmd  CC=10  out:11
+    apply_profile  CC=5  out:2
+    get_profile  CC=2  out:6
+    list_profiles  CC=1  out:1
+  src.img2nl.thumbnail  [1 funcs]
+    make_thumbnail  CC=4  out:12
 
 EDGES:
   packages.cli2img2nl.src.cli2img2nl.cli.main → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
@@ -125,47 +233,47 @@ EDGES:
   packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch → packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line
   packages.dsl2img2nl.src.dsl2img2nl.bus.execute_dsl_line → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
   packages.dsl2img2nl.src.dsl2img2nl.cli.main → packages.dsl2img2nl.src.dsl2img2nl.bus.dispatch
-  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze → src.img2nl.analyze.analyze_image
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze → packages.dsl2img2nl.src.dsl2img2nl.handlers._require_path
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_targets → packages.dsl2img2nl.src.dsl2img2nl.handlers._require_path
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_capture → packages.dsl2img2nl.src.dsl2img2nl.handlers._require_path
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_capture_analyze → packages.dsl2img2nl.src.dsl2img2nl.handlers._require_path
   packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query → packages.uri2img2nl.src.uri2img2nl.query.query_uri
   packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query → packages.uri2img2nl.src.uri2img2nl.uri.uri_for_analyze
-  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint → src.img2nl.analyze.analyze_image
-  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens → packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_analyze
-  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens → packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_query
-  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_from_tokens → packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint
+  packages.dsl2img2nl.src.dsl2img2nl.handlers.handle_llm_hint → packages.dsl2img2nl.src.dsl2img2nl.handlers._require_path
+  packages.dsl2img2nl.src.dsl2img2nl.grammar._try_kv_token → packages.dsl2img2nl.src.dsl2img2nl.grammar._normalize_token
+  packages.dsl2img2nl.src.dsl2img2nl.grammar._try_kv_token → packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_kv
+  packages.dsl2img2nl.src.dsl2img2nl.grammar._try_bool_flag → packages.dsl2img2nl.src.dsl2img2nl.grammar._normalize_token
+  packages.dsl2img2nl.src.dsl2img2nl.grammar._try_bool_flag → packages.dsl2img2nl.src.dsl2img2nl.grammar._parse_bool
+  packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_token → packages.dsl2img2nl.src.dsl2img2nl.grammar._apply_positional
   packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line → packages.dsl2img2nl.src.dsl2img2nl.grammar.split_command
+  packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line → packages.dsl2img2nl.src.dsl2img2nl.grammar._finalize_cmd
+  packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line → packages.dsl2img2nl.src.dsl2img2nl.grammar._normalize_token
+  packages.dsl2img2nl.src.dsl2img2nl.grammar.parse_line → packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_token
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_capture_analyze → packages.uri2img2nl.src.uri2img2nl.query_handlers._missing_path
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_capture_analyze → packages.uri2img2nl.src.uri2img2nl.query_handlers.cmd_from_uri
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_capture_analyze → packages.uri2img2nl.src.uri2img2nl.query_handlers._analyze_failure
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_targets → packages.uri2img2nl.src.uri2img2nl.query_handlers._missing_path
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_targets → packages.uri2img2nl.src.uri2img2nl.query_handlers.cmd_from_uri
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_targets → packages.uri2img2nl.src.uri2img2nl.query_handlers._analyze_failure
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_analyze → packages.uri2img2nl.src.uri2img2nl.query_handlers._missing_path
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_analyze → packages.uri2img2nl.src.uri2img2nl.query_handlers.cmd_from_uri
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_analyze → packages.uri2img2nl.src.uri2img2nl.query_handlers._analyze_failure
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_llm_hint → packages.uri2img2nl.src.uri2img2nl.query_handlers._missing_path
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_llm_hint → packages.uri2img2nl.src.uri2img2nl.query_handlers._analyze_failure
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_text → packages.uri2img2nl.src.uri2img2nl.query_handlers._missing_path
+  packages.uri2img2nl.src.uri2img2nl.query_handlers.handle_text → packages.uri2img2nl.src.uri2img2nl.query_handlers._analyze_failure
   packages.uri2img2nl.src.uri2img2nl.cli.main → packages.uri2img2nl.src.uri2img2nl.query.query_uri
   packages.uri2img2nl.src.uri2img2nl.query.query_uri → packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri
-  packages.uri2img2nl.src.uri2img2nl.query.query_uri → src.img2nl.analyze.analyze_image
-  src.img2nl.analyze.analyze_image → src.img2nl.features.scene.classify_scene
-  src.img2nl.analyze.analyze_image → src.img2nl.features.special_hits.analyze_special_hits
-  src.img2nl.analyze.analyze_image → src.img2nl.i18n.locales.normalize_locale
-  src.img2nl.analyze.analyze_image → src.img2nl.describe.describe_image
-  src.img2nl.analyze.analyze_image → src.img2nl.llm_gate.llm_transport_hint
-  src.img2nl.features.ocr_text.analyze_ocr → src.img2nl.features.ocr_text._preview
-  src.img2nl.features.ocr_text.analyze_ocr → src.img2nl.features.ocr_text._should_ocr
-  src.img2nl.features.semantic.analyze_semantic → src.img2nl.features.semantic._get_model
-  src.img2nl.features.semantic.analyze_semantic → src.img2nl.features.semantic._should_detect
-  src.img2nl.features.similarity.compare_fingerprints → src.img2nl.features.similarity.fingerprint_hamming
-  src.img2nl.features.fingerprint.analyze_fingerprint → src.img2nl.features.fingerprint._unavailable
-  src.img2nl.features.barcodes.analyze_barcodes → src.img2nl.features.barcodes._suppress_zbar_stderr
-  src.img2nl.features.barcodes.analyze_barcodes → src.img2nl.features.barcodes._should_scan
-  src.img2nl.features.special_hits.analyze_special_hits → src.img2nl.features.barcodes.analyze_barcodes
-  src.img2nl.features.special_hits.analyze_special_hits → src.img2nl.features.ocr_text.analyze_ocr
-  src.img2nl.i18n.translate.t → src.img2nl.i18n.locales.normalize_locale
-  src.img2nl.i18n.locales.is_european_locale → src.img2nl.i18n.locales.normalize_locale
-  src.img2nl.i18n.offline.list_installed_pairs → src.img2nl.i18n.offline._require_argos
-  src.img2nl.i18n.offline.list_installed_pairs → src.img2nl.i18n.offline.argostranslate_available
-  src.img2nl.i18n.offline.list_available_pairs → src.img2nl.i18n.offline._require_argos
-  src.img2nl.i18n.offline.list_available_pairs → src.img2nl.i18n.offline._update_index
-  src.img2nl.i18n.offline.ensure_language_pair → src.img2nl.i18n.locales.normalize_locale
-  src.img2nl.i18n.offline.ensure_language_pair → src.img2nl.i18n.offline._require_argos
-  src.img2nl.i18n.offline.ensure_language_pair → src.img2nl.i18n.offline._update_index
-  src.img2nl.i18n.offline.translate_summary_offline → src.img2nl.i18n.locales.normalize_locale
-  src.img2nl.i18n.offline.translate_summary_offline → src.img2nl.i18n.offline._require_argos
-  src.img2nl.i18n.offline.translate_summary_offline → src.img2nl.i18n.offline.argostranslate_available
+  packages.uri2img2nl.src.uri2img2nl.uri.uri_for_analyze → packages.uri2img2nl.src.uri2img2nl.uri._encode_params
+  packages.uri2img2nl.src.uri2img2nl.uri.uri_for_targets → packages.uri2img2nl.src.uri2img2nl.uri._encode_params
+  packages.uri2img2nl.src.uri2img2nl.uri.uri_for_capture_analyze → packages.uri2img2nl.src.uri2img2nl.uri._encode_params
+  packages.uri2img2nl.src.uri2img2nl.uri.parse_img2nl_uri → packages.uri2img2nl.src.uri2img2nl.uri._bool_param
   src.img2nl.describe._describe_color_parts → src.img2nl.i18n.translate.t
   src.img2nl.describe._describe_brightness_dynamics → src.img2nl.i18n.translate.t
   src.img2nl.describe.describe_image → src.img2nl.i18n.locales.normalize_locale
   src.img2nl.describe.describe_image → src.img2nl.describe._describe_catalog
   src.img2nl.describe.describe_image → src.img2nl.i18n.offline.translate_summary_offline
-  src.img2nl.features.scene._scene_from_heuristics → src.img2nl.features.scene._scene_general_fallback
+  src.img2nl.cli.build_parser → src.img2nl.cli._add_analyze_parser
+  src.img2nl.cli.build_parser → src.img2nl.cli._add_capture_parser
+  src.img2nl.cli.build_parser → src.img2nl.cli._add_capture_analyze_parser
+  src.img2nl.cli.build_parser → src.img2nl.cli._add_translate_install_parser

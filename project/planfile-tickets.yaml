@@ -1,5 +1,5 @@
 source: code2llm
-# generated in 0.02s
+# generated in 0.04s
 schema: code2llm.planfile_tickets.v1
 project_root: /home/tom/github/wronai/img2nl
 tickets:
@@ -60,12 +60,13 @@ tickets:
   - src/img2nl/features/objects.py
   dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/objects.py:47:God Function:
     analyze_objects'
-- signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: main'
-  description: 'code2llm reports `God Function: main` in `src/img2nl/cli.py:12`.
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: cmd'
+  description: 'code2llm reports `Shotgun Surgery: cmd` in `packages/dsl2img2nl/src/dsl2img2nl/grammar.py:73`.
 
 
-    Function ''main'' is oversized: CC=14, fan-out=15, mutations=20.
+    Mutation of variable ''cmd'' spans 7 functions. Changing this logic requires work
+    in many places.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -74,13 +75,14 @@ tickets:
   - llm-ready
   - code2llm
   - code-smell
-  - god-function
+  - shotgun-surgery
   files:
-  - src/img2nl/cli.py
-  dedupe_key: 'code2llm:smell:god_function:src/img2nl/cli.py:12:God Function: main'
+  - packages/dsl2img2nl/src/dsl2img2nl/grammar.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:packages/dsl2img2nl/src/dsl2img2nl/grammar.py:73:Shotgun
+    Surgery: cmd'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: h'
-  description: 'code2llm reports `Shotgun Surgery: h` in `src/img2nl/analyze.py:27`.
+  description: 'code2llm reports `Shotgun Surgery: h` in `src/img2nl/features/colors.py:13`.
 
 
     Mutation of variable ''h'' spans 9 functions. Changing this logic requires work
@@ -95,12 +97,52 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/img2nl/analyze.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/analyze.py:27:Shotgun Surgery:
-    h'
+  - src/img2nl/features/colors.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/features/colors.py:13:Shotgun
+    Surgery: h'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: hits'
+  description: 'code2llm reports `Shotgun Surgery: hits` in `src/img2nl/features/identify_matchers.py:125`.
+
+
+    Mutation of variable ''hits'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/img2nl/features/identify_matchers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/features/identify_matchers.py:125:Shotgun
+    Surgery: hits'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: key'
+  description: 'code2llm reports `Shotgun Surgery: key` in `src/img2nl/profiles.py:51`.
+
+
+    Mutation of variable ''key'' spans 9 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/img2nl/profiles.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/profiles.py:51:Shotgun Surgery:
+    key'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: package_mod'
-  description: 'code2llm reports `Shotgun Surgery: package_mod` in `src/img2nl/i18n/offline.py:133`.
+  description: 'code2llm reports `Shotgun Surgery: package_mod` in `src/img2nl/i18n/offline.py:71`.
 
 
     Mutation of variable ''package_mod'' spans 5 functions. Changing this logic requires
@@ -116,11 +158,31 @@ tickets:
   - shotgun-surgery
   files:
   - src/img2nl/i18n/offline.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/i18n/offline.py:133:Shotgun
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/i18n/offline.py:71:Shotgun
     Surgery: package_mod'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: parser'
+  description: 'code2llm reports `Shotgun Surgery: parser` in `src/img2nl/cli.py:58`.
+
+
+    Mutation of variable ''parser'' spans 8 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/img2nl/cli.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/cli.py:58:Shotgun Surgery:
+    parser'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: parts'
-  description: 'code2llm reports `Shotgun Surgery: parts` in `src/img2nl/describe.py:35`.
+  description: 'code2llm reports `Shotgun Surgery: parts` in `src/img2nl/describe.py:58`.
 
 
     Mutation of variable ''parts'' spans 5 functions. Changing this logic requires
@@ -136,14 +198,14 @@ tickets:
   - shotgun-surgery
   files:
   - src/img2nl/describe.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/describe.py:35:Shotgun Surgery:
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/describe.py:58:Shotgun Surgery:
     parts'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: path'
-  description: 'code2llm reports `Shotgun Surgery: path` in `src/img2nl/i18n/offline.py:95`.
+  description: 'code2llm reports `Shotgun Surgery: path` in `src/img2nl/features/ui_adapter.py:63`.
 
 
-    Mutation of variable ''path'' spans 5 functions. Changing this logic requires
+    Mutation of variable ''path'' spans 6 functions. Changing this logic requires
     work in many places.
 
 
@@ -155,12 +217,32 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/img2nl/i18n/offline.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/i18n/offline.py:95:Shotgun
+  - src/img2nl/features/ui_adapter.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/features/ui_adapter.py:63:Shotgun
     Surgery: path'
 - signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: payload'
+  description: 'code2llm reports `Shotgun Surgery: payload` in `packages/dsl2img2nl/src/dsl2img2nl/handlers.py:73`.
+
+
+    Mutation of variable ''payload'' spans 9 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - packages/dsl2img2nl/src/dsl2img2nl/handlers.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:packages/dsl2img2nl/src/dsl2img2nl/handlers.py:73:Shotgun
+    Surgery: payload'
+- signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: reasons'
-  description: 'code2llm reports `Shotgun Surgery: reasons` in `src/img2nl/llm_gate.py:83`.
+  description: 'code2llm reports `Shotgun Surgery: reasons` in `src/img2nl/llm_gate.py:118`.
 
 
     Mutation of variable ''reasons'' spans 6 functions. Changing this logic requires
@@ -176,14 +258,14 @@ tickets:
   - shotgun-surgery
   files:
   - src/img2nl/llm_gate.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/llm_gate.py:83:Shotgun Surgery:
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/llm_gate.py:118:Shotgun Surgery:
     reasons'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: result'
-  description: 'code2llm reports `Shotgun Surgery: result` in `packages/dsl2img2nl/src/dsl2img2nl/handlers.py:29`.
+  description: 'code2llm reports `Shotgun Surgery: result` in `src/img2nl/cli_commands.py:58`.
 
 
-    Mutation of variable ''result'' spans 10 functions. Changing this logic requires
+    Mutation of variable ''result'' spans 19 functions. Changing this logic requires
     work in many places.
 
 
@@ -195,8 +277,8 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - packages/dsl2img2nl/src/dsl2img2nl/handlers.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:packages/dsl2img2nl/src/dsl2img2nl/handlers.py:29:Shotgun
+  - src/img2nl/cli_commands.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/cli_commands.py:58:Shotgun
     Surgery: result'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: rgb'
@@ -220,7 +302,7 @@ tickets:
     Surgery: rgb'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: scene'
-  description: 'code2llm reports `Shotgun Surgery: scene` in `src/img2nl/features/barcodes.py:26`.
+  description: 'code2llm reports `Shotgun Surgery: scene` in `src/img2nl/describe.py:126`.
 
 
     Mutation of variable ''scene'' spans 5 functions. Changing this logic requires
@@ -235,15 +317,15 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/img2nl/features/barcodes.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/features/barcodes.py:26:Shotgun
-    Surgery: scene'
+  - src/img2nl/describe.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/describe.py:126:Shotgun Surgery:
+    scene'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: score'
-  description: 'code2llm reports `Shotgun Surgery: score` in `src/img2nl/llm_gate.py:83`.
+  description: 'code2llm reports `Shotgun Surgery: score` in `src/img2nl/features/targets.py:33`.
 
 
-    Mutation of variable ''score'' spans 7 functions. Changing this logic requires
+    Mutation of variable ''score'' spans 8 functions. Changing this logic requires
     work in many places.
 
 
@@ -255,12 +337,32 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/img2nl/llm_gate.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/llm_gate.py:83:Shotgun Surgery:
-    score'
+  - src/img2nl/features/targets.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/features/targets.py:33:Shotgun
+    Surgery: score'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: sub'
+  description: 'code2llm reports `Shotgun Surgery: sub` in `src/img2nl/cli.py:58`.
+
+
+    Mutation of variable ''sub'' spans 7 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/img2nl/cli.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/cli.py:58:Shotgun Surgery:
+    sub'
 - signal: code2llm_smell_shotgun_surgery
   title: 'Address code smell: Shotgun Surgery: w'
-  description: 'code2llm reports `Shotgun Surgery: w` in `src/img2nl/analyze.py:27`.
+  description: 'code2llm reports `Shotgun Surgery: w` in `src/img2nl/features/colors.py:13`.
 
 
     Mutation of variable ''w'' spans 9 functions. Changing this logic requires work
@@ -275,15 +377,212 @@ tickets:
   - code-smell
   - shotgun-surgery
   files:
-  - src/img2nl/analyze.py
-  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/analyze.py:27:Shotgun Surgery:
-    w'
+  - src/img2nl/features/colors.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/img2nl/features/colors.py:13:Shotgun
+    Surgery: w'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: cmd, index, tokens'
+  description: 'code2llm reports `Data Clump: cmd, index, tokens` in `packages/dsl2img2nl/src/dsl2img2nl/grammar.py:29`.
+
+
+    Arguments (cmd, index, tokens) are used together in multiple functions: packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_kv,
+    packages.dsl2img2nl.src.dsl2img2nl.grammar._try_kv_token, packages.dsl2img2nl.src.dsl2img2nl.grammar._try_bool_flag,
+    packages.dsl2img2nl.src.dsl2img2nl.grammar._apply_positional, packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_token.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - packages/dsl2img2nl/src/dsl2img2nl/grammar.py
+  dedupe_key: 'code2llm:smell:data_clump:packages/dsl2img2nl/src/dsl2img2nl/grammar.py:29:Data
+    Clump: cmd, index, tokens'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: cmd, index, tokens'
+  description: 'code2llm reports `Data Clump: cmd, index, tokens` in `packages/dsl2img2nl/src/dsl2img2nl/grammar.py:64`.
+
+
+    Arguments (cmd, index, tokens) are used together in multiple functions: packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_kv,
+    packages.dsl2img2nl.src.dsl2img2nl.grammar._try_kv_token, packages.dsl2img2nl.src.dsl2img2nl.grammar._try_bool_flag,
+    packages.dsl2img2nl.src.dsl2img2nl.grammar._apply_positional, packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_token.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - packages/dsl2img2nl/src/dsl2img2nl/grammar.py
+  dedupe_key: 'code2llm:smell:data_clump:packages/dsl2img2nl/src/dsl2img2nl/grammar.py:64:Data
+    Clump: cmd, index, tokens'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: cmd, index, tokens'
+  description: 'code2llm reports `Data Clump: cmd, index, tokens` in `packages/dsl2img2nl/src/dsl2img2nl/grammar.py:73`.
+
+
+    Arguments (cmd, index, tokens) are used together in multiple functions: packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_kv,
+    packages.dsl2img2nl.src.dsl2img2nl.grammar._try_kv_token, packages.dsl2img2nl.src.dsl2img2nl.grammar._try_bool_flag,
+    packages.dsl2img2nl.src.dsl2img2nl.grammar._apply_positional, packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_token.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - packages/dsl2img2nl/src/dsl2img2nl/grammar.py
+  dedupe_key: 'code2llm:smell:data_clump:packages/dsl2img2nl/src/dsl2img2nl/grammar.py:73:Data
+    Clump: cmd, index, tokens'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: cmd, index, tokens'
+  description: 'code2llm reports `Data Clump: cmd, index, tokens` in `packages/dsl2img2nl/src/dsl2img2nl/grammar.py:85`.
+
+
+    Arguments (cmd, index, tokens) are used together in multiple functions: packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_kv,
+    packages.dsl2img2nl.src.dsl2img2nl.grammar._try_kv_token, packages.dsl2img2nl.src.dsl2img2nl.grammar._try_bool_flag,
+    packages.dsl2img2nl.src.dsl2img2nl.grammar._apply_positional, packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_token.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - packages/dsl2img2nl/src/dsl2img2nl/grammar.py
+  dedupe_key: 'code2llm:smell:data_clump:packages/dsl2img2nl/src/dsl2img2nl/grammar.py:85:Data
+    Clump: cmd, index, tokens'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: cmd, index, tokens'
+  description: 'code2llm reports `Data Clump: cmd, index, tokens` in `packages/dsl2img2nl/src/dsl2img2nl/grammar.py:97`.
+
+
+    Arguments (cmd, index, tokens) are used together in multiple functions: packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_kv,
+    packages.dsl2img2nl.src.dsl2img2nl.grammar._try_kv_token, packages.dsl2img2nl.src.dsl2img2nl.grammar._try_bool_flag,
+    packages.dsl2img2nl.src.dsl2img2nl.grammar._apply_positional, packages.dsl2img2nl.src.dsl2img2nl.grammar._consume_token.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - packages/dsl2img2nl/src/dsl2img2nl/grammar.py
+  dedupe_key: 'code2llm:smell:data_clump:packages/dsl2img2nl/src/dsl2img2nl/grammar.py:97:Data
+    Clump: cmd, index, tokens'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _add_analyze_parser'
+  description: 'code2llm reports `God Function: _add_analyze_parser` in `src/img2nl/cli.py:15`.
+
+
+    Function ''_add_analyze_parser'' is oversized: CC=1, fan-out=3, mutations=16.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/img2nl/cli.py
+  dedupe_key: 'code2llm:smell:god_function:src/img2nl/cli.py:15:God Function: _add_analyze_parser'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _add_capture_analyze_parser'
+  description: 'code2llm reports `God Function: _add_capture_analyze_parser` in `src/img2nl/cli.py:58`.
+
+
+    Function ''_add_capture_analyze_parser'' is oversized: CC=1, fan-out=3, mutations=13.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/img2nl/cli.py
+  dedupe_key: 'code2llm:smell:god_function:src/img2nl/cli.py:58:God Function: _add_capture_analyze_parser'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _add_capture_parser'
+  description: 'code2llm reports `God Function: _add_capture_parser` in `src/img2nl/cli.py:49`.
+
+
+    Function ''_add_capture_parser'' is oversized: CC=1, fan-out=3, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/img2nl/cli.py
+  dedupe_key: 'code2llm:smell:god_function:src/img2nl/cli.py:49:God Function: _add_capture_parser'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _add_translate_install_parser'
+  description: 'code2llm reports `God Function: _add_translate_install_parser` in
+    `src/img2nl/cli.py:77`.
+
+
+    Function ''_add_translate_install_parser'' is oversized: CC=1, fan-out=3, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/img2nl/cli.py
+  dedupe_key: 'code2llm:smell:god_function:src/img2nl/cli.py:77:God Function: _add_translate_install_parser'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _bbox_center'
+  description: 'code2llm reports `God Function: _bbox_center` in `src/img2nl/features/targets.py:68`.
+
+
+    Function ''_bbox_center'' is oversized: CC=2, fan-out=1, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/img2nl/features/targets.py
+  dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/targets.py:68:God Function:
+    _bbox_center'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _describe_catalog'
-  description: 'code2llm reports `God Function: _describe_catalog` in `src/img2nl/describe.py:113`.
+  description: 'code2llm reports `God Function: _describe_catalog` in `src/img2nl/describe.py:126`.
 
 
-    Function ''_describe_catalog'' is oversized: CC=1, fan-out=9, mutations=16.
+    Function ''_describe_catalog'' is oversized: CC=1, fan-out=10, mutations=17.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -295,7 +594,7 @@ tickets:
   - god-function
   files:
   - src/img2nl/describe.py
-  dedupe_key: 'code2llm:smell:god_function:src/img2nl/describe.py:113:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/img2nl/describe.py:126:God Function:
     _describe_catalog'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _describe_noise_objects_patterns'
@@ -320,7 +619,7 @@ tickets:
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _describe_scene_special_semantic'
   description: 'code2llm reports `God Function: _describe_scene_special_semantic`
-    in `src/img2nl/describe.py:87`.
+    in `src/img2nl/describe.py:100`.
 
 
     Function ''_describe_scene_special_semantic'' is oversized: CC=6, fan-out=9, mutations=7.
@@ -335,7 +634,7 @@ tickets:
   - god-function
   files:
   - src/img2nl/describe.py
-  dedupe_key: 'code2llm:smell:god_function:src/img2nl/describe.py:87:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/img2nl/describe.py:100:God Function:
     _describe_scene_special_semantic'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: _llm_dynamics_noise_adjustments'
@@ -435,10 +734,10 @@ tickets:
     analyze_edges'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: analyze_image'
-  description: 'code2llm reports `God Function: analyze_image` in `src/img2nl/analyze.py:27`.
+  description: 'code2llm reports `God Function: analyze_image` in `src/img2nl/analyze.py:66`.
 
 
-    Function ''analyze_image'' is oversized: CC=6, fan-out=21, mutations=17.
+    Function ''analyze_image'' is oversized: CC=4, fan-out=13, mutations=9.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -450,7 +749,7 @@ tickets:
   - god-function
   files:
   - src/img2nl/analyze.py
-  dedupe_key: 'code2llm:smell:god_function:src/img2nl/analyze.py:27:God Function:
+  dedupe_key: 'code2llm:smell:god_function:src/img2nl/analyze.py:66:God Function:
     analyze_image'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: analyze_noise'
@@ -528,6 +827,25 @@ tickets:
   - src/img2nl/features/semantic.py
   dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/semantic.py:26:God
     Function: analyze_semantic'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: build_target_report'
+  description: 'code2llm reports `God Function: build_target_report` in `src/img2nl/features/targets.py:75`.
+
+
+    Function ''build_target_report'' is oversized: CC=8, fan-out=15, mutations=14.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/img2nl/features/targets.py
+  dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/targets.py:75:God Function:
+    build_target_report'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: compare_images_ssim'
   description: 'code2llm reports `God Function: compare_images_ssim` in `src/img2nl/features/similarity.py:46`.
@@ -662,11 +980,11 @@ tickets:
   dedupe_key: 'code2llm:smell:god_function:src/img2nl/thumbnail.py:8:God Function:
     make_thumbnail'
 - signal: code2llm_smell_god_function
-  title: 'Address code smell: God Function: parse_line'
-  description: 'code2llm reports `God Function: parse_line` in `packages/dsl2img2nl/src/dsl2img2nl/grammar.py:14`.
+  title: 'Address code smell: God Function: match_ui'
+  description: 'code2llm reports `God Function: match_ui` in `src/img2nl/features/presence_matchers.py:83`.
 
 
-    Function ''parse_line'' is oversized: CC=14, fan-out=5, mutations=16.
+    Function ''match_ui'' is oversized: CC=7, fan-out=8, mutations=9.
 
 
     Make the smallest refactor that removes the smell and run local tests.'
@@ -677,9 +995,28 @@ tickets:
   - code-smell
   - god-function
   files:
-  - packages/dsl2img2nl/src/dsl2img2nl/grammar.py
-  dedupe_key: 'code2llm:smell:god_function:packages/dsl2img2nl/src/dsl2img2nl/grammar.py:14:God
-    Function: parse_line'
+  - src/img2nl/features/presence_matchers.py
+  dedupe_key: 'code2llm:smell:god_function:src/img2nl/features/presence_matchers.py:83:God
+    Function: match_ui'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: parse_img2nl_uri'
+  description: 'code2llm reports `God Function: parse_img2nl_uri` in `packages/uri2img2nl/src/uri2img2nl/uri.py:125`.
+
+
+    Function ''parse_img2nl_uri'' is oversized: CC=14, fan-out=9, mutations=5.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - packages/uri2img2nl/src/uri2img2nl/uri.py
+  dedupe_key: 'code2llm:smell:god_function:packages/uri2img2nl/src/uri2img2nl/uri.py:125:God
+    Function: parse_img2nl_uri'
 - signal: code2llm_smell_god_function
   title: 'Address code smell: God Function: translate_summary_offline'
   description: 'code2llm reports `God Function: translate_summary_offline` in `src/img2nl/i18n/offline.py:133`.

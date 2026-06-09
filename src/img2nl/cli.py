@@ -3,82 +3,99 @@
 from __future__ import annotations
 
 import argparse
-import json
-import sys
 
-from img2nl.analyze import analyze_image
+from img2nl.cli_commands import (
+    cmd_analyze,
+    cmd_capture,
+    cmd_capture_analyze,
+    cmd_translate_install,
+)
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="img2nl", description="Image → NL summary + thumbnail")
-    sub = parser.add_subparsers(dest="cmd", required=True)
-
-    a = sub.add_parser("analyze", help="Analyze image heuristics")
-    a.add_argument("image")
-    a.add_argument("--thumbnail", default="")
-    a.add_argument(
-        "--locale",
-        default="pl",
-        help="European ISO 639-1 code (pl, en, de, fr, es, cs, uk, ...)",
-    )
-    a.add_argument(
+def _add_analyze_parser(sub: argparse._SubParsersAction) -> None:
+    parser = sub.add_parser("analyze", help="Analyze image heuristics")
+    parser.add_argument("image")
+    parser.add_argument("--thumbnail", default="")
+    parser.add_argument("--locale", default="pl")
+    parser.add_argument(
         "--translate-mode",
         default="auto",
         choices=["auto", "catalog", "offline"],
-        help="auto=catalog pl/en + argostranslate en→target; offline=require argos; catalog=static JSON only",
     )
-    a.add_argument("--json", action="store_true")
-    a.add_argument("--no-thumbnail", action="store_true")
+    parser.add_argument("--json", action="store_true")
+    parser.add_argument("--no-thumbnail", action="store_true")
+    parser.add_argument(
+        "--source-type",
+        default="auto",
+        choices=["auto", "photo", "screenshot", "document", "camera"],
+    )
+    parser.add_argument(
+        "--goal",
+        default="describe",
+        choices=["describe", "find", "click", "index"],
+    )
+    parser.add_argument("--targets", default="")
+    parser.add_argument("--speed", default="fast", choices=["fast", "balanced", "full"])
+    parser.add_argument("--enable-ui-detect", action="store_true")
+    parser.add_argument("--enable-detect", action="store_true")
+    parser.add_argument(
+        "--profile",
+        default="",
+        choices=["", "fast_ui", "fast_photo", "fast_document", "full_desktop"],
+    )
+    parser.set_defaults(func=cmd_analyze)
 
-    ti = sub.add_parser("translate-install", help="Install argostranslate language pair (offline)")
-    ti.add_argument("from_lang", nargs="?", default="en")
-    ti.add_argument("to_lang", nargs="?", default="pl")
-    ti.add_argument("--list-available", action="store_true")
-    ti.add_argument("--list-installed", action="store_true")
 
-    args = parser.parse_args(argv)
+def _add_capture_parser(sub: argparse._SubParsersAction) -> None:
+    parser = sub.add_parser("capture", help="Capture screenshot via vdisplay or imgl")
+    parser.add_argument("-o", "--output", required=True)
+    parser.add_argument("--monitor", type=int, default=1)
+    parser.add_argument("--backend", default="auto", choices=["auto", "vdisplay", "imgl"])
+    parser.add_argument("--json", action="store_true")
+    parser.set_defaults(func=cmd_capture)
 
-    if args.cmd == "analyze":
-        result = analyze_image(
-            args.image,
-            thumbnail=args.thumbnail or None,
-            locale=args.locale,
-            translate_mode=args.translate_mode,
-            skip_thumbnail=args.no_thumbnail,
-        )
-        if args.json:
-            print(json.dumps(result.to_dict(), ensure_ascii=False, indent=2))
-        else:
-            print(result.text)
-            if result.thumbnail:
-                print(f"thumbnail: {result.thumbnail}")
-            print(f"llm: {result.llm_hint.get('recommendation')} ({result.llm_hint.get('confidence')})")
-        return 0 if result.ok else 1
 
-    if args.cmd == "translate-install":
-        from img2nl.i18n.offline import (
-            argostranslate_available,
-            ensure_language_pair,
-            list_available_pairs,
-            list_installed_pairs,
-        )
+def _add_capture_analyze_parser(sub: argparse._SubParsersAction) -> None:
+    parser = sub.add_parser("capture-analyze", help="Capture screenshot and analyze it")
+    parser.add_argument("-o", "--output", required=True)
+    parser.add_argument("--monitor", type=int, default=1)
+    parser.add_argument("--backend", default="auto", choices=["auto", "vdisplay", "imgl"])
+    parser.add_argument("--locale", default="pl")
+    parser.add_argument("--json", action="store_true")
+    parser.add_argument("--no-thumbnail", action="store_true")
+    parser.add_argument("--goal", default="click", choices=["describe", "find", "click", "index"])
+    parser.add_argument("--targets", default="")
+    parser.add_argument("--enable-detect", action="store_true")
+    parser.add_argument(
+        "--profile",
+        default="fast_ui",
+        choices=["fast_ui", "fast_photo", "fast_document", "full_desktop"],
+    )
+    parser.set_defaults(func=cmd_capture_analyze)
 
-        if not argostranslate_available():
-            print("Install: pip install img2nl[translate]")
-            return 1
-        if args.list_installed:
-            for pair in list_installed_pairs():
-                print(f"{pair[0]} -> {pair[1]}")
-            return 0
-        if args.list_available:
-            for pair in list_available_pairs(refresh_index=True):
-                print(f"{pair[0]} -> {pair[1]}")
-            return 0
-        ok = ensure_language_pair(args.from_lang, args.to_lang, refresh_index=True)
-        print(f"{'ok' if ok else 'failed'}: {args.from_lang} -> {args.to_lang}")
-        return 0 if ok else 1
 
-    return 1
+def _add_translate_install_parser(sub: argparse._SubParsersAction) -> None:
+    parser = sub.add_parser("translate-install", help="Install argostranslate language pair")
+    parser.add_argument("from_lang", nargs="?", default="en")
+    parser.add_argument("to_lang", nargs="?", default="pl")
+    parser.add_argument("--list-available", action="store_true")
+    parser.add_argument("--list-installed", action="store_true")
+    parser.set_defaults(func=cmd_translate_install)
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="img2nl", description="Image → NL summary + thumbnail")
+    sub = parser.add_subparsers(dest="cmd", required=True)
+    _add_analyze_parser(sub)
+    _add_capture_parser(sub)
+    _add_capture_analyze_parser(sub)
+    _add_translate_install_parser(sub)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
+    return args.func(args)
 
 
 if __name__ == "__main__":

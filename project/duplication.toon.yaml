@@ -1,33 +1,43 @@
-# redup/duplication | 1 groups | 38f 2187L | 2026-06-09
+# redup/duplication | 2 groups | 54f 3829L | 2026-06-09
 
 SUMMARY:
-  files_scanned: 38
-  total_lines:   2187
-  dup_groups:    1
-  dup_fragments: 2
-  saved_lines:   7
-  scan_ms:       4544
+  files_scanned: 54
+  total_lines:   3829
+  dup_groups:    2
+  dup_fragments: 4
+  saved_lines:   22
+  scan_ms:       3791
 
-HOTSPOTS[1] (files with most duplication):
-  src/img2nl/features/scene.py  dup=11L  groups=1  frags=2  (0.5%)
+HOTSPOTS[2] (files with most duplication):
+  packages/dsl2img2nl/src/dsl2img2nl/handlers.py  dup=35L  groups=1  frags=2  (0.9%)
+  src/img2nl/features/scene.py  dup=11L  groups=1  frags=2  (0.3%)
 
-DUPLICATES[1] (ranked by impact):
+DUPLICATES[2] (ranked by impact):
+  [a145f7c8b4ef4787]   STRU  handle_analyze  L=15 N=2 saved=15 sim=1.00
+      packages/dsl2img2nl/src/dsl2img2nl/handlers.py:23-37  (handle_analyze)
+      packages/dsl2img2nl/src/dsl2img2nl/handlers.py:73-92  (handle_capture_analyze)
   [a4a4c87e8e1cb6fe]   STRU  _scene_from_similarity  L=7 N=2 saved=7 sim=1.00
       src/img2nl/features/scene.py:8-14  (_scene_from_similarity)
       src/img2nl/features/scene.py:17-20  (_scene_from_special)
 
-REFACTOR[1] (ranked by priority):
-  [1] ○ extract_function   → src/img2nl/features/utils/_scene_from_similarity.py
+REFACTOR[2] (ranked by priority):
+  [1] ○ extract_function   → packages/dsl2img2nl/src/dsl2img2nl/utils/handle_analyze.py
+      WHY: 2 occurrences of 15-line block across 1 files — saves 15 lines
+      FILES: packages/dsl2img2nl/src/dsl2img2nl/handlers.py
+  [2] ○ extract_function   → src/img2nl/features/utils/_scene_from_similarity.py
       WHY: 2 occurrences of 7-line block across 1 files — saves 7 lines
       FILES: src/img2nl/features/scene.py
 
-QUICK_WINS[1] (low risk, high savings — do first):
-  [1] extract_function   saved=7L  → src/img2nl/features/utils/_scene_from_similarity.py
+QUICK_WINS[2] (low risk, high savings — do first):
+  [1] extract_function   saved=15L  → packages/dsl2img2nl/src/dsl2img2nl/utils/handle_analyze.py
+      FILES: handlers.py
+  [2] extract_function   saved=7L  → src/img2nl/features/utils/_scene_from_similarity.py
       FILES: scene.py
 
-EFFORT_ESTIMATE (total ≈ 0.2h):
+EFFORT_ESTIMATE (total ≈ 0.7h):
+  medium handle_analyze                      saved=15L  ~30min
   easy   _scene_from_similarity              saved=7L  ~14min
 
 METRICS-TARGET:
-  dup_groups:  1 → 0
-  saved_lines: 7 lines recoverable
+  dup_groups:  2 → 0
+  saved_lines: 22 lines recoverable

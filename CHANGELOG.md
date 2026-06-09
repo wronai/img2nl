@@ -8,6 +8,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-06-09
 
 ### Fixed
+- Fix unused-imports issues (ticket-44310f1e)
+- Fix unused-imports issues (ticket-2104c231)
+- Fix unused-imports issues (ticket-8df9dff2)
+- Fix unused-imports issues (ticket-46a4e14a)
+- Fix unused-imports issues (ticket-17ca5653)
+- Fix unused-imports issues (ticket-57553cc2)
+- Fix magic-numbers issues (ticket-69efda0c)
+- Fix unused-imports issues (ticket-0a5e091f)
+- Fix unused-imports issues (ticket-4dc4f671)
+- Fix unused-imports issues (ticket-4fb759e3)
+- Fix unused-imports issues (ticket-af49afa7)
+- Fix unused-imports issues (ticket-e7ad702d)
+- Fix unused-imports issues (ticket-db9582aa)
+- Fix string-concat issues (ticket-1bb5a4c3)
+- Fix unused-imports issues (ticket-84e17fb1)
+- Fix unused-imports issues (ticket-eccd8f6a)
+- Fix unused-imports issues (ticket-6c863b1a)
+- Fix unused-imports issues (ticket-d7478d49)
+- Fix unused-imports issues (ticket-69f2a7f0)
+- Fix unused-imports issues (ticket-ec6b0cdf)
+
+## [0.1.10] - 2026-06-09
+
+### Fixed
 - Fix unused-imports issues (ticket-139c9530)
 - Fix ai-boilerplate issues (ticket-bce7aa6e)
 - Fix unused-imports issues (ticket-220eaf8d)
@@ -81,6 +105,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - `describe.py` / `llm_gate.py` — use `scene_class`, `special_hits`, `similarity`
 - `README.md` — detection layers, VQL integration, API examples
+
+## [0.1.6] - 2026-06-09
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/test_dsl_screenshot.py
+- Update tests/test_screenshot_pipeline.py
+- Update tests/test_special_layers.py
+
+### Other
+- Update app.doql.less
+- Update install-dev.sh
+- Update packages/dsl2img2nl/src/dsl2img2nl/grammar.py
+- Update packages/dsl2img2nl/src/dsl2img2nl/handlers.py
+- Update packages/uri2img2nl/src/uri2img2nl/__init__.py
+- Update packages/uri2img2nl/src/uri2img2nl/query.py
+- Update packages/uri2img2nl/src/uri2img2nl/query_handlers.py
+- Update packages/uri2img2nl/src/uri2img2nl/query_result.py
+- Update packages/uri2img2nl/src/uri2img2nl/uri.py
+- Update planfile.yaml
+- ... and 19 more files
 
 ## [0.1.5] - 2026-06-09
 

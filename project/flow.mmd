@@ -9,22 +9,22 @@ flowchart TD
     end
 
     subgraph Core
-        packages__dsl2img2nl__src__dsl2img2nl__bus__dispatch("dispatch CC=8")
         packages__dsl2img2nl__src__dsl2img2nl__bus__execute_dsl_line["execute_dsl_line"]
         packages__dsl2img2nl__src__dsl2img2nl__cli__main["main"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_analyze["handle_analyze"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_targets["handle_targets"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_capture["handle_capture"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_capture_analyze["handle_capture_analyze"]
         packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query["handle_query"]
-        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_from_tokens["handle_from_tokens"]
+        packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_llm_hint["handle_llm_hint"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar___set_pair["_set_pair"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar___try_kv_token["_try_kv_token"]
+        packages__dsl2img2nl__src__dsl2img2nl__grammar___try_bool_flag["_try_bool_flag"]
         packages__dsl2img2nl__src__dsl2img2nl__result__DslResult__to_dict["to_dict"]
-        packages__uri2img2nl__src__uri2img2nl__cli__main["main"]
-        packages__uri2img2nl__src__uri2img2nl__query__QueryResult__to_dict["to_dict"]
-        packages__uri2img2nl__src__uri2img2nl__query__query_uri("query_uri CC=9")
-        packages__uri2img2nl__src__uri2img2nl__uri__is_img2nl_uri["is_img2nl_uri"]
-        packages__uri2img2nl__src__uri2img2nl__uri__uri_for_llm_hint["uri_for_llm_hint"]
-        src__img2nl__cli__main["main"]
-        src__img2nl__analyze__analyze_image["analyze_image"]
-        src__img2nl__result__Img2NlResult__to_dict["to_dict"]
-        src__img2nl__features__similarity__compare_images_ssim["compare_images_ssim"]
-        ...["+9 more"]
+        packages__uri2img2nl__src__uri2img2nl__query_handlers__handle_capture_analyze["handle_capture_analyze"]
+        packages__uri2img2nl__src__uri2img2nl__query_handlers__handle_targets["handle_targets"]
+        packages__uri2img2nl__src__uri2img2nl__query_handlers__handle_analyze["handle_analyze"]
+        ...["+59 more"]
     end
 
-    class packages__cli2img2nl__src__cli2img2nl__cli__main,packages__dsl2img2nl__src__dsl2img2nl__bus__execute_dsl_line,packages__dsl2img2nl__src__dsl2img2nl__cli__main,packages__dsl2img2nl__src__dsl2img2nl__result__DslResult__to_dict,packages__uri2img2nl__src__uri2img2nl__cli__main,packages__uri2img2nl__src__uri2img2nl__query__QueryResult__to_dict,packages__uri2img2nl__src__uri2img2nl__uri__is_img2nl_uri,packages__uri2img2nl__src__uri2img2nl__uri__uri_for_llm_hint,src__img2nl__cli__main,src__img2nl__result__Img2NlResult__to_dict entry
+    class packages__cli2img2nl__src__cli2img2nl__cli__main,packages__dsl2img2nl__src__dsl2img2nl__bus__execute_dsl_line,packages__dsl2img2nl__src__dsl2img2nl__cli__main,packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_analyze,packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_targets,packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_capture,packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_capture_analyze,packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_query,packages__dsl2img2nl__src__dsl2img2nl__handlers__handle_llm_hint,packages__dsl2img2nl__src__dsl2img2nl__grammar___set_pair entry

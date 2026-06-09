@@ -771,3 +771,263 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-44310f1e
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in packages/uri2img2nl/src/uri2img2nl/query_handlers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - packages/uri2img2nl/src/uri2img2nl/query_handlers.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2104c231
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in packages/uri2img2nl/src/uri2img2nl/query_result.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - packages/uri2img2nl/src/uri2img2nl/query_result.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8df9dff2
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/api.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/api.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-46a4e14a
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/capture.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/capture.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-17ca5653
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/cli_commands.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/cli_commands.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-57553cc2
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/context.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/context.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-69efda0c
+    name: Fix magic-numbers issues
+    description: Resolve 4 magic-numbers issues in src/img2nl/context.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/img2nl/context.py
+    rule_id: magic-numbers
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0a5e091f
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/features/adapters.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/features/adapters.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4dc4f671
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/features/extractors.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/features/extractors.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4fb759e3
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/features/identify_matchers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/features/identify_matchers.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-af49afa7
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/features/matchers_common.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/features/matchers_common.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e7ad702d
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/features/presence_matchers.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/features/presence_matchers.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-db9582aa
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/features/router.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/features/router.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1bb5a4c3
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in src/img2nl/features/targets.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/features/targets.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-84e17fb1
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/features/targets.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/features/targets.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-eccd8f6a
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/features/ui_adapter.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/features/ui_adapter.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6c863b1a
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/img2nl/plan.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/img2nl/plan.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d7478d49
+    name: Fix unused-imports issues
+    description: Resolve 14 unused-imports issues in src/img2nl/profiles.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - src/img2nl/profiles.py
+    rule_id: unused-imports
+    count: 14
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-69f2a7f0
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_dsl_screenshot.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_dsl_screenshot.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ec6b0cdf
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_screenshot_pipeline.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_screenshot_pipeline.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced

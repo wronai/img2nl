@@ -2,7 +2,7 @@
 
 app {
   name: img2nl;
-  version: 0.1.3;
+  version: 0.1.5;
 }
 
 dependencies {
@@ -48,6 +48,10 @@ workflow[name="test"] {
 workflow[name="clean"] {
   trigger: manual;
   step-1: run cmd=rm -rf .pytest_cache **/__pycache__ dist build *.egg-info;
+}
+
+tests {
+  import: testql-scenarios/**/*.testql.toon.yaml;
 }
 
 env_vars {

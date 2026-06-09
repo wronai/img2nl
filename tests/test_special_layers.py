@@ -146,7 +146,7 @@ def test_reference_fingerprint_param(tmp_path: Path) -> None:
 
 def test_semantic_only_when_enabled(tmp_path: Path) -> None:
     p = _desktop(tmp_path / "desktop.png")
-    with patch("img2nl.analyze.analyze_semantic") as mock_sem:
+    with patch("img2nl.features.extractors.analyze_semantic") as mock_sem:
         mock_sem.return_value = {"available": True, "skipped": False, "labels": ["tv"], "objects": [], "object_count": 0, "model": "yolov8n.pt"}
         analyze_image(p, skip_thumbnail=True, enable_detect=True)
         mock_sem.assert_called_once()
